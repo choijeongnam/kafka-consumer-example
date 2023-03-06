@@ -167,7 +167,51 @@
          <version>${jackson.version}</version>   
       </dependency>
    </dependencies>
-
+   
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>${spring.boot.version}</version>
+			</plugin>
+			        <plugin>
+             <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>${maven-compiler-plugin.version}</version>
+            <configuration>
+               <source>1.8</source>
+              <target>1.8</target>
+            </configuration>
+        </plugin>
+         
+      <plugin>
+          <artifactId>maven-war-plugin</artifactId>
+            <version>2.4</version>
+         <configuration>
+            <failOnMissingWebXml>false</failOnMissingWebXml>
+         </configuration>
+      </plugin>
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <version>3.3.0</version>
+                <executions>
+                <execution>
+                    <goals>
+                        <goal>sources</goal>
+                        <goal>resolve</goal>
+                    </goals>
+                    <configuration>
+                        <classifier>javadoc</classifier>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
+			
+		</plugins>
+	</build>
+	
    <pluginRepositories>
        <pluginRepository>
            <id>central</id>
@@ -184,15 +228,5 @@
          <url>https://webpush.dongkukmail.com/nexus/repository/MyDataRepo/</url>
       </repository>
    </distributionManagement>
-
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
-
+	
 </project>
