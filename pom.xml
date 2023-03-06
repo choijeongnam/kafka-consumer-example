@@ -44,11 +44,11 @@
          <version>${spring.boot.version}</version>
       </dependency>
       
-      <dependency>
+      <!-- <dependency>
          <groupId>org.springframework.boot</groupId>
          <artifactId>spring-boot-starter-jdbc</artifactId>
          <version>${spring.boot.version}</version>
-      </dependency>
+      </dependency> -->
       
       <dependency>
          <groupId>org.springframework.boot</groupId>
@@ -86,11 +86,11 @@
       </dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.mybatis.spring.boot/mybatis-spring-boot-starter -->
-		<dependency>
+		<!-- <dependency>
 		    <groupId>org.mybatis.spring.boot</groupId>
 		    <artifactId>mybatis-spring-boot-starter</artifactId>
 		    <version>${spring.mybatis.version}</version>
-		</dependency>
+		</dependency> -->
 				
 
       <dependency>
@@ -101,7 +101,7 @@
       </dependency>      
       
       
-      <dependency>
+      <!-- <dependency>
          <groupId>com.oracle.ojdbc</groupId>
          <artifactId>ojdbc8</artifactId>
          <version>${ojdbc.oracle.version}</version>
@@ -111,7 +111,7 @@
          <groupId>com.oracle.ojdbc</groupId>
          <artifactId>orai18n</artifactId>
          <version>${ojdbc.oracle.version}</version>
-      </dependency>
+      </dependency> -->
       
       <dependency>
          <groupId>io.springfox</groupId>
