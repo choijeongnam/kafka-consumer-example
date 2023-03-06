@@ -15,19 +15,143 @@
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>1.8</java.version>
+		<maven.test.skip>true</maven.test.skip>
+   
+   <spring.boot.version>2.7.2</spring.boot.version>
+   <spring.mybatis.version>2.3.0</spring.mybatis.version>
+   
+   <ojdbc.oracle.version>19.3.0.0</ojdbc.oracle.version>
+   <lombok.version>1.18.12</lombok.version>
+   <swagger.version>2.9.2</swagger.version>
+   <jackson.version>2.13.4</jackson.version>
+   
+   <deploy.jboss.host>127.0.0.1</deploy.jboss.host>
+   <deploy.jboss.port>9990</deploy.jboss.port>
+   <deploy.jboss.username>loca</deploy.jboss.username>
+   <deploy.jboss.password>loca123</deploy.jboss.password>
+   
+   <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+   <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+   
+   <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+   <maven-surfile-plugin.version>2.22.2</maven-surfile-plugin.version>
+		
 	</properties>
 	<dependencies>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter</artifactId>
-		</dependency>
+         <groupId>org.springframework.boot</groupId>
+         <artifactId>spring-boot-starter</artifactId>
+         <version>${spring.boot.version}</version>
+      </dependency>
+      
+      <dependency>
+         <groupId>org.springframework.boot</groupId>
+         <artifactId>spring-boot-starter-jdbc</artifactId>
+         <version>${spring.boot.version}</version>
+      </dependency>
+      
+      <dependency>
+         <groupId>org.springframework.boot</groupId>
+         <artifactId>spring-boot-starter-web</artifactId>
+         <version>${spring.boot.version}</version>
+         <exclusions>
+            <exclusion>
+               <artifactId>logback-calssic</artifactId>
+               <groupId>cho.qos.logback</groupId>
+            </exclusion>
+         </exclusions>
+      </dependency>
+      
+      <dependency>
+         <groupId>org.springframework.boot</groupId>
+         <artifactId>spring-boot-starter-tomcat</artifactId>
+         <version>${spring.boot.version}</version>
+         <scope>provided</scope>      
+      </dependency>
+            
+      
+      <dependency>
+         <groupId>org.springframework.boot</groupId>
+         <artifactId>spring-boot-starter-test</artifactId>
+         <version>${spring.boot.version}</version>
+         <scope>test</scope>
+      </dependency>
 
+      <dependency>
+         <groupId>org.springframework.boot</groupId>
+         <artifactId>spring-boot-devtools</artifactId>
+         <version>${spring.boot.version}</version>
+         <scope>runtime</scope>
+         <optional>true</optional>
+      </dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.mybatis.spring.boot/mybatis-spring-boot-starter -->
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
+		    <groupId>org.mybatis.spring.boot</groupId>
+		    <artifactId>mybatis-spring-boot-starter</artifactId>
+		    <version>${spring.mybatis.version}</version>
 		</dependency>
-	</dependencies>
+				
+
+      <dependency>
+         <groupId>org.springframework.boot</groupId>
+         <artifactId>spring-boot-configuration-processor</artifactId>
+         <version>${spring.boot.version}</version>
+         <optional>true</optional>
+      </dependency>      
+      
+      
+      <dependency>
+         <groupId>com.oracle.ojdbc</groupId>
+         <artifactId>ojdbc8</artifactId>
+         <version>${ojdbc.oracle.version}</version>
+      </dependency>
+      
+      <dependency>
+         <groupId>com.oracle.ojdbc</groupId>
+         <artifactId>orai18n</artifactId>
+         <version>${ojdbc.oracle.version}</version>
+      </dependency>
+      
+      <dependency>
+         <groupId>io.springfox</groupId>
+         <artifactId>springfox-swagger2</artifactId>
+         <version>${swagger.version}</version>         
+      </dependency>
+      
+      
+      <dependency>
+         <groupId>io.springfox</groupId>
+         <artifactId>springfox-swagger-ui</artifactId>
+         <version>${swagger.version}</version>         
+      </dependency>
+      
+      <dependency>
+         <groupId>org.projectlombok</groupId>
+         <artifactId>lombok</artifactId>
+         <version>${lombok.version}</version>   
+         <optional>true</optional>      
+      </dependency>
+      
+      <dependency>
+         <groupId>org.aspectj</groupId>
+         <artifactId>aspectjweaver</artifactId>
+         <version>1.9.7</version>   
+      </dependency>
+      
+      <dependency>
+         <groupId>com.fasterxml.jackson.core</groupId>
+         <artifactId>jackson-core</artifactId>
+         <version>${jackson.version}</version>   
+      </dependency>
+      
+      <dependency>
+         <groupId>com.fasterxml.jackson.core</groupId>
+         <artifactId>jackson-annotations</artifactId>
+         <version>${jackson.version}</version>   
+      </dependency>
+   </dependencies>
+
 
 	<build>
 		<plugins>
