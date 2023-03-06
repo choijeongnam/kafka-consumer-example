@@ -27,7 +27,7 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("SpringBoot + React Boilerplate API")
+                .title("주소 : http://localhost:8000/swagger-ui.html, http://localhost:8000/v2/api-docs")
                 .version("1.0.0")
                 .description("스프링부트의 swagger api 입니다.")
                 .build();
