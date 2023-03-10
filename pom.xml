@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.7.2</version>
-		<relativePath/> <!-- lookup parent from repository -->
-	</parent>
-	<groupId>com.lottecard</groupId>
-	<artifactId>Mydata</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>Mydata</name>
-	<description>Demo project for Spring Boot</description>
-	<properties>
-		<java.version>1.8</java.version>
-		<maven.test.skip>true</maven.test.skip>
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+   <modelVersion>4.0.0</modelVersion>
+   <parent>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-parent</artifactId>
+      <version>2.7.2</version>
+      <relativePath/> <!-- lookup parent from repository -->
+   </parent>
+   <groupId>com.lottecard</groupId>
+   <artifactId>Mydata</artifactId>
+   <version>0.0.1-SNAPSHOT</version>
+   <name>Mydata</name>
+   <description>Demo project for Spring Boot</description>
+   <properties>
+      <java.version>1.8</java.version>
+      <maven.test.skip>true</maven.test.skip>
    
    <spring.boot.version>2.7.2</spring.boot.version>
    <spring.mybatis.version>2.3.0</spring.mybatis.version>
@@ -35,10 +35,10 @@
    
    <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
    <maven-surfile-plugin.version>2.22.2</maven-surfile-plugin.version>
-		
-	</properties>
-	
-	<repositories>
+      
+   </properties>
+   
+<!--    <repositories>
        <repository> 
            <id>central</id>
            <url>https://webpush.dongkukmail.com/nexus/repository/maven-public/</url>
@@ -50,21 +50,21 @@
               <enabled>false</enabled>
            </snapshots>
        </repository>
-   </repositories>
-	
-	
-	<dependencies>
-		<dependency>
+   </repositories> -->
+   
+   
+   <dependencies>
+      <dependency>
          <groupId>org.springframework.boot</groupId>
          <artifactId>spring-boot-starter</artifactId>
          <version>${spring.boot.version}</version>
       </dependency>
       
-       <dependency>
+      <!-- <dependency>
          <groupId>org.springframework.boot</groupId>
          <artifactId>spring-boot-starter-jdbc</artifactId>
          <version>${spring.boot.version}</version>
-      </dependency>
+      </dependency> -->
       
       <dependency>
          <groupId>org.springframework.boot</groupId>
@@ -100,14 +100,18 @@
          <scope>runtime</scope>
          <optional>true</optional>
       </dependency>
-
-		<!-- https://mvnrepository.com/artifact/org.mybatis.spring.boot/mybatis-spring-boot-starter -->
-		<dependency>
-		    <groupId>org.mybatis.spring.boot</groupId>
-		    <artifactId>mybatis-spring-boot-starter</artifactId>
-		    <version>${spring.mybatis.version}</version>
-		</dependency>
-				
+      <dependency> 
+    <groupId>org.springframework.boot</groupId> 
+    <artifactId>spring-boot-starter-validation</artifactId> 
+   <version>${spring.boot.version}</version>
+</dependency>
+      <!-- https://mvnrepository.com/artifact/org.mybatis.spring.boot/mybatis-spring-boot-starter -->
+      <!-- <dependency>
+          <groupId>org.mybatis.spring.boot</groupId>
+          <artifactId>mybatis-spring-boot-starter</artifactId>
+          <version>${spring.mybatis.version}</version>
+      </dependency> -->
+            
 
       <dependency>
          <groupId>org.springframework.boot</groupId>
@@ -117,7 +121,7 @@
       </dependency>      
       
       
-       <dependency>
+      <!-- <dependency>
          <groupId>com.oracle.ojdbc</groupId>
          <artifactId>ojdbc8</artifactId>
          <version>${ojdbc.oracle.version}</version>
@@ -127,7 +131,7 @@
          <groupId>com.oracle.ojdbc</groupId>
          <artifactId>orai18n</artifactId>
          <version>${ojdbc.oracle.version}</version>
-      </dependency>
+      </dependency> -->
       
       <dependency>
          <groupId>io.springfox</groupId>
@@ -135,13 +139,23 @@
          <version>${swagger.version}</version>         
       </dependency>
       
-      
       <dependency>
          <groupId>io.springfox</groupId>
          <artifactId>springfox-swagger-ui</artifactId>
          <version>${swagger.version}</version>         
       </dependency>
-      
+            <dependency>
+       <groupId>javax.validation</groupId>
+       <artifactId>validation-api</artifactId>
+       <version>2.0.1.Final</version>
+      </dependency>
+
+<dependency>
+    <groupId>io.springfox</groupId>
+    <artifactId>springfox-bean-validators</artifactId>
+    <version>2.9.2</version>
+</dependency>
+            
       <dependency>
          <groupId>org.projectlombok</groupId>
          <artifactId>lombok</artifactId>
@@ -168,15 +182,15 @@
       </dependency>
    </dependencies>
    
-	<build>
-	 <pluginManagement>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<version>${spring.boot.version}</version>
-			</plugin>
-			        <plugin>
+   <build>
+    <pluginManagement>
+      <plugins>
+         <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+            <version>${spring.boot.version}</version>
+         </plugin>
+                 <plugin>
              <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
             <version>${maven-compiler-plugin.version}</version>
@@ -209,12 +223,12 @@
                 </execution>
             </executions>
         </plugin>
-			
-		</plugins>
-		</pluginManagement>
-	</build>
-	
-   <pluginRepositories>
+         
+      </plugins>
+      </pluginManagement>
+   </build>
+   
+<!--    <pluginRepositories>
        <pluginRepository>
            <id>central</id>
            <url>https://webpush.dongkukmail.com/nexus/repository/maven-public/</url>
@@ -230,5 +244,5 @@
          <url>https://webpush.dongkukmail.com/nexus/repository/MyDataRepo/</url>
       </repository>
    </distributionManagement>
-	
+ -->   
 </project>
