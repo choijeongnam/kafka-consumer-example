@@ -14,8 +14,10 @@ public class TestController {
 
 	@PostMapping(value = "/test")
 	public ResponseDTO test(@RequestBody @Valid TestDTO testDTO) {
+		
+		System.err.println(testDTO.getName());
+		System.err.println(testDTO.getValue());
 		ResponseDTO res = new ResponseDTO();
-		System.err.println("valid 실패?");
 		//res.setCode(200);
 		//res.setMessage("Sucess");
 		return res;

@@ -72,10 +72,6 @@ public class CodeValidator implements ModelPropertyBuilderPlugin, ConstraintVali
 		// TODO Auto-generated method stub
 		
 		Class<?> valueType = value.getClass();
-
-		if(value instanceof Long) {
-			System.err.println("되는지");
-		}
 		
 		//string integer boolean
 		System.err.println(value + ",,찍어바" + valueType);
@@ -84,6 +80,17 @@ public class CodeValidator implements ModelPropertyBuilderPlugin, ConstraintVali
 	    		return false;
 	    	}
 	    }
+	    
+        if (value instanceof String) {
+            // validate string value
+        } else if (value instanceof Long) {
+            // validate integer value
+        } else {
+            // invalid data type
+            context.buildConstraintViolationWithTemplate("Invalid data type")
+                    .addConstraintViolation();
+            return false;
+        }
 	    
 	    
 		return true;
