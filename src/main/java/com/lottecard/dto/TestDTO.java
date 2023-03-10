@@ -11,7 +11,7 @@ public class TestDTO {
 	private String name;
 	
 	@CheckValidator(example = "test12222")
-	private String value;
+	private Long value;
 	
 	public String getName() {
 		return name;
@@ -19,13 +19,11 @@ public class TestDTO {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getValue() {
+	public Long getValue() {
 		return value;
 	}
-	public void setValue(String value) {
+	public void setValue(Long value) {
 		this.value = value;
 	}
-	
 
-	
 }

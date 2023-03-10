@@ -4,6 +4,9 @@ package com.lottecard;
 import static springfox.bean.validators.plugins.Validators.annotationFromBean;
 import static springfox.bean.validators.plugins.Validators.annotationFromField;
 
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
+
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -18,7 +21,10 @@ import springfox.documentation.spi.schema.contexts.ModelPropertyContext;
 
 @Component
 @Order(Validators.BEAN_VALIDATOR_PLUGIN_ORDER)
-public class CodeValidator implements ModelPropertyBuilderPlugin{
+public class CodeValidator implements ModelPropertyBuilderPlugin, ConstraintValidator<CheckValidator, Object>{
+	
+	private boolean required;
+	private String dataType;
 	
 	@Override
 	public boolean supports(DocumentationType delimiter) {
@@ -32,7 +38,13 @@ public class CodeValidator implements ModelPropertyBuilderPlugin{
 		
 		Optional<CheckValidator> checkValidator = extractAnnotation(context);
 		
-		context.getBuilder().required(checkValidator.get().required()).example(checkValidator.get().example()).build();
+		if(checkValidator.isPresent()) {
+			context.getBuilder().required(checkValidator.get().required()).example(checkValidator.get().example()).build();
+		}
+		
+		
+		
+		
 		
 //		Optional<CheckValidator> c = extractAnnotation(context);
 //		if(c.isPresent()) {
@@ -48,6 +60,36 @@ public class CodeValidator implements ModelPropertyBuilderPlugin{
 		// TODO Auto-generated method stub
 		return annotationFromBean(context, CheckValidator.class).or(annotationFromField(context, CheckValidator.class));
 	}
+	
+	public void initialize(CheckValidator constraintAnnotation) {
+		//this.ALLOW_ARRAY = constraintAnnotation.codes(); // 허용할 코드 설정
+		this.required = constraintAnnotation.required();
+		this.dataType = constraintAnnotation.dataType();
+	}
+
+	@Override
+	public boolean isValid(Object value, ConstraintValidatorContext context) {
+		// TODO Auto-generated method stub
+		
+		Class<?> valueType = value.getClass();
+
+		if(value instanceof Long) {
+			System.err.println("되는지");
+		}
+		
+		//string integer boolean
+		System.err.println(value + ",,찍어바" + valueType);
+	    if (required) { 
+	    	if(value == null) {
+	    		return false;
+	    	}
+	    }
+	    
+	    
+		return true;
+	}
+	
+	
 	
 	
 //    @Override

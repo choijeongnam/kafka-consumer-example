@@ -5,7 +5,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import javax.validation.Constraint;
 import javax.validation.Payload;
+import javax.validation.constraints.NotNull;
 
 import io.swagger.annotations.Extension;
 import io.swagger.annotations.ExtensionProperty;
@@ -13,7 +15,8 @@ import io.swagger.annotations.ExtensionProperty;
 
 @Target({ElementType.METHOD, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-//@Constraint(validatedBy = CodeValidator.class)
+//@NotNull
+@Constraint(validatedBy = CodeValidator.class)
 public @interface CheckValidator {
 	
     String message() default "invalid";
