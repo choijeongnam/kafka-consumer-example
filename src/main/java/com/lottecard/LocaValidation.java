@@ -16,8 +16,8 @@ import io.swagger.annotations.ExtensionProperty;
 @Target({ElementType.METHOD, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 //@NotNull
-@Constraint(validatedBy = CodeValidator.class)
-public @interface CheckValidator {
+@Constraint(validatedBy = LocaValidator.class)
+public @interface LocaValidation {
 	
     String message() default "invalid";
 

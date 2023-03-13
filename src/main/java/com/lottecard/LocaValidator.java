@@ -9,6 +9,8 @@ import javax.validation.ConstraintValidatorContext;
 
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.BeanPropertyBindingResult;
+import org.springframework.validation.BindingResult;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Optional;
@@ -21,10 +23,9 @@ import springfox.documentation.spi.schema.contexts.ModelPropertyContext;
 
 @Component
 @Order(Validators.BEAN_VALIDATOR_PLUGIN_ORDER)
-public class CodeValidator implements ModelPropertyBuilderPlugin, ConstraintValidator<CheckValidator, Object>{
+public class LocaValidator implements ModelPropertyBuilderPlugin, ConstraintValidator<LocaValidation, Object>{
 	
 	private boolean required;
-	private String dataType;
 	
 	@Override
 	public boolean supports(DocumentationType delimiter) {
@@ -36,14 +37,12 @@ public class CodeValidator implements ModelPropertyBuilderPlugin, ConstraintVali
 	public void apply(ModelPropertyContext context) {
 		// TODO Auto-generated method stub
 		
-		Optional<CheckValidator> checkValidator = extractAnnotation(context);
+		Optional<LocaValidation> locaValidation = extractAnnotation(context);
 		
-		if(checkValidator.isPresent()) {
-			context.getBuilder().required(checkValidator.get().required()).example(checkValidator.get().example()).build();
+		if(locaValidation.isPresent()) {
+			context.getBuilder().required(locaValidation.get().required()).example(locaValidation.get().example()).build();
 		}
-		
-		
-		
+
 		
 		
 //		Optional<CheckValidator> c = extractAnnotation(context);
@@ -56,29 +55,38 @@ public class CodeValidator implements ModelPropertyBuilderPlugin, ConstraintVali
 	}
 
 	@VisibleForTesting
-	private Optional<CheckValidator> extractAnnotation(ModelPropertyContext context) {
+	private Optional<LocaValidation> extractAnnotation(ModelPropertyContext context) {
 		// TODO Auto-generated method stub
-		return annotationFromBean(context, CheckValidator.class).or(annotationFromField(context, CheckValidator.class));
+		return annotationFromBean(context, LocaValidation.class).or(annotationFromField(context, LocaValidation.class));
 	}
 	
-	public void initialize(CheckValidator constraintAnnotation) {
+	public void initialize(LocaValidation constraintAnnotation) {
 		//this.ALLOW_ARRAY = constraintAnnotation.codes(); // 허용할 코드 설정
 		this.required = constraintAnnotation.required();
-		this.dataType = constraintAnnotation.dataType();
 	}
 
+	@SuppressWarnings("unused")
 	@Override
 	public boolean isValid(Object value, ConstraintValidatorContext context) {
 		// TODO Auto-generated method stub
 		
 		Class<?> valueType = value.getClass();
 		
-		//string integer boolean
-		System.err.println(value + ",,찍어바" + valueType);
 	    if (required) { 
-	    	if(value == null) {
-	    		return false;
-	    	}
+
+	        if (value == null) {
+	            // ConstraintValidatorContext를 이용하여 MethodArgumentNotValidException 예외를 생성합니다.
+	            context.disableDefaultConstraintViolation();
+	            context.buildConstraintViolationWithTemplate("value must not be null").addConstraintViolation();
+	            
+	            BindingResult bindingResult = new BeanPropertyBindingResult(value, "value");
+	            bindingResult.reject("NotNull", "value must not be null");
+	            
+	            // MethodArgumentNotValidException 예외를 발생시킵니다.
+	            //throw new MethodArgumentNotValidException(null, bindingResult);
+	            //throw new MethodArgumentNotValidException(null)
+	            return false;
+	        }
 	    }
 	    
         if (value instanceof String) {

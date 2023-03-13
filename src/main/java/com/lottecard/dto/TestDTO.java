@@ -1,16 +1,16 @@
 package com.lottecard.dto;
 
-import com.lottecard.CheckValidator;
+import com.lottecard.LocaValidation;
 
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 public class TestDTO {
 	
-	@CheckValidator(name="test", example="이건 낫널로 줄래요", required = true)
+	@LocaValidation(name="AP01", example="AP01", required = true)
 	private String name;
 	
-	@CheckValidator(example = "test12222")
+	@LocaValidation(name="LC01", example="1000", required = true)
 	private Long value;
 	
 	public String getName() {
