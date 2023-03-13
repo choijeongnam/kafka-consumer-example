@@ -4,13 +4,15 @@ package com.lottecard;
 import static springfox.bean.validators.plugins.Validators.annotationFromBean;
 import static springfox.bean.validators.plugins.Validators.annotationFromField;
 
+import java.net.BindException;
+
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Optional;
@@ -65,42 +67,41 @@ public class LocaValidator implements ModelPropertyBuilderPlugin, ConstraintVali
 		this.required = constraintAnnotation.required();
 	}
 
-	@SuppressWarnings("unused")
 	@Override
 	public boolean isValid(Object value, ConstraintValidatorContext context) {
 		// TODO Auto-generated method stub
 		
-		Class<?> valueType = value.getClass();
+		//Class<?> valueType = value.getClass();
+		System.err.println(value);
 		
-	    if (required) { 
-
-	        if (value == null) {
-	            // ConstraintValidatorContext를 이용하여 MethodArgumentNotValidException 예외를 생성합니다.
-	            context.disableDefaultConstraintViolation();
-	            context.buildConstraintViolationWithTemplate("value must not be null").addConstraintViolation();
-	            
-	            BindingResult bindingResult = new BeanPropertyBindingResult(value, "value");
-	            bindingResult.reject("NotNull", "value must not be null");
-	            
-	            // MethodArgumentNotValidException 예외를 발생시킵니다.
-	            //throw new MethodArgumentNotValidException(null, bindingResult);
-	            //throw new MethodArgumentNotValidException(null)
-	            return false;
-	        }
-	    }
+		if(required) {
+			if(value == null) {
+				//throw new MethodArgumentNotValidException(value, bindingResult)
+//				try {
+//					throw new BindException();
+//				} catch(Exception e) {
+//					return false;
+//				}
+				return false;
+			}
+		}
+		
+//	    if (required) {
+//	        if (value == null) {
+//	        	return false;
+//	        }
+//	    }
 	    
-        if (value instanceof String) {
-            // validate string value
-        } else if (value instanceof Long) {
-            // validate integer value
-        } else {
-            // invalid data type
-            context.buildConstraintViolationWithTemplate("Invalid data type")
-                    .addConstraintViolation();
-            return false;
-        }
-	    
-	    
+//        if (value instanceof String) {
+//            // validate string value
+//        } else if (value instanceof Long) {
+//            // validate integer value
+//        } else {
+//            // invalid data type
+//            context.buildConstraintViolationWithTemplate("Invalid data type")
+//                    .addConstraintViolation();
+//            return false;
+//        }
 		return true;
 	}
 	

@@ -24,31 +24,31 @@ public class LogAspectService {
     @Autowired
     private HttpServletRequest request;
     
-    @Around("@annotation(org.springframework.web.bind.annotation.PostMapping)")
-    public Object logging(ProceedingJoinPoint pjp) throws Throwable {
-        
-        String requestMethod = request.getMethod();
-        String requestURI = request.getRequestURI();
-        logger.info("[HTTP Request] Method: {} URI: {}", requestMethod, requestURI);
-
-        BindingResult bindingResult = null;
-        for (Object arg : pjp.getArgs()) {
-            if (arg instanceof BindingResult) {
-                bindingResult = (BindingResult) arg;
-                break;
-            }
-        }
-
-        Object result = pjp.proceed();
-
-        if (bindingResult != null && bindingResult.hasErrors()) {
-            String errors = bindingResult.getAllErrors().stream()
-                    .map(ObjectError::toString)
-                    .collect(Collectors.joining(", "));
-            logger.error("[Validation Error] Method: {} URI: {} Errors: {}", requestMethod, requestURI, errors);
-        }
-
-        return result;
-
-    }
+//    @Around("@annotation(org.springframework.web.bind.annotation.PostMapping)")
+//    public Object logging(ProceedingJoinPoint pjp) throws Throwable {
+//        
+//        String requestMethod = request.getMethod();
+//        String requestURI = request.getRequestURI();
+//        logger.info("[HTTP Request] Method: {} URI: {}", requestMethod, requestURI);
+//
+//        BindingResult bindingResult = null;
+//        for (Object arg : pjp.getArgs()) {
+//            if (arg instanceof BindingResult) {
+//                bindingResult = (BindingResult) arg;
+//                break;
+//            }
+//        }
+//
+//        Object result = pjp.proceed();
+////
+////        if (bindingResult != null && bindingResult.hasErrors()) {
+////            String errors = bindingResult.getAllErrors().stream()
+////                    .map(ObjectError::toString)
+////                    .collect(Collectors.joining(", "));
+////            logger.error("[Validation Error] Method: {} URI: {} Errors: {}", requestMethod, requestURI, errors);
+////        }
+//
+//        return result;
+//
+//    }
 }
