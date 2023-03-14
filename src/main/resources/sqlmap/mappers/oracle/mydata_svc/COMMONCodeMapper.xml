@@ -164,14 +164,14 @@
 		(
 			<trim prefix="" prefixOverrides=",">
 			<include refid="insert-condition"/>
-<!-- 			<include refid="commonSql.common-insert-condition" /> -->
+			<include refid="commonSql.common-insert-condition" />
 		</trim>
 		)
 		VALUES
 		(
 			<trim prefix="" prefixOverrides=",">
 			<include refid="insert-values"/>
-<!-- 			<include refid="commonSql.common-insert-value" /> -->
+			<include refid="commonSql.common-insert-value" />
 		</trim>
 		)
 	</insert>
@@ -180,7 +180,7 @@
 		UPDATE COMMON_CODE
 		<set>
 			<include refid="update-condition"/>
-<!-- 			<include refid="commonSql.common-update-condition" /> -->
+			<include refid="commonSql.common-update-condition" />
 		</set>
 		<where>
 			<include refid="where-key"/>
@@ -191,7 +191,7 @@
 		UPDATE COMMON_CODE
 		<set>
 			<include refid="update-condition"/>
-<!-- 			<include refid="commonSql.common-update-condition" /> -->
+			<include refid="commonSql.common-update-condition" />
 		</set>
 		<where>
 			1=2 OR (<trim prefix="" prefixOverrides="AND|OR"><include refid="where-models"/></trim>)
@@ -245,21 +245,21 @@
 		WHEN MATCHED THEN
 			UPDATE
 			<set>
-<!-- 				<include refid="commonSql.common-update-condition" /> -->
+				<include refid="commonSql.common-update-condition" />
 				<include refid="update-condition" />
 			</set>
 		WHEN NOT MATCHED THEN
 			INSERT
 			(
 				<trim prefix="" prefixOverrides=",">
-<!-- 					<include refid="commonSql.common-insert-condition" /> -->
+					<include refid="commonSql.common-insert-condition" />
 					<include refid="insert-condition" />
 				</trim>
 			)
 			VALUES
 			(
 				<trim prefix="" prefixOverrides=",">
-<!-- 					<include refid="commonSql.common-insert-value" /> -->
+					<include refid="commonSql.common-insert-value" />
 					<include refid="insert-values" />
 				</trim>
 			)

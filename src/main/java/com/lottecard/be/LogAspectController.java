@@ -1,6 +1,7 @@
 package com.lottecard.be;
 
 import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +11,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;
@@ -23,10 +25,13 @@ import com.google.common.base.Joiner;
 @Order(1)
 public class LogAspectController {
     private static final Logger logger = LoggerFactory.getLogger(LogAspectController.class);
+    private static final String TRACE_ID = "traceId";
     
     @Around("execution(* com.lottecard.controller.*.*(..))")
     public Object logging(ProceedingJoinPoint pjp) throws Throwable {
 
+    	String traceId = UUID.randomUUID().toString();
+		MDC.put(TRACE_ID, traceId);
         String params = getRequestParams();
 
         long startAt = System.currentTimeMillis();
@@ -41,6 +46,7 @@ public class LogAspectController {
         logger.info("----------> [RESPONSE] : {}({}) = {} ({}ms)", pjp.getSignature().getDeclaringTypeName(),
                 pjp.getSignature().getName(), result, endAt-startAt);
 
+        MDC.clear();
         return result;
     }
     
