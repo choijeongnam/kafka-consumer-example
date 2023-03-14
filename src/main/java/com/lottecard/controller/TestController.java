@@ -32,10 +32,12 @@ public class TestController {
 		//유효성 검증과 요청 메시지 읽기는 스프링에서 다른 과정으로 처리되므로, 발생하는 예외도 서로 다를 수 있습니다. 따라서 HttpMessageNotReadableException이 발생하는 경우, 요청 바디의 형식이나 필드 값이 잘못되었는지 확인해야 합니다.
 		COMMONCodeVO vo = new COMMONCodeVO();
 		ResponseDTO res = new ResponseDTO();
-		//res.setCode(200);
+		res.setCode(200);
 		//res.setMessage("Sucess");
-		 ObjectMapper objectMapper = new ObjectMapper();
-		res.setMessage(objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(cmon.selectList(vo)));
+		//res.setMessage(objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(cmon.selectList(vo)));
+		vo.setCode("10000");
+		cmon.selectList(vo);
+		res.setMessage(vo.toString());
 		return res;
 	}
 	

@@ -1,6 +1,7 @@
 package com.lottecard.test.model.vo;
 
-import org.apache.ibatis.type.Alias;
+
+import java.util.Set;
 
 import com.lottecard.cmn.model.vo.AbstractVO;
 
@@ -9,9 +10,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
 public class COMMONCodeVO extends AbstractVO  {
 
 	private String groupCode;
@@ -54,4 +52,50 @@ public class COMMONCodeVO extends AbstractVO  {
 	public void setUpdateId(String updateId) {
 		this.updateId = updateId;
 	}
+
+	public String getGroupCode() {
+		return groupCode;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public String getCodeName() {
+		return codeName;
+	}
+
+	public String getUsageStatus() {
+		return usageStatus;
+	}
+
+	public String getCreateDt() {
+		return createDt;
+	}
+
+	public String getCreateId() {
+		return createId;
+	}
+
+	public String getUpdateDt() {
+		return updateDt;
+	}
+
+	public String getUpdateId() {
+		return updateId;
+	}
+	
+	@Override
+	public void setAssignParameters(Set<String> assignParameters) {
+		// TODO Auto-generated method stub
+		super.setAssignParameters(assignParameters);
+	}
+
+	@Override
+	public String toString() {
+		return "COMMONCodeVO [groupCode=" + groupCode + ", code=" + code + ", codeName=" + codeName + ", usageStatus="
+				+ usageStatus + ", createDt=" + createDt + ", createId=" + createId + ", updateDt=" + updateDt
+				+ ", updateId=" + updateId + "]";
+	}
+	
 }

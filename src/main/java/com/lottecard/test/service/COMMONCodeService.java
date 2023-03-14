@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 import com.lottecard.test.model.vo.COMMONCodeVO;
 
 
-@Repository
 public interface COMMONCodeService {
 
 	 List<COMMONCodeVO> selectList(COMMONCodeVO vo) throws Exception;

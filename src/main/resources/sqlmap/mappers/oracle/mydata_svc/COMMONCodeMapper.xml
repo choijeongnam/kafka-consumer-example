@@ -10,84 +10,28 @@
 
 	<sql id="where-models">
 		<if test="groupCode != null and groupCode != ''">
-			<choose>
-				<when test = "!likeParameters.contains('groupCode')">
 					AND GROUP_CODE = #{groupCode}
-				</when>
-				<otherwise>
-					AND GROUP_CODE LIKE '%'||#{groupCode}||'%'
-				</otherwise>
-			</choose>
 		</if>
 		<if test="code != null and code != ''">
-			<choose>
-				<when test = "!likeParameters.contains('code')">
 					AND CODE = #{code}
-				</when>
-				<otherwise>
-					AND CODE LIKE '%'||#{code}||'%'
-				</otherwise>
-			</choose>
 		</if>
 		<if test="codeName != null and codeName != ''">
-			<choose>
-				<when test = "!likeParameters.contains('codeName')">
 					AND CODE_NAME = #{codeName}
-				</when>
-				<otherwise>
-					AND CODE_NAME LIKE '%'||#{codeName}||'%'
-				</otherwise>
-			</choose>
 		</if>
 		<if test="usageStatus != null and usageStatus != ''">
-			<choose>
-				<when test = "!likeParameters.contains('usageStatus')">
 					AND USAGE_STATUS = #{usageStatus}
-				</when>
-				<otherwise>
-					AND USAGE_STATUS LIKE '%'||#{usageStatus}||'%'
-				</otherwise>
-			</choose>
 		</if>
 		<if test="createDt != null and createDt != ''">
-			<choose>
-				<when test = "!likeParameters.contains('createDt')">
 					AND CREATE_DT = #{createDt}
-				</when>
-				<otherwise>
-					AND CREATE_DT LIKE '%'||#{createDt}||'%'
-				</otherwise>
-			</choose>
 		</if>
 		<if test="createId != null and createId != ''">
-			<choose>
-				<when test = "!likeParameters.contains('createId')">
 					AND CREATE_ID = #{createId}
-				</when>
-				<otherwise>
-					AND CREATE_ID LIKE '%'||#{createId}||'%'
-				</otherwise>
-			</choose>
 		</if>
 		<if test="updateDt != null and updateDt != ''">
-			<choose>
-				<when test = "!likeParameters.contains('updateDt')">
 					AND UPDATE_DT = #{updateDt}
-				</when>
-				<otherwise>
-					AND UPDATE_DT LIKE '%'||#{updateDt}||'%'
-				</otherwise>
-			</choose>
 		</if>
 		<if test="updateId != null and updateId != ''">
-			<choose>
-				<when test = "!likeParameters.contains('updateId')">
 					AND UPDATE_ID = #{updateId}
-				</when>
-				<otherwise>
-					AND UPDATE_ID LIKE '%'||#{updateId}||'%'
-				</otherwise>
-			</choose>
 		</if>
 	</sql>
 	
