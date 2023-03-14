@@ -1,5 +1,7 @@
 package com.lottecard.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,9 +37,9 @@ public class TestController {
 		res.setCode(200);
 		//res.setMessage("Sucess");
 		//res.setMessage(objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(cmon.selectList(vo)));
-		vo.setCode("10000");
-		cmon.selectList(vo);
-		res.setMessage(vo.toString());
+		vo.setGroupCode("10000");
+		List<COMMONCodeVO> list = cmon.selectList(vo);
+		res.setMessage(list.toString());
 		return res;
 	}
 	
