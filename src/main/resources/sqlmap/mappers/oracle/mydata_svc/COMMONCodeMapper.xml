@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lottecard.test.dao.mapper.COMMONCodeMapper">
+
+	<sql id="where-key">
+		AND GROUP_CODE = #{groupCode}
+		AND CODE = #{code}
+	</sql>
+
+	<sql id="where-models">
+		<if test="groupCode != null and groupCode != ''">
+			<choose>
+				<when test = "!likeParameters.contains('groupCode')">
+					AND GROUP_CODE = #{groupCode}
+				</when>
+				<otherwise>
+					AND GROUP_CODE LIKE '%'||#{groupCode}||'%'
+				</otherwise>
+			</choose>
+		</if>
+		<if test="code != null and code != ''">
+			<choose>
+				<when test = "!likeParameters.contains('code')">
+					AND CODE = #{code}
+				</when>
+				<otherwise>
+					AND CODE LIKE '%'||#{code}||'%'
+				</otherwise>
+			</choose>
+		</if>
+		<if test="codeName != null and codeName != ''">
+			<choose>
+				<when test = "!likeParameters.contains('codeName')">
+					AND CODE_NAME = #{codeName}
+				</when>
+				<otherwise>
+					AND CODE_NAME LIKE '%'||#{codeName}||'%'
+				</otherwise>
+			</choose>
+		</if>
+		<if test="usageStatus != null and usageStatus != ''">
+			<choose>
+				<when test = "!likeParameters.contains('usageStatus')">
+					AND USAGE_STATUS = #{usageStatus}
+				</when>
+				<otherwise>
+					AND USAGE_STATUS LIKE '%'||#{usageStatus}||'%'
+				</otherwise>
+			</choose>
+		</if>
+		<if test="createDt != null and createDt != ''">
+			<choose>
+				<when test = "!likeParameters.contains('createDt')">
+					AND CREATE_DT = #{createDt}
+				</when>
+				<otherwise>
+					AND CREATE_DT LIKE '%'||#{createDt}||'%'
+				</otherwise>
+			</choose>
+		</if>
+		<if test="createId != null and createId != ''">
+			<choose>
+				<when test = "!likeParameters.contains('createId')">
+					AND CREATE_ID = #{createId}
+				</when>
+				<otherwise>
+					AND CREATE_ID LIKE '%'||#{createId}||'%'
+				</otherwise>
+			</choose>
+		</if>
+		<if test="updateDt != null and updateDt != ''">
+			<choose>
+				<when test = "!likeParameters.contains('updateDt')">
+					AND UPDATE_DT = #{updateDt}
+				</when>
+				<otherwise>
+					AND UPDATE_DT LIKE '%'||#{updateDt}||'%'
+				</otherwise>
+			</choose>
+		</if>
+		<if test="updateId != null and updateId != ''">
+			<choose>
+				<when test = "!likeParameters.contains('updateId')">
+					AND UPDATE_ID = #{updateId}
+				</when>
+				<otherwise>
+					AND UPDATE_ID LIKE '%'||#{updateId}||'%'
+				</otherwise>
+			</choose>
+		</if>
+	</sql>
+	
+
+	<sql id="insert-condition">
+		, GROUP_CODE
+		, CODE
+		<if test="assignParameters.contains('createId')">
+			, CREATE_ID
+		</if>
+		<if test="assignParameters.contains('updateId')">
+			, UPDATE_ID
+		</if>
+		<if test="assignParameters.contains('codeName')">
+			, CODE_NAME
+		</if>
+		<if test="assignParameters.contains('updateDt')">
+			, UPDATE_DT
+		</if>
+		<if test="assignParameters.contains('usageStatus')">
+			, USAGE_STATUS
+		</if>
+		<if test="assignParameters.contains('createDt')">
+			, CREATE_DT
+		</if>
+	</sql>
+
+	<sql id="insert-values">
+		, #{groupCode}
+		, #{code}
+		<if test="assignParameters.contains('updateDt')">
+			, #{updateDt}
+		</if>
+		<if test="assignParameters.contains('usageStatus')">
+			, #{usageStatus}
+		</if>
+		<if test="assignParameters.contains('createDt')">
+			, #{createDt}
+		</if>
+		<if test="assignParameters.contains('createId')">
+			, #{createId}
+		</if>
+		<if test="assignParameters.contains('updateId')">
+			, #{updateId}
+		</if>
+		<if test="assignParameters.contains('codeName')">
+			, #{codeName}
+		</if>
+	</sql>
+
+	<sql id="update-condition">
+		<if test="assignParameters.contains('createId')">
+			CREATE_ID = #{createId},
+		</if>
+		<if test="assignParameters.contains('updateId')">
+			UPDATE_ID = #{updateId},
+		</if>
+		<if test="assignParameters.contains('codeName')">
+			CODE_NAME = #{codeName},
+		</if>
+		<if test="assignParameters.contains('updateDt')">
+			UPDATE_DT = #{updateDt},
+		</if>
+		<if test="assignParameters.contains('usageStatus')">
+			USAGE_STATUS = #{usageStatus},
+		</if>
+		<if test="assignParameters.contains('createDt')">
+			CREATE_DT = #{createDt},
+		</if>
+	</sql>
+
+	<insert id="insertOne" parameterType="COMMONCodeVO">
+		INSERT INTO COMMON_CODE
+		(
+			<trim prefix="" prefixOverrides=",">
+			<include refid="insert-condition"/>
+<!-- 			<include refid="commonSql.common-insert-condition" /> -->
+		</trim>
+		)
+		VALUES
+		(
+			<trim prefix="" prefixOverrides=",">
+			<include refid="insert-values"/>
+<!-- 			<include refid="commonSql.common-insert-value" /> -->
+		</trim>
+		)
+	</insert>
+
+	<update id="updateOne" parameterType="COMMONCodeVO">
+		UPDATE COMMON_CODE
+		<set>
+			<include refid="update-condition"/>
+<!-- 			<include refid="commonSql.common-update-condition" /> -->
+		</set>
+		<where>
+			<include refid="where-key"/>
+		</where>
+	</update>
+
+	<update id="updates" parameterType="COMMONCodeVO">
+		UPDATE COMMON_CODE
+		<set>
+			<include refid="update-condition"/>
+<!-- 			<include refid="commonSql.common-update-condition" /> -->
+		</set>
+		<where>
+			1=2 OR (<trim prefix="" prefixOverrides="AND|OR"><include refid="where-models"/></trim>)
+		</where>
+	</update>
+
+	<delete id="deleteOne" parameterType="COMMONCodeVO">
+		DELETE FROM COMMON_CODE
+		<where>
+			<include refid="where-key"/>
+		</where>
+	</delete>
+
+	<delete id="deletes" parameterType="COMMONCodeVO">
+		DELETE FROM COMMON_CODE
+		<where>
+			1=2 OR (<trim prefix="" prefixOverrides="AND|OR"><include refid="where-models"/></trim>)
+		</where>
+	</delete>
+
+	<select id="selectOne" parameterType="COMMONCodeVO" resultType="COMMONCodeVO">
+		SELECT
+			*
+		FROM COMMON_CODE
+		<where>
+			<include refid="where-key"/>
+		</where>
+	</select>
+
+	<select id="selectList" parameterType="COMMONCodeVO" resultType="COMMONCodeVO">
+		SELECT
+			*
+		FROM COMMON_CODE
+		<where>
+			<include refid="where-models"/>
+		</where>
+	</select>
+
+	<select id="selectCount" parameterType="COMMONCodeVO" resultType="COMMONCodeVO">
+		SELECT
+			COUNT(*)
+		FROM COMMON_CODE
+		<where>
+			<include refid="where-models"/>
+		</where>
+	</select>
+	<update id="mergeUpdateOne" parameterType="COMMONCodeVO">
+		MERGE INTO COMMON_CODE
+			USING DUAL
+			ON (<trim prefix="" prefixOverrides="AND|OR"><include refid="where-key" /></trim>)
+		WHEN MATCHED THEN
+			UPDATE
+			<set>
+<!-- 				<include refid="commonSql.common-update-condition" /> -->
+				<include refid="update-condition" />
+			</set>
+		WHEN NOT MATCHED THEN
+			INSERT
+			(
+				<trim prefix="" prefixOverrides=",">
+<!-- 					<include refid="commonSql.common-insert-condition" /> -->
+					<include refid="insert-condition" />
+				</trim>
+			)
+			VALUES
+			(
+				<trim prefix="" prefixOverrides=",">
+<!-- 					<include refid="commonSql.common-insert-value" /> -->
+					<include refid="insert-values" />
+				</trim>
+			)
+	</update>
+</mapper>
