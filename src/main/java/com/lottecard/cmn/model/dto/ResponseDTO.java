@@ -1,4 +1,4 @@
-package com.lottecard.dto;
+package com.lottecard.cmn.model.dto;
 
 public class ResponseDTO {
 	private int code;

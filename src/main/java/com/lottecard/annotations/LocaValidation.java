@@ -1,4 +1,4 @@
-package com.lottecard;
+package com.lottecard.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -8,6 +8,8 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 import javax.validation.constraints.NotNull;
+
+import com.lottecard.annotations.plugins.LocaValidator;
 
 import io.swagger.annotations.Extension;
 import io.swagger.annotations.ExtensionProperty;

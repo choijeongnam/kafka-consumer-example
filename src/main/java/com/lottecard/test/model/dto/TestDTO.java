@@ -1,6 +1,6 @@
-package com.lottecard.dto;
+package com.lottecard.test.model.dto;
 
-import com.lottecard.LocaValidation;
+import com.lottecard.annotations.LocaValidation;
 
 import lombok.NoArgsConstructor;
 

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.lottecard.dto.ResponseDTO;
+import com.lottecard.cmn.model.dto.ResponseDTO;
 
 import lombok.extern.slf4j.Slf4j;
 

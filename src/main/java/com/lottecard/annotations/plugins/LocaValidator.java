@@ -1,4 +1,4 @@
-package com.lottecard;
+package com.lottecard.annotations.plugins;
 
 
 import static springfox.bean.validators.plugins.Validators.annotationFromBean;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Optional;
+import com.lottecard.annotations.LocaValidation;
 
 import springfox.bean.validators.plugins.Validators;
 import springfox.documentation.spi.DocumentationType;

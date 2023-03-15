@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lottecard.dto.ResponseDTO;
-import com.lottecard.dto.TestDTO;
+import com.lottecard.cmn.model.dto.ResponseDTO;
+import com.lottecard.test.model.dto.TestDTO;
 import com.lottecard.test.model.vo.COMMONCodeVO;
 import com.lottecard.test.service.impl.COMMONCodeServiceImpl;
 
