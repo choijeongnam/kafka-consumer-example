@@ -1,4 +1,4 @@
-package com.lottecard.controller;
+package com.lottecard.cmn.controller;
 
 import java.util.List;
 

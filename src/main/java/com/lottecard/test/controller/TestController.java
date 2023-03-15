@@ -1,4 +1,4 @@
-package com.lottecard.controller;
+package com.lottecard.test.controller;
 
 import java.util.List;
 
