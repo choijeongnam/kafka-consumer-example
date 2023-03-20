@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -109,6 +110,38 @@ public class DataSourceConfig extends AbstractJdbcConfiguration {
     	sessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver()
 //				.getResources("classpath:/sqlmap/mappers/postgresql/**/" + dbType + "/**/*.xml"));
     			.getResources("classpath:/sqlmap/mappers/oracle/**/*.xml"));
+    	
+    	sessionFactoryBean.setTypeAliases (new Class[] {
+    			COMMONCodeVO.class
+//    			TMcGaHistVO.class,
+//    			TMcSfCmpnMstVO.class
+		});
+    	
+//    	return sessionFactoryBean.getObject();
+    	return sessionFactoryBean;
+    	
+    }
+    
+    
+    @Bean(name="sqlSessionOracleBatch")
+    public SqlSessionFactoryBean sqlSessionFactoryOracleBatch(@Qualifier("dataSourceOracle") DataSource dataSource) throws Exception {
+    	SqlSessionFactoryBean sessionFactoryBean = new SqlSessionFactoryBean();
+    	
+		org.apache.ibatis.session.Configuration configuration = new org.apache.ibatis.session.Configuration();
+		configuration.setCacheEnabled(true);
+		configuration.setLazyLoadingEnabled(true);
+		configuration.setMapUnderscoreToCamelCase(true);
+		configuration.setJdbcTypeForNull(JdbcType.NULL);
+		configuration.setCallSettersOnNulls(true);
+		configuration.setDefaultExecutorType( ExecutorType.BATCH );		//	BATCH 세션으로 할 경우 처리 카운트를 얻을수 없음.
+		sessionFactoryBean.setConfiguration(configuration);
+		
+		
+    	sessionFactoryBean.setDataSource(dataSourceOracle());
+//    	sessionFactoryBean.setTypeA
+    	sessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver()
+//				.getResources("classpath:/sqlmap/mappers/postgresql/**/" + dbType + "/**/*.xml"));
+    			.getResources("classpath:/sqlmap/mappers/oracle_batch/**/*.xml"));
     	
     	sessionFactoryBean.setTypeAliases (new Class[] {
     			COMMONCodeVO.class

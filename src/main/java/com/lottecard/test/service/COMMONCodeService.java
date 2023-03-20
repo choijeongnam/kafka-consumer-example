@@ -11,4 +11,6 @@ public interface COMMONCodeService {
 
 	 List<COMMONCodeVO> selectList(COMMONCodeVO vo) throws Exception;
 //		int mergeSfCmpnMstList(List<TMcSfCmpnMstVO> TMcSfCmpnMstVOList) throws Exception;
+
+	List<COMMONCodeVO> selectBatchList(COMMONCodeVO vo) throws Exception;
  }
