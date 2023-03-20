@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div>
+		<h1>home 검색 api</h1>
+		<input id="bookName" type="text"/>
+		<button id="search">검색</button>
+	</div>
+<script type="text/javascript">
+	$(document).ready(function (){
+
+		$("#search").click(function(){
+			$.ajax({
+				method: "GET",
+				url: "https://dapi.kakao.com/v3/search/book",
+				data: { query : $("#bookNmae".val()) },
+				hearders: {Authorization : "kakaoAK cc4022433a2da9a75a08b0b21d3b169c"}
+			}).done(function (res){
+				console.log(res);
+			})
+		})
+	})
+</script>
+</body>
+</html>
