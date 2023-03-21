@@ -3,14 +3,22 @@
 
 <mapper namespace="commonSql">
 	<sql id="common-insert-condition">
-		, LT_CH_DTTI
+<!-- 		, LT_CH_DTTI
 		, LT_CHPR_ID
-		, CMGRP_CD
+		, CMGRP_CD -->
+		, FST_CRT_USID
+		, FST_CRT_DTTI
+		, LT_CH_USID
+		, LT_CH_DTTI
 	</sql>
 	<sql id="common-insert-value">
-		, TO_CHAR(SYSTIMESTAMP, 'YYYYMMDDHH24MISSFF3')
+<!-- 		, TO_CHAR(SYSTIMESTAMP, 'YYYYMMDDHH24MISSFF3')
 		, #{ltChprId}
-		, '01'
+		, '01' -->
+		, 'skhan'
+		, TO_CHAR(SYSTIMESTAMP, 'YYYYMMDDHH24MISSFF3')
+		, 'skhan'
+		, TO_CHAR(SYSTIMESTAMP, 'YYYYMMDDHH24MISSFF3')
 	</sql>
 	<sql id="common-update-condition">
 		LT_CH_DTTI = TO_CHAR(SYSTIMESTAMP, 'YYYYMMDDHH24MISSFF3'),

@@ -118,6 +118,9 @@
 		<if test="assignParameters.contains('thumbnail')">
 			, #{thumbnail}
 		</if>
+		<if test="assignParameters.contains('contents')">
+			, #{contents}
+		</if>
 	</sql>
 
 	<sql id="update-condition">
