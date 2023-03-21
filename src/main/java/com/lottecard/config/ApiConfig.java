@@ -11,8 +11,8 @@ import okhttp3.OkHttpClient;
 @Configuration
 public class ApiConfig {
 
-	@Bean(name = "OKHTTP_CLIENT")
-	OkHttpClient getOkHttpClient() {
+	@Bean
+	OkHttpClient okHttpClient() {
 		return new OkHttpClient()
 				.newBuilder()
 					.callTimeout(60, TimeUnit.SECONDS)
