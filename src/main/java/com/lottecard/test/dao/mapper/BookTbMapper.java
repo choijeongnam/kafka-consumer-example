@@ -2,7 +2,6 @@ package com.lottecard.test.dao.mapper;
 
 import com.lottecard.test.model.vo.BookTbEntity;
 
-
 public interface BookTbMapper {
 
 	public int insertOne(BookTbEntity entity);

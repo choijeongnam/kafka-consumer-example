@@ -7,7 +7,7 @@
 <body>
 	<div>
 		<h1>index 검색 api</h1>
-		<input type="hidden" id="bookName" value="별이빛나는밤에" />
+		<input type="text" id="bookName" />
 		<button type="button" id="search">검색</button>
 	</div>
 
@@ -16,13 +16,20 @@
  	$(document).ready(function (){
 
 		$("#search").click(function(){
-			$.ajax({
-			    url: 'home1', // 요청 할 주소
-			    type: 'POST', // GET, PUT
-			    data: {
-			        name: '별이빛나는밤에'
-			    }
-			});
+
+			var bookName = $("#bookName").val();
+			if(bookName != null) {
+				$.ajax({
+				    url: 'home1', // 요청 할 주소
+				    type: 'POST', // GET, PUT
+				    data: {
+				        name: bookName
+				    }
+				});
+			} else {
+				alert("검색할 책이름 입력하세요.")
+			}
+
 	 	})
 	 })
 </script>

@@ -146,7 +146,8 @@ public class DataSourceConfig extends AbstractJdbcConfiguration {
     			.getResources("classpath:/sqlmap/mappers/oracle_batch/**/*.xml"));
 
     	sessionFactoryBean.setTypeAliases (new Class[] {
-    			COMMONCodeVO.class
+    			COMMONCodeVO.class,
+    			BookTbEntity.class
 //    			TMcGaHistVO.class,
 //    			TMcSfCmpnMstVO.class
 		});

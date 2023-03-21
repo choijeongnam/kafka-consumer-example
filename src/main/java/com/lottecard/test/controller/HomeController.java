@@ -82,12 +82,8 @@ public class HomeController {
 
 	        BookTbEntity bte = new BookTbEntity();
 	        bte.setTitle(tmp.get("title").toString());
-	        bte.setContents(tmp.get("content").toString());
+	        bte.setContents(tmp.get("contents").toString());
 	        bte.setIsbn(tmp.get("isbn").toString());
-	        bte.setFstCrtUsid("skhan");
-	        bte.setFstCrtDtti("2023-03-21");
-	        bte.setLtChUsid("skhan");
-	        bte.setLtChDtti("2023-03-21");
 
 	        bookTbService.insertOne(bte);
 

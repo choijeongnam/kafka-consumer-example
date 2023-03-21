@@ -2,12 +2,12 @@ package com.lottecard.test.dao;
 
 import org.springframework.stereotype.Repository;
 
+import com.lottecard.cmn.dao.OracleAbstractMapper;
 import com.lottecard.test.dao.mapper.BookTbMapper;
-import com.lottecard.cmn.dao.OracleBatchAbstractMapper;
 import com.lottecard.test.model.vo.BookTbEntity;
 
 @Repository
-public class BookTbDao extends OracleBatchAbstractMapper {
+public class BookTbDao extends OracleAbstractMapper {
 
 	public int insertOne(BookTbEntity entity) {
 		return getSqlSession().getMapper(BookTbMapper.class).insertOne(entity);

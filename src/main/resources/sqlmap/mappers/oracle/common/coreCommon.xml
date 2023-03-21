@@ -16,9 +16,9 @@
 		, #{ltChprId}
 		, '01' -->
 		, 'skhan'
-		, TO_CHAR(SYSTIMESTAMP, 'YYYYMMDDHH24MISSFF3')
+		, TO_DATE('01012023','mmddyyyy')
 		, 'skhan'
-		, TO_CHAR(SYSTIMESTAMP, 'YYYYMMDDHH24MISSFF3')
+		, TO_DATE('01012023','mmddyyyy')
 	</sql>
 	<sql id="common-update-condition">
 		LT_CH_DTTI = TO_CHAR(SYSTIMESTAMP, 'YYYYMMDDHH24MISSFF3'),
