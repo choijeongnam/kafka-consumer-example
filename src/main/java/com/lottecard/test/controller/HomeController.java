@@ -4,12 +4,16 @@ import java.io.IOException;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.lottecard.test.model.vo.BookTbEntity;
+import com.lottecard.test.service.BookTbService;
 
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor.Chain;
@@ -24,6 +28,9 @@ public class HomeController {
 
 	@Autowired
 	private OkHttpClient okHttpClient;
+
+	@Autowired
+	private BookTbService bookTbService;
 
 	@RequestMapping(value="/", method=RequestMethod.GET)
     public String index(){
@@ -70,8 +77,16 @@ public class HomeController {
 	        //System.err.println("응답 코드 찍어보자?" + response.body().string());
 
 	        JSONObject o = new JSONObject(response.body().string());
+	        JSONArray arr = (JSONArray) o.get("documents");
+	        JSONObject tmp = (JSONObject) arr.get(0);
 
-	        System.err.println("documents값은 ? ====> " + o.get("documents").toString());
+	        BookTbEntity bte = new BookTbEntity();
+	        bte.setTitle(tmp.get("title").toString());
+	        bte.setContents(tmp.get("content").toString());
+	        bte.setIsbn(tmp.get("isbn").toString());
+
+	        bookTbService.insertOne(bte);
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
