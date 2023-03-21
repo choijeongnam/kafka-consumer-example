@@ -17,6 +17,7 @@ import org.springframework.data.jdbc.repository.config.AbstractJdbcConfiguration
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
+import com.lottecard.test.model.vo.BookTbEntity;
 import com.lottecard.test.model.vo.COMMONCodeVO;
 import com.zaxxer.hikari.HikariDataSource;
 
@@ -24,13 +25,13 @@ import com.zaxxer.hikari.HikariDataSource;
 //@EnableJdbcRepositories
 //@EnableConfigurationProperties
 //@PropertySource("classpath:application.properties")
-public class DataSourceConfig extends AbstractJdbcConfiguration {                            
+public class DataSourceConfig extends AbstractJdbcConfiguration {
 
 //	@Bean(name="dataSourcePostgrSQL",destroyMethod = "close")
 	@Primary
 	@Bean(name="dataSourceOracle")
 	@ConfigurationProperties("spring.datasource.hikari")
-    public DataSource dataSourceOracle() {                                                   
+    public DataSource dataSourceOracle() {
 
 //        EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
 //        return builder.setType(EmbeddedDatabaseType.HSQL).build();
@@ -46,12 +47,12 @@ public class DataSourceConfig extends AbstractJdbcConfiguration {
 //			basicDataSource.setMinIdle(5);
 //
 //			dataSource = basicDataSource;
-		
+
 		return DataSourceBuilder.create().type(HikariDataSource.class).build();
 //			return dataSource;
-        
+
     }
-	
+
 //    @Bean(name = "backofficeDataSource")
 //
 //    @ConfigurationProperties(prefix = "backoffice.datasource")
@@ -63,18 +64,18 @@ public class DataSourceConfig extends AbstractJdbcConfiguration {
 //        return hikariDataSource;
 //
 //    }
-	
-//	
+
+//
 //	@Bean(name="dataSourcePostgrSQLBatch")
 //	@ConfigurationProperties("spring.datasource.hikari2")
-//    public DataSource dataSourcePostgrSQLBatch() {                                                   
+//    public DataSource dataSourcePostgrSQLBatch() {
 //		return DataSourceBuilder.create().type(HikariDataSource.class).build();
 //    }
-//	
-	
+//
+
 
     @Bean
-    NamedParameterJdbcOperations namedParameterJdbcOperations(DataSource dataSource) { 
+    NamedParameterJdbcOperations namedParameterJdbcOperations(DataSource dataSource) {
         return new NamedParameterJdbcTemplate(dataSource);
     }
 
@@ -83,18 +84,18 @@ public class DataSourceConfig extends AbstractJdbcConfiguration {
 //    public TransactionManager txManagerPostgreSQL(@Qualifier("dataSourcePostgrSQL") DataSource dataSource) {
 //        return new DataSourceTransactionManager(dataSource);
 //    }
-    
+
 //    @Bean(name="txManagerPostgreSQLBatch")
 //    public TransactionManager txManagerPostgreSQLBatch(@Qualifier("dataSourcePostgrSQLBatch") DataSource dataSource) {
 ////    	DataSourceTransactionManager dataSourceTransactionManager = new DataSourceTransactionManager(dataSource);
 //        return new DataSourceTransactionManager(dataSource);
 //    }
-    
+
     @Primary
     @Bean(name="sqlSessionOracle")
     public SqlSessionFactoryBean sqlSessionFactoryOracle(@Qualifier("dataSourceOracle") DataSource dataSource) throws Exception {
     	SqlSessionFactoryBean sessionFactoryBean = new SqlSessionFactoryBean();
-    	
+
 		org.apache.ibatis.session.Configuration configuration = new org.apache.ibatis.session.Configuration();
 		configuration.setCacheEnabled(true);
 		configuration.setLazyLoadingEnabled(true);
@@ -103,30 +104,31 @@ public class DataSourceConfig extends AbstractJdbcConfiguration {
 		configuration.setCallSettersOnNulls(true);
 		configuration.setDefaultExecutorType( ExecutorType.REUSE );		//	BATCH 세션으로 할 경우 처리 카운트를 얻을수 없음.
 		sessionFactoryBean.setConfiguration(configuration);
-		
-		
+
+
     	sessionFactoryBean.setDataSource(dataSourceOracle());
 //    	sessionFactoryBean.setTypeA
     	sessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver()
 //				.getResources("classpath:/sqlmap/mappers/postgresql/**/" + dbType + "/**/*.xml"));
     			.getResources("classpath:/sqlmap/mappers/oracle/**/*.xml"));
-    	
+
     	sessionFactoryBean.setTypeAliases (new Class[] {
-    			COMMONCodeVO.class
+    			COMMONCodeVO.class,
+    			BookTbEntity.class
 //    			TMcGaHistVO.class,
 //    			TMcSfCmpnMstVO.class
 		});
-    	
+
 //    	return sessionFactoryBean.getObject();
     	return sessionFactoryBean;
-    	
+
     }
-    
-    
+
+
     @Bean(name="sqlSessionOracleBatch")
     public SqlSessionFactoryBean sqlSessionFactoryOracleBatch(@Qualifier("dataSourceOracle") DataSource dataSource) throws Exception {
     	SqlSessionFactoryBean sessionFactoryBean = new SqlSessionFactoryBean();
-    	
+
 		org.apache.ibatis.session.Configuration configuration = new org.apache.ibatis.session.Configuration();
 		configuration.setCacheEnabled(true);
 		configuration.setLazyLoadingEnabled(true);
@@ -135,29 +137,29 @@ public class DataSourceConfig extends AbstractJdbcConfiguration {
 		configuration.setCallSettersOnNulls(true);
 		configuration.setDefaultExecutorType( ExecutorType.BATCH );		//	BATCH 세션으로 할 경우 처리 카운트를 얻을수 없음.
 		sessionFactoryBean.setConfiguration(configuration);
-		
-		
+
+
     	sessionFactoryBean.setDataSource(dataSourceOracle());
 //    	sessionFactoryBean.setTypeA
     	sessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver()
 //				.getResources("classpath:/sqlmap/mappers/postgresql/**/" + dbType + "/**/*.xml"));
     			.getResources("classpath:/sqlmap/mappers/oracle_batch/**/*.xml"));
-    	
+
     	sessionFactoryBean.setTypeAliases (new Class[] {
     			COMMONCodeVO.class
 //    			TMcGaHistVO.class,
 //    			TMcSfCmpnMstVO.class
 		});
-    	
+
 //    	return sessionFactoryBean.getObject();
     	return sessionFactoryBean;
-    	
+
     }
-    
+
 //    @Bean(name="sqlSessionPostgresqlBatch")
 //    public SqlSessionFactoryBean sqlSessionFactoryPostgresqlBatch(@Qualifier("dataSourcePostgrSQL") DataSource dataSource) throws Exception {
 //    	SqlSessionFactoryBean sessionFactoryBean = new SqlSessionFactoryBean();
-//    	
+//
 //		org.apache.ibatis.session.Configuration configuration = new org.apache.ibatis.session.Configuration();
 //		configuration.setCacheEnabled(true);
 //		configuration.setLazyLoadingEnabled(true);
@@ -166,20 +168,20 @@ public class DataSourceConfig extends AbstractJdbcConfiguration {
 //		configuration.setCallSettersOnNulls(true);
 //		configuration.setDefaultExecutorType( ExecutorType.BATCH );		//	BATCH 세션으로 할 경우 처리 카운트를 얻을수 없음.
 //		sessionFactoryBean.setConfiguration(configuration);
-//		
-//		
+//
+//
 //    	sessionFactoryBean.setDataSource(dataSourcePostgrSQL());
 //    	sessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver()
 //    			.getResources("classpath:/sqlmap/mappers/postgresqlbatch/**/*.xml"));
-//    	
+//
 //    	sessionFactoryBean.setTypeAliases (new Class[] {
 //    			TMcCjMessageResponseVO.class,
 //    			TMCCmpnMstVO.class
 //		});
-//    	
+//
 //    	return sessionFactoryBean;
-//    	
+//
 //    }
-    
-    
+
+
 }

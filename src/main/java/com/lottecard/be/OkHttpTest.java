@@ -2,6 +2,7 @@ package com.lottecard.be;
 
 import java.io.IOException;
 
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -13,24 +14,30 @@ import okhttp3.Response;
 
 public class OkHttpTest {
 
-	static String reqUrl = "http://localhost:8000";
+	static String reqUrl = "http://localhost:8000/home1";
 
-	@Qualifier("OKHTTP_CLIENT")
 	@Autowired
-	static OkHttpClient client;
+	private OkHttpClient client;
 
-	public static void main(String[] args) throws IOException {
+	@Test
+	public void main() throws IOException {
 
-        MediaType mediaType = MediaType.parse("application/json");
-        RequestBody body = RequestBody.create(mediaType, "{\"name\":\"John\"}");
-        Request request = new Request.Builder()
-                .url(reqUrl)
-                .method("POST", body)
-                .addHeader("Content-Type", "application/json")
-                .build();
-        Response response = client.newCall(request).execute();
+		try {
+	        MediaType mediaType = MediaType.parse("application/json");
+	        RequestBody body = RequestBody.create(mediaType, "{\"name\":\"John\"}");
+	        Request request = new Request.Builder()
+	                .url(reqUrl)
+	                .method("POST", body)
+	                .addHeader("Content-Type", "application/json")
+	                .build();
+	        Response response = client.newCall(request).execute();
 
-        System.err.println("응답 코드 찍어보자?" + response.body().string());
+	        System.err.println("응답 코드 찍어보자?" + response.body().string());
+
+		} catch (Exception e){
+			System.err.println(e.toString());
+		}
+
 
 		//reqPostSample();
 	}

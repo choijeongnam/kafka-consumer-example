@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html;" charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div>
+		<h1>index 검색 api</h1>
+		<input type="hidden" id="bookName" value="별이빛나는밤에" />
+		<button type="button" id="search">검색</button>
+	</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script type="text/javascript">
+ 	$(document).ready(function (){
+
+		$("#search").click(function(){
+			$.ajax({
+			    url: 'home1', // 요청 할 주소
+			    type: 'POST', // GET, PUT
+			    data: {
+			        name: '별이빛나는밤에'
+			    }
+			});
+	 	})
+	 })
+</script>
+</body>
+</html>
