@@ -10,13 +10,14 @@ import okhttp3.OkHttpClient;
 
 @Configuration
 public class ApiConfig {
-	@Bean
-	private OkHttpClient getOkHttpClient() {
+
+	@Bean(name = "OKHTTP_CLIENT")
+	OkHttpClient getOkHttpClient() {
 		return new OkHttpClient()
 				.newBuilder()
 					.callTimeout(60, TimeUnit.SECONDS)
 					.connectionPool(new ConnectionPool())
 				.build();
 	}
-	
+
 }
