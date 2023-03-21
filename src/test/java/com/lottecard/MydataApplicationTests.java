@@ -1,11 +1,15 @@
 package com.lottecard;
 
+import java.io.IOException;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import com.lottecard.test.service.BookTbService;
 
 import okhttp3.OkHttpClient;
 
@@ -14,11 +18,11 @@ import okhttp3.OkHttpClient;
 @AutoConfigureMockMvc
 class MydataApplicationTests {
 	@Autowired
-	private OkHttpClient okHttpClient;
+	private BookTbService bookTbService;
 	
 	@Test
-	void contextLoads() {
-		System.out.println("test 빈 들어오나"+ okHttpClient);
+	void contextLoads() throws IOException {
+		bookTbService.SelectOne("별이빛나는밤에");
 	}
 
 }
