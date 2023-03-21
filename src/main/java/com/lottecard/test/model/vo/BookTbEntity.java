@@ -17,6 +17,10 @@ public class BookTbEntity extends AbstractVO {
 	private String salePrice;
 	private String thumbnail;
 	private String status;
+	private String fstCrtUsid;
+	private String fstCrtDtti;
+	private String ltChUsid;
+	private String ltChDtti;
 
 	public void setTitle(String title) {
 		addAssignParameters("title");
@@ -76,5 +80,25 @@ public class BookTbEntity extends AbstractVO {
 	public void setStatus(String status) {
 		addAssignParameters("status");
 		this.status = status;
+	}
+
+	public void setFstCrtUsid(String fstCrtUsid) {
+		addAssignParameters("fstCrtUsid");
+		this.fstCrtUsid = fstCrtUsid;
+	}
+
+	public void setFstCrtDtti(String fstCrtDtti) {
+		addAssignParameters("fstCrtDtti");
+		this.fstCrtDtti = fstCrtDtti;
+	}
+
+	public void setLtChUsid(String ltChUsid) {
+		addAssignParameters("ltChUsid");
+		this.ltChUsid = ltChUsid;
+	}
+
+	public void setLtChDtti(String ltChDtti) {
+		addAssignParameters("ltChDtti");
+		this.ltChDtti = ltChDtti;
 	}
 }
