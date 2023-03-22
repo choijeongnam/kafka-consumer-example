@@ -10,5 +10,5 @@ import retrofit2.http.Query;
 
 public interface BookApi {
 	@GET("/v3/search/book")
-	public Call<BookTbInDto> SelectOne(@Header("Authorization") String authorization, @Query("query") String query, @Query("page") int page, @Query("size") int size);
+	public Call<BookTbInDto> SelectOne(@Query("query") String query, @Query("page") int page, @Query("size") int size);
 }

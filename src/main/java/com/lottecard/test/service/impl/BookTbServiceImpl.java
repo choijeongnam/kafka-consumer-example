@@ -29,7 +29,7 @@ public class BookTbServiceImpl implements BookTbService {
 	public void insertOne(String query) throws IOException {
 		BookTbEntity bookTbEntity = new BookTbEntity();
 
-		Call<BookTbInDto> call = retrofit.create(BookApi.class).SelectOne("KakaoAK ab230ed4b4b50baa90581a2b0070290c" ,query, 1, 1);
+		Call<BookTbInDto> call = retrofit.create(BookApi.class).SelectOne(query, 1, 1);
 		Response<BookTbInDto> response = call.execute();
 		if(response.isSuccessful()) {
 
@@ -50,7 +50,7 @@ public class BookTbServiceImpl implements BookTbService {
 	@Override
 	public BookTbEntity SelectOne(String query) throws IOException {
 		BookTbEntity bookTbEntity = null;
-		Call<BookTbInDto> call = retrofit.create(BookApi.class).SelectOne("KakaoAK ab230ed4b4b50baa90581a2b0070290c" ,query, 1, 1);
+		Call<BookTbInDto> call = retrofit.create(BookApi.class).SelectOne(query, 1, 1);
 		Response<BookTbInDto> res = call.execute();
 		if(res.isSuccessful()) {
 			BookTbInDto inDto = res.body();
