@@ -9,7 +9,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import com.lottecard.test.service.BookTbService;
+import com.lottecard.myd.test.service.BookTbService;
 
 import okhttp3.OkHttpClient;
 
