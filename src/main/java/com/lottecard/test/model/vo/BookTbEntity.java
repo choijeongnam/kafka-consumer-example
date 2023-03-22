@@ -2,7 +2,6 @@ package com.lottecard.test.model.vo;
 
 import com.lottecard.cmn.model.vo.AbstractVO;
 
-
 public class BookTbEntity extends AbstractVO {
 
 	private String title;
@@ -10,9 +9,9 @@ public class BookTbEntity extends AbstractVO {
 	private String url;
 	private String isbn;
 	private String pubDtti;
-	private String authors;
+	//private String authors;
 	private String publisher;
-	private String translators;
+	private String[] translators;
 	private String price;
 	private String salePrice;
 	private String thumbnail;
@@ -21,6 +20,71 @@ public class BookTbEntity extends AbstractVO {
 	private String fstCrtDtti;
 	private String ltChUsid;
 	private String ltChDtti;
+	private String[] authors;
+
+	public String getTitle() {
+		return title;
+	}
+
+	public String getContents() {
+		return contents;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public String getIsbn() {
+		return isbn;
+	}
+
+	public String getPubDtti() {
+		return pubDtti;
+	}
+
+	public String getPublisher() {
+		return publisher;
+	}
+
+	public String[] getTranslators() {
+		return translators;
+	}
+
+	public String getPrice() {
+		return price;
+	}
+
+	public String getSalePrice() {
+		return salePrice;
+	}
+
+	public String getThumbnail() {
+		return thumbnail;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public String getFstCrtUsid() {
+		return fstCrtUsid;
+	}
+
+	public String getFstCrtDtti() {
+		return fstCrtDtti;
+	}
+
+	public String getLtChUsid() {
+		return ltChUsid;
+	}
+
+	public String getLtChDtti() {
+		return ltChDtti;
+	}
+
+	public String[] getAuthors() {
+		return authors;
+	}
 
 	public void setTitle(String title) {
 		addAssignParameters("title");
@@ -47,8 +111,7 @@ public class BookTbEntity extends AbstractVO {
 		this.pubDtti = pubDtti;
 	}
 
-	public void setAuthors(String authors) {
-		addAssignParameters("authors");
+	public void setAuthors(String[] authors) {
 		this.authors = authors;
 	}
 
@@ -57,7 +120,7 @@ public class BookTbEntity extends AbstractVO {
 		this.publisher = publisher;
 	}
 
-	public void setTranslators(String translators) {
+	public void setTranslators(String[] translators) {
 		addAssignParameters("translators");
 		this.translators = translators;
 	}

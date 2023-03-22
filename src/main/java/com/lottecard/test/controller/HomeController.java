@@ -45,54 +45,57 @@ public class HomeController {
     }
 
 	@RequestMapping(value="/home1", method=RequestMethod.POST)
-    public void home1(@RequestParam Map<String, Object> map){
+    public void home1(@RequestParam Map<String, Object> map) throws IOException{
 
 		String name = map.get("name").toString();
+
+		bookTbService.insertOne(name);
+
 		//headers: {Authorization : "KakaoAK ab230ed4b4b50baa90581a2b0070290c"}
 
 //        MediaType mediaType = MediaType.parse("application/json");
 //        RequestBody body = RequestBody.create(mediaType, "{\"name\":\"John\"}");
 
-        HttpUrl httpUrl = new HttpUrl.Builder()
-                .scheme("https")
-                .host("dapi.kakao.com")
-                .addPathSegment("v3")
-                .addPathSegment("search")
-                .addPathSegment("book")
-                .addQueryParameter("query", name)
-                // Each addPathSegment separated add a / symbol to the final url
-                // finally my Full URL is:
-                // https://subdomain.apiweb.com/api/v1/students/8873?auth_token=71x23768234hgjwqguygqew
-                .build();
-
-		System.out.println("url 찍기~" + httpUrl.toString());
-
-        Request request = new Request.Builder()
-                .addHeader("Authorization", "KakaoAK ab230ed4b4b50baa90581a2b0070290c")
-                .url(httpUrl)
-                .build();
-
-		try {
-			Response response = okHttpClient.newCall(request).execute();
-	        //System.err.println("응답 코드 찍어보자?" + response.body().string());
-
-	        JSONObject o = new JSONObject(response.body().string());
-	        JSONArray arr = (JSONArray) o.get("documents");
-	        JSONObject tmp = (JSONObject) arr.get(0);
-
-	        BookTbEntity bte = new BookTbEntity();
-	        bte.setTitle(tmp.get("title").toString());
-	        bte.setContents(tmp.get("contents").toString());
-	        bte.setIsbn(tmp.get("isbn").toString());
-
-	        bookTbService.insertOne(bte);
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JSONException e) {
-
-		}
+//        HttpUrl httpUrl = new HttpUrl.Builder()
+//                .scheme("https")
+//                .host("dapi.kakao.com")
+//                .addPathSegment("v3")
+//                .addPathSegment("search")
+//                .addPathSegment("book")
+//                .addQueryParameter("query", name)
+//                // Each addPathSegment separated add a / symbol to the final url
+//                // finally my Full URL is:
+//                // https://subdomain.apiweb.com/api/v1/students/8873?auth_token=71x23768234hgjwqguygqew
+//                .build();
+//
+//        Request request = new Request.Builder()
+//                .addHeader("Authorization", "KakaoAK ab230ed4b4b50baa90581a2b0070290c")
+//                .url(httpUrl)
+//                .build();
+//
+//		try {
+//			Response response = okHttpClient.newCall(request).execute();
+//	        //System.err.println("응답 코드 찍어보자?" + response.body().string());
+//
+//	        JSONObject o = new JSONObject(response.body().string());
+//	        JSONArray arr = (JSONArray) o.get("documents");
+//	        JSONObject tmp = (JSONObject) arr.get(0);
+//
+//	        BookTbEntity bte = new BookTbEntity();
+//	        bte.setTitle(tmp.get("title").toString());
+//	        bte.setContents(tmp.get("contents").toString());
+//	        bte.setIsbn(tmp.get("isbn").toString());
+//
+//	        //System.err.println("출력좀?" + bookTbService.SelectOne("별이빛나는밤에"));
+//
+//	        //bookTbService.insertOne(bte);
+//
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (JSONException e) {
+//
+//		}
     }
 
 }
