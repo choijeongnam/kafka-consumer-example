@@ -31,17 +31,15 @@ public class BookTbServiceImpl implements BookTbService {
 
 		Call<BookTbInDto> call = retrofit.create(BookApi.class).SelectOne(query, 1, 1);
 		Response<BookTbInDto> response = call.execute();
+
 		if(response.isSuccessful()) {
-
-				BookTbInDto inDto = response.body();
-				bookTbEntity = inDto.getDocuments().get(0);
-				bookTbEntity.setTitle(bookTbEntity.getTitle());
-				bookTbEntity.setContents(bookTbEntity.getContents());
-				bookTbEntity.setIsbn(bookTbEntity.getIsbn());
-		        bookTbDao.insertOne(bookTbEntity);
-
-		        System.out.println("insert 성공");
-
+			BookTbInDto inDto = response.body();
+			bookTbEntity = inDto.getDocuments().get(0);
+			bookTbEntity.setTitle(bookTbEntity.getTitle());
+			bookTbEntity.setContents(bookTbEntity.getContents());
+			bookTbEntity.setIsbn(bookTbEntity.getIsbn());
+	        bookTbDao.insertOne(bookTbEntity);
+	        System.out.println("insert 성공");
 		} else {
 			System.out.println("insert 실패");
 		}
@@ -56,7 +54,7 @@ public class BookTbServiceImpl implements BookTbService {
 			BookTbInDto inDto = res.body();
 			bookTbEntity = inDto.getDocuments().get(0);
 			System.out.println("result: "+ bookTbEntity.toString());
-		}else {
+		} else {
 			System.out.println("fail");
 		}
 		return null;
