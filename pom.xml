@@ -228,10 +228,10 @@
 	    <artifactId>converter-gson</artifactId>
 	    <version>${retrofit2.version}</version>
 	    <exclusions>
-	    	<exclsusion>
+	    	<exclusion>
 	    		<groupId>com.google.code.gson</groupId>
 	    		<artifactId>gson</artifactId>
-	    	</exclsusion>
+	    	</exclusion>
 	    </exclusions>
 	</dependency>
 	
@@ -256,12 +256,18 @@
 	    <version>${okhttp3.version}</version>
 	</dependency>
 	
-	<!-- https://mvnrepository.com/artifact/com.tickaroo.tikxml/parent -->
+	<!-- https://mvnrepository.com/artifact/com.squareup.retrofit2/converter-jackson -->
 	<dependency>
-	    <groupId>com.tickaroo.tikxml</groupId>
-	    <artifactId>parent</artifactId>
-	    <version>${tikxml.version}</version>
-	    <type>pom</type>
+	    <groupId>com.squareup.retrofit2</groupId>
+	    <artifactId>converter-jackson</artifactId>
+	    <version>2.9.0</version>
+	</dependency>
+	
+	<!-- https://mvnrepository.com/artifact/com.squareup.retrofit2/converter-simplexml -->
+	<dependency>
+	    <groupId>com.squareup.retrofit2</groupId>
+	    <artifactId>converter-simplexml</artifactId>
+	    <version>2.9.0</version>
 	</dependency>
 
    </dependencies>
