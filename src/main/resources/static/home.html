@@ -9,6 +9,9 @@
 		<h1>index 검색 api</h1>
 		<input type="text" id="bookName" />
 		<button type="button" id="search">검색</button>
+		<input type="text" id="title" />
+		<input type="text" id="contents" />
+		<input type="text" id="isbn" />
 	</div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -26,7 +29,10 @@
 				        name: bookName
 				    },
 					success: function (data) {
-			    		console.log(data)
+						console.log(data);
+						$("#title").attr('value', data.title);
+						$("#contents").attr('value', data.contents);
+						$("#isbn").attr('value', data.isbn);
 					},
 			        error: function() {
 			            alert("출력실패(중복)");

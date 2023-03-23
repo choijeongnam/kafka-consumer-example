@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.lottecard.myd.test.model.dto.BookTbOutDto;
 import com.lottecard.myd.test.model.vo.BookTbEntity;
 import com.lottecard.myd.test.service.BookTbService;
 
@@ -47,13 +48,21 @@ public class HomeController {
 
 	@RequestMapping(value="/home1", method=RequestMethod.POST)
 	@ResponseBody
-    public BookTbEntity home1(@RequestParam Map<String, Object> map) throws IOException{
+    public BookTbOutDto home1(@RequestParam Map<String, Object> map) throws IOException{
 
 		String name = map.get("name").toString();
 
 		bookTbService.insertOne(name);
 
-		return bookTbService.SelectOne(name);
+		BookTbEntity bookTbEntity = bookTbService.SelectOne(name);
+
+		BookTbOutDto bookTbOutDto = new BookTbOutDto();
+
+		bookTbOutDto.setTitle(bookTbEntity.getTitle());
+		bookTbOutDto.setContents(bookTbEntity.getContents());
+		bookTbOutDto.setIsbn(bookTbEntity.getIsbn());
+
+		return bookTbOutDto;
 
 		//return bookTbService.SelectOne(name);
 		//headers: {Authorization : "KakaoAK ab230ed4b4b50baa90581a2b0070290c"}

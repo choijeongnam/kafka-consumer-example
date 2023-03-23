@@ -4,7 +4,6 @@ import com.lottecard.myd.cmn.model.vo.AbstractVO;
 
 import lombok.Getter;
 
-@Getter
 public class BookTbEntity extends AbstractVO {
 
 	private String title;
@@ -23,6 +22,70 @@ public class BookTbEntity extends AbstractVO {
 	private String ltChUsid;
 	private String ltChDtti;
 	private String authors;
+
+	public String getTitle() {
+		return title;
+	}
+
+	public String getContents() {
+		return contents;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public String getIsbn() {
+		return isbn;
+	}
+
+	public String getPubDtti() {
+		return pubDtti;
+	}
+
+	public String getPublisher() {
+		return publisher;
+	}
+
+	public String getTranslators() {
+		return translators;
+	}
+
+	public String getPrice() {
+		return price;
+	}
+
+	public String getSalePrice() {
+		return salePrice;
+	}
+
+	public String getThumbnail() {
+		return thumbnail;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public String getFstCrtUsid() {
+		return fstCrtUsid;
+	}
+
+	public String getFstCrtDtti() {
+		return fstCrtDtti;
+	}
+
+	public String getLtChUsid() {
+		return ltChUsid;
+	}
+
+	public String getLtChDtti() {
+		return ltChDtti;
+	}
+
+	public String getAuthors() {
+		return authors;
+	}
 
 	public void setTitle(String title) {
 		addAssignParameters("title");
