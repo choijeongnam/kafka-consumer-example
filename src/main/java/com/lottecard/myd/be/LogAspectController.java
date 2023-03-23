@@ -25,13 +25,10 @@ import com.google.common.base.Joiner;
 @Order(1)
 public class LogAspectController {
     private static final Logger logger = LoggerFactory.getLogger(LogAspectController.class);
-    private static final String TRACE_ID = "traceId";
     
     @Around("execution(* com.lottecard.controller.*.*(..))")
     public Object logging(ProceedingJoinPoint pjp) throws Throwable {
 
-    	String traceId = UUID.randomUUID().toString();
-		MDC.put(TRACE_ID, traceId);
         String params = getRequestParams();
 
         long startAt = System.currentTimeMillis();
@@ -46,7 +43,6 @@ public class LogAspectController {
         logger.info("----------> [RESPONSE] : {}({}) = {} ({}ms)", pjp.getSignature().getDeclaringTypeName(),
                 pjp.getSignature().getName(), result, endAt-startAt);
 
-        MDC.clear();
         return result;
     }
     
