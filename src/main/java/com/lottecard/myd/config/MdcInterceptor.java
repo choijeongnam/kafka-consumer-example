@@ -17,15 +17,15 @@ import lombok.extern.slf4j.Slf4j;
 public class MdcInterceptor implements AsyncHandlerInterceptor {
 	
     private static final Logger logger = LoggerFactory.getLogger(MdcInterceptor.class);
-    private static final String TRACE_ID = "traceId";
+//    private static final String TRACE_ID = "traceId";
 	
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		
-		String traceId = UUID.randomUUID().toString();
-		MDC.put(TRACE_ID,traceId);
+//		String traceId = UUID.randomUUID().toString();
+//		MDC.put(TRACE_ID,traceId);
 		// TODO Auto-generated method stub
 		return true;
 	}
@@ -41,14 +41,14 @@ public class MdcInterceptor implements AsyncHandlerInterceptor {
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
 			throws Exception {
 		// TODO Auto-generated method stub
-		MDC.clear();
+//		MDC.clear();
 	}
 
 	@Override
 	public void afterConcurrentHandlingStarted(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		// TODO Auto-generated method stub
-		MDC.clear();
+//		MDC.clear();
 	}
 	
 }
