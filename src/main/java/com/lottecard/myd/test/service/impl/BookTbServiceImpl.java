@@ -46,16 +46,21 @@ public class BookTbServiceImpl implements BookTbService {
 
 	@Override
 	public BookTbEntity SelectOne(String query) throws IOException {
+		BookTbEntity bookTbEntity = new BookTbEntity();
+
 		Call<BookTbInDto> call = retrofit.create(BookApi.class).SelectOne(query, 1, 1);
 		Response<BookTbInDto> res = call.execute();
-		
+
 		if(res.isSuccessful()) {
 			BookTbInDto inDto = res.body();
+			bookTbEntity.setTitle(inDto.getDocuments().get(0).getTitle());
+			bookTbEntity.setContents(inDto.getDocuments().get(0).getContents());
+			bookTbEntity.setIsbn(inDto.getDocuments().get(0).getIsbn());
 			System.out.println("result: "+ inDto.toString());
 		} else {
 			System.out.println("fail");
 		}
-		
-		return null;
+
+		return bookTbEntity;
 	}
  }

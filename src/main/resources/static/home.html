@@ -24,7 +24,13 @@
 				    type: 'POST', // GET, PUT
 				    data: {
 				        name: bookName
-				    }
+				    },
+					success: function (data) {
+			    		console.log(data)
+					},
+			        error: function() {
+			            alert("출력실패(중복)");
+			        }
 				});
 			} else {
 				alert("검색할 책이름 입력하세요.")

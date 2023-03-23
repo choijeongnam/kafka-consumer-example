@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lottecard.myd.test.model.vo.BookTbEntity;
 import com.lottecard.myd.test.service.BookTbService;
@@ -45,12 +46,16 @@ public class HomeController {
     }
 
 	@RequestMapping(value="/home1", method=RequestMethod.POST)
-    public void home1(@RequestParam Map<String, Object> map) throws IOException{
+	@ResponseBody
+    public BookTbEntity home1(@RequestParam Map<String, Object> map) throws IOException{
 
 		String name = map.get("name").toString();
 
 		bookTbService.insertOne(name);
 
+		return bookTbService.SelectOne(name);
+
+		//return bookTbService.SelectOne(name);
 		//headers: {Authorization : "KakaoAK ab230ed4b4b50baa90581a2b0070290c"}
 
 //        MediaType mediaType = MediaType.parse("application/json");
