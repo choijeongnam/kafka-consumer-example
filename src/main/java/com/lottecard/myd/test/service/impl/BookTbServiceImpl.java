@@ -34,29 +34,28 @@ public class BookTbServiceImpl implements BookTbService {
 
 		if(response.isSuccessful()) {
 			BookTbInDto inDto = response.body();
-			bookTbEntity = inDto.getDocuments().get(0);
-			bookTbEntity.setTitle(bookTbEntity.getTitle());
-			bookTbEntity.setContents(bookTbEntity.getContents());
-			bookTbEntity.setIsbn(bookTbEntity.getIsbn());
-	        bookTbDao.insertOne(bookTbEntity);
-	        System.out.println("insert 성공");
+			bookTbEntity.setTitle(inDto.getDocuments().get(0).getTitle());
+			bookTbEntity.setContents(inDto.getDocuments().get(0).getContents());
+			bookTbEntity.setIsbn(inDto.getDocuments().get(0).getIsbn());
+	        int count = bookTbDao.insertOne(bookTbEntity);
+	        System.out.println("insert count: " + count);
 		} else {
-			System.out.println("insert 실패");
+			System.out.println("Failure");
 		}
 	}
 
 	@Override
 	public BookTbEntity SelectOne(String query) throws IOException {
-		BookTbEntity bookTbEntity = null;
 		Call<BookTbInDto> call = retrofit.create(BookApi.class).SelectOne(query, 1, 1);
 		Response<BookTbInDto> res = call.execute();
+		
 		if(res.isSuccessful()) {
 			BookTbInDto inDto = res.body();
-			bookTbEntity = inDto.getDocuments().get(0);
-			System.out.println("result: "+ bookTbEntity.toString());
+			System.out.println("result: "+ inDto.toString());
 		} else {
 			System.out.println("fail");
 		}
+		
 		return null;
 	}
  }
