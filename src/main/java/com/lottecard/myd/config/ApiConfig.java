@@ -2,7 +2,6 @@ package com.lottecard.myd.config;
 
 import java.util.concurrent.TimeUnit;
 
-import org.mapstruct.BeanMapping;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -36,6 +35,7 @@ public class ApiConfig {
 					.baseUrl("https://dapi.kakao.com")
 					.client(okHttpClient())
 					.addConverterFactory(GsonConverterFactory.create())
+					//.addConverterFactory(JaxbConverterFactory.create())
 				.build();
 	}
 

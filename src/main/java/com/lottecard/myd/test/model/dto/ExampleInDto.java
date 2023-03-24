@@ -1,15 +1,12 @@
 package com.lottecard.myd.test.model.dto;
 
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "response")
 public class ExampleInDto {
-	@XmlElement(name = "header")
 	private Header header;
-	@XmlElement(name = "body")
 	private Body body;
-	
+
 	public Header getHeader() {
 		return header;
 	}
@@ -18,25 +15,24 @@ public class ExampleInDto {
 		this.header = header;
 	}
 
-	
-	
+	public Body getBody() {
+		return body;
+	}
+
+	public void setBody(Body body) {
+		this.body = body;
+	}
+
 	@Override
 	public String toString() {
 		return "ExampleInDto [header=" + header + ", body=" + body + "]";
 	}
 
-
-
 	static class Header{
-		@XmlElement(name = "resultCode")
 		private int resultCode;
-		@XmlElement(name = "resultMsg")
         private String resultMsg;
-		@XmlElement(name = "pageNo")
         private int pageNo;
-		@XmlElement(name = "totalPage")
         private int totalPage;
-		@XmlElement(name = "totCnt")
         private int totCnt;
 		public int getResultCode() {
 			return resultCode;
@@ -73,11 +69,10 @@ public class ExampleInDto {
 			return "Header [resultCode=" + resultCode + ", resultMsg=" + resultMsg + ", pageNo=" + pageNo
 					+ ", totalPage=" + totalPage + ", totCnt=" + totCnt + "]";
 		}
-		
+
 	}
-	
+
 	static class Body{
-		@XmlElement(name = "items")
 		items items;
 
 		public items getItems() {
@@ -92,11 +87,10 @@ public class ExampleInDto {
 		public String toString() {
 			return "Body [items=" + items + "]";
 		}
-		
+
 	}
-	
+
 	static class items{
-		@XmlElement(name = "item")
 		item item;
 
 		public item getItem() {
@@ -111,23 +105,16 @@ public class ExampleInDto {
 		public String toString() {
 			return "items [item=" + item + "]";
 		}
-		
+
 	}
-	
+
 	static class item{
-		@XmlElement(name = "lectNm")
 		private String lectNm;
-		@XmlElement(name = "lectToDt")
 		private int lectToDt;
-		@XmlElement(name = "userCnt")
 		private int userCnt;
-		@XmlElement(name = "compCnt")
 		private int compCnt;
-		@XmlElement(name = "passCnt")
 		private int passCnt;
-		@XmlElement(name = "compRate")
 		private int compRate;
-		@XmlElement(name = "passRate")
 		private int passRate;
 		public String getLectNm() {
 			return lectNm;
@@ -176,6 +163,6 @@ public class ExampleInDto {
 			return "item [lectNm=" + lectNm + ", lectToDt=" + lectToDt + ", userCnt=" + userCnt + ", compCnt=" + compCnt
 					+ ", passCnt=" + passCnt + ", compRate=" + compRate + ", passRate=" + passRate + "]";
 		}
-		
+
 	}
 }

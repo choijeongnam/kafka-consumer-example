@@ -19,7 +19,7 @@ import okhttp3.OkHttpClient;
 class MydataApplicationTests {
 	@Autowired
 	private BookTbService bookTbService;
-	
+
 	@Test
 	void contextLoads() throws IOException {
 		bookTbService.SelectOne("별이빛나는밤에");
