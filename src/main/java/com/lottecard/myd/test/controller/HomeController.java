@@ -54,8 +54,7 @@ public class HomeController {
 		user.put("email_id", "sookyeonghan@dongkuk.com");
 		JSONObject userDetails = new JSONObject(user);
 
-		logger.debug("마스킹 되냐고요!!!! JSON:{}" , userDetails);
-		System.err.println("마스킹 되냐고요!!!! JSON:" + userDetails);
+		logger.debug("마스킹 되냐고요 :{}" , userDetails);
 
         return "home";
     }

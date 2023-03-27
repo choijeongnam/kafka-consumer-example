@@ -33,7 +33,7 @@ public class LogAspect {
     public void daoLog() {}
 
     @Around("controllerLog()")
-    public Object controllerLogging(ProceedingJoinPoint pjp) {
+    public Object controllerLogging(ProceedingJoinPoint pjp) throws Throwable{
 
         String params = getRequestParams();
 
@@ -42,23 +42,13 @@ public class LogAspect {
         logger.info("----------> [REQUEST Controller] : {}({}) = {}", pjp.getSignature().getDeclaringTypeName(),
                 pjp.getSignature().getName(), params);
 
-        Object result;
+    	Object result = pjp.proceed();
+    	long endAt = System.currentTimeMillis();
 
-        try {
-            result = pjp.proceed();
+        logger.info("----------> [RESPONSE Controller] : {}({}) = {} ({}ms)", pjp.getSignature().getDeclaringTypeName(),
+                pjp.getSignature().getName(), result, endAt-startAt);
 
-            long endAt = System.currentTimeMillis();
-
-            logger.info("----------> [RESPONSE Controller] : {}({}) = {} ({}ms)", pjp.getSignature().getDeclaringTypeName(),
-                    pjp.getSignature().getName(), result, endAt-startAt);
-            // do something with result
-            return result;
-        } catch (Throwable e) {
-            // 예외 처리 로직
-            logger.error("예외 발생: {}", e.getMessage());
-            //throw e; // Controller 등에서 예외 처리를 위해 예외를 다시 던져줍니다.
-        }
-        return null;
+        return result;
     }
 
     @Around("daoLog()")

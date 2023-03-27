@@ -27,7 +27,7 @@ public class BookTbServiceImpl implements BookTbService {
 	private Retrofit retrofit;
 
 	@Override
-	@Transactional(rollbackFor = Exception.class)
+	@Transactional(rollbackFor = RuntimeException.class)
 	public void insertOne(String query) throws IOException {
 		BookTbEntity bookTbEntity = new BookTbEntity();
 
