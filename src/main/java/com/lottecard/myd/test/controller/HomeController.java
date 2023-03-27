@@ -1,8 +1,11 @@
 package com.lottecard.myd.test.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.boot.configurationprocessor.json.JSONException;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.lottecard.myd.be.LogAspect;
 import com.lottecard.myd.test.model.dto.BookTbOutDto;
 import com.lottecard.myd.test.model.vo.BookTbEntity;
 import com.lottecard.myd.test.service.BookTbService;
@@ -34,6 +38,8 @@ public class HomeController {
 	@Autowired
 	private BookTbService bookTbService;
 
+	private static final Logger logger = LoggerFactory.getLogger(LogAspect.class);
+
 	@RequestMapping(value="/", method=RequestMethod.GET)
     public String index(){
 
@@ -42,6 +48,14 @@ public class HomeController {
 
 	@RequestMapping(value="/home", method=RequestMethod.GET)
     public String home(){
+
+		Map<String, String> user = new HashMap<String, String>();
+
+		user.put("email_id", "sookyeonghan@dongkuk.com");
+		JSONObject userDetails = new JSONObject(user);
+
+		logger.debug("마스킹 되냐고요!!!! JSON:{}" , userDetails);
+		System.err.println("마스킹 되냐고요!!!! JSON:" + userDetails);
 
         return "home";
     }

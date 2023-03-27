@@ -25,7 +25,7 @@ import com.google.common.base.Joiner;
 public class LogAspect {
     private static final Logger logger = LoggerFactory.getLogger(LogAspect.class);
 
-    //추후에 컨트롤러 경로로 수정해야함
+    //추후에 컨트롤러 경로로 수정해야함 ->>> (..) 는 파라미터 0개 이상 () 는 파라미터 없는거 둘다하려면 (*)
     @Pointcut("execution(* com.lottecard.myd.test.controller.*.*(..))")
     public void controllerLog() {}
 
