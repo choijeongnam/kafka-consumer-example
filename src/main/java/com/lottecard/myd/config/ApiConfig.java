@@ -5,11 +5,13 @@ import java.util.concurrent.TimeUnit;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+
 import okhttp3.ConnectionPool;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.jaxb.JaxbConverterFactory;
 
 @Configuration
 public class ApiConfig {
@@ -34,8 +36,7 @@ public class ApiConfig {
 				.Builder()
 					.baseUrl("https://dapi.kakao.com")
 					.client(okHttpClient())
-					.addConverterFactory(GsonConverterFactory.create())
-					//.addConverterFactory(JaxbConverterFactory.create())
+					.addConverterFactory(new TestConverterFactory())
 				.build();
 	}
 
