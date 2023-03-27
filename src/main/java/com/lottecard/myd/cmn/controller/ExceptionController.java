@@ -32,7 +32,6 @@ public class ExceptionController {
     public ResponseEntity<ResponseDTO> methodValidException(MethodArgumentNotValidException e, HttpServletRequest request){
     	logger.error("MethodArgumentNotValidException 발생!!! url:{}, trace:{}",request.getRequestURI(), e.getStackTrace());
 
-       // ResponseDTO errorResponse = makeErrorResponse(e.getBindingResult());
         return new ResponseEntity<ResponseDTO>(new ResponseDTO(), HttpStatus.BAD_REQUEST);
     }
 
@@ -40,7 +39,6 @@ public class ExceptionController {
     public ResponseEntity<ResponseDTO> errorValid(BindException e, HttpServletRequest request) {
     	logger.error("BindException 발생!!! url:{}, trace:{}",request.getRequestURI(), e.getStackTrace());
 
-        // ResponseDTO errorResponse = makeErrorResponse(e.getBindingResult());
          return new ResponseEntity<ResponseDTO>(new ResponseDTO(), HttpStatus.BAD_REQUEST);
     }
 
@@ -48,16 +46,20 @@ public class ExceptionController {
     public ResponseEntity<ResponseDTO> errorSQL(SQLException e, HttpServletRequest request) {
     	logger.error("SQLException 발생!!! url:{}, trace:{}",request.getRequestURI(), e.getStackTrace());
 
-        // ResponseDTO errorResponse = makeErrorResponse(e.getBindingResult());
          return new ResponseEntity<ResponseDTO>(new ResponseDTO(), HttpStatus.BAD_REQUEST);
     }
 
-//    @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
-//    public ResponseEntity<ResponseDTO> errorSQL(SQLIntegrityConstraintViolationException e, HttpServletRequest request) {
-//    	logger.error("SQLIntegrityConstraintViolationException 발생!!! url:{}, trace:{}",request.getRequestURI(), e.getStackTrace());
-//
-//        // ResponseDTO errorResponse = makeErrorResponse(e.getBindingResult());
-//         return new ResponseEntity<ResponseDTO>(new ResponseDTO(), HttpStatus.BAD_REQUEST);
-//    }
+    @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
+    public ResponseEntity<ResponseDTO> errorSQL(SQLIntegrityConstraintViolationException e, HttpServletRequest request) {
+    	logger.error("SQLIntegrityConstraintViolationException 발생!!! url:{}, trace:{}",request.getRequestURI(), e.getStackTrace());
 
+         return new ResponseEntity<ResponseDTO>(new ResponseDTO(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(NullPointerException.class)
+    public ResponseEntity<ResponseDTO> errorSQL(NullPointerException e, HttpServletRequest request) {
+    	logger.error("NullPointerException 발생!!! url:{}, trace:{}",request.getRequestURI(), e.getStackTrace());
+
+         return new ResponseEntity<ResponseDTO>(new ResponseDTO(), HttpStatus.BAD_REQUEST);
+    }
 }

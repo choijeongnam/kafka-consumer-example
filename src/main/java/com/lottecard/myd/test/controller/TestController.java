@@ -5,9 +5,12 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,26 +22,25 @@ import com.lottecard.myd.test.service.impl.COMMONCodeServiceImpl;
 
 import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
-@RestController
+@Controller
 public class TestController {
 
 	@Autowired
 	COMMONCodeService cmon;
 
-	@PostMapping(value = "/test")
-	public ResponseDTO test(@RequestBody @Valid TestDTO testDTO) throws Exception {
+	@RequestMapping(value="/test", method=RequestMethod.GET)
+	public ResponseDTO test() throws Exception {
 		ResponseDTO res = new ResponseDTO();
 		res.setCode(200);
 		res.setMessage("SUCCESS");
-		
+
 		return res;
 	}
 
 
 
-	@PostMapping(value = "/testb")
-	public ResponseDTO testb(@RequestBody @Valid TestDTO testDTO) throws Exception {
+	@RequestMapping(value="/testb", method=RequestMethod.POST)
+	public ResponseDTO testb(@Valid @RequestBody TestDTO testDTO) {
 
 		//MethodArgumentNotValidException은 스프링에서 제공하는 예외 클래스 중 하나로, @Valid 어노테이션을 이용하여 객체 유효성 검증을 수행할 때 발생할 수 있습니다. 유효성 검증에 실패한 경우, MethodArgumentNotValidException 예외가 발생합니다.
 		//반면, HttpMessageNotReadableException은 요청 메시지를 읽을 때 발생할 수 있는 예외입니다. 예를 들어, 요청 바디가 JSON 형식이고, 해당 JSON의 필드에 필수 값이 누락된 경우 HttpMessageNotReadableException이 발생할 수 있습니다.
@@ -50,8 +52,8 @@ public class TestController {
 		//res.setMessage("Sucess");
 		//res.setMessage(objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(cmon.selectList(vo)));
 		vo.setGroupCode("10000");
-		List<COMMONCodeVO> list = cmon.selectBatchList(vo);
-		res.setMessage(list.toString());
+		//List<COMMONCodeVO> list = cmon.selectBatchList(vo);
+		//res.setMessage(list.toString());
 		return res;
 	}
 

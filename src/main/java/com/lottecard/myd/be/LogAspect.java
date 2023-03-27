@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,47 +26,21 @@ import com.google.common.base.Joiner;
 public class LogAspect {
     private static final Logger logger = LoggerFactory.getLogger(LogAspect.class);
 
-    //추후에 컨트롤러 경로로 수정해야함 ->>> (..) 는 파라미터 0개 이상 () 는 파라미터 없는거 둘다하려면 (*)
-    @Pointcut("execution(* com.lottecard.myd.test.controller.*.*(..))")
-    public void controllerLog() {}
-
-    @Pointcut("execution(* com.lottecard.myd.test.dao.*.*(..))")
-    public void daoLog() {}
-
-    @Around("controllerLog()")
-    public Object controllerLogging(ProceedingJoinPoint pjp) throws Throwable{
+    @Around("execution(* com.lottecard.myd..*.*(..))")
+    public Object logging(ProceedingJoinPoint pjp) throws Throwable {
 
         String params = getRequestParams();
 
         long startAt = System.currentTimeMillis();
 
-        logger.info("----------> [REQUEST Controller] : {}({}) = {}", pjp.getSignature().getDeclaringTypeName(),
-                pjp.getSignature().getName(), params);
-
-    	Object result = pjp.proceed();
-    	long endAt = System.currentTimeMillis();
-
-        logger.info("----------> [RESPONSE Controller] : {}({}) = {} ({}ms)", pjp.getSignature().getDeclaringTypeName(),
-                pjp.getSignature().getName(), result, endAt-startAt);
-
-        return result;
-    }
-
-    @Around("daoLog()")
-    public Object daoLogging(ProceedingJoinPoint pjp) throws Throwable {
-
-        String params = getRequestParams();
-
-        long startAt = System.currentTimeMillis();
-
-        logger.info("----------> [REQUEST Dao] : {}({}) = {}", pjp.getSignature().getDeclaringTypeName(),
+        logger.info("----------> [REQUEST] : {}({}) = {}", pjp.getSignature().getDeclaringTypeName(),
                 pjp.getSignature().getName(), params);
 
         Object result = pjp.proceed();
 
         long endAt = System.currentTimeMillis();
 
-        logger.info("----------> [RESPONSE Dao] : {}({}) = {} ({}ms)", pjp.getSignature().getDeclaringTypeName(),
+        logger.info("----------> [RESPONSE] : {}({}) = {} ({}ms)", pjp.getSignature().getDeclaringTypeName(),
                 pjp.getSignature().getName(), result, endAt-startAt);
 
         return result;
@@ -96,7 +71,6 @@ public class LogAspect {
                         entry.getKey(), Joiner.on(",").join(entry.getValue())))
                 .collect(Collectors.joining(", "));
     }
-
 
 //    @Pointcut("execution(* com.lottecard.controller.*.*(..))")
 //    public void cut() {
