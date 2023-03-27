@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -25,27 +26,63 @@ import com.google.common.base.Joiner;
 @Order(1)
 public class LogAspectController {
     private static final Logger logger = LoggerFactory.getLogger(LogAspectController.class);
-    
-    @Around("execution(* com.lottecard.myd..*.*(..))")
-    public Object logging(ProceedingJoinPoint pjp) throws Throwable {
+
+    //추후에 컨트롤러 경로로 수정해야함
+    @Pointcut("execution(* com.lottecard.myd.test.controller.*.*(..))")
+    public void controllerLog() {}
+
+    @Pointcut("execution(* com.lottecard.myd.test.dao.*.*(..))")
+    public void daoLog() {}
+
+    @Around("controllerLog()")
+    public Object controllerLogging(ProceedingJoinPoint pjp) {
 
         String params = getRequestParams();
 
         long startAt = System.currentTimeMillis();
 
-        logger.info("----------> [REQUEST] : {}({}) = {}", pjp.getSignature().getDeclaringTypeName(),
+        logger.info("----------> [REQUEST Controller] : {}({}) = {}", pjp.getSignature().getDeclaringTypeName(),
+                pjp.getSignature().getName(), params);
+
+        Object result;
+
+        try {
+            result = pjp.proceed();
+
+            long endAt = System.currentTimeMillis();
+
+            logger.info("----------> [RESPONSE Controller] : {}({}) = {} ({}ms)", pjp.getSignature().getDeclaringTypeName(),
+                    pjp.getSignature().getName(), result, endAt-startAt);
+            // do something with result
+            return result;
+        } catch (Throwable e) {
+            // 예외 처리 로직
+            logger.error("예외 발생: {}", e.getMessage());
+            //throw e; // Controller 등에서 예외 처리를 위해 예외를 다시 던져줍니다.
+        }
+        return null;
+    }
+
+    @Around("daoLog()")
+    public Object daoLogging(ProceedingJoinPoint pjp) throws Throwable {
+
+        String params = getRequestParams();
+
+        long startAt = System.currentTimeMillis();
+
+        logger.info("----------> [REQUEST Dao] : {}({}) = {}", pjp.getSignature().getDeclaringTypeName(),
                 pjp.getSignature().getName(), params);
 
         Object result = pjp.proceed();
 
         long endAt = System.currentTimeMillis();
 
-        logger.info("----------> [RESPONSE] : {}({}) = {} ({}ms)", pjp.getSignature().getDeclaringTypeName(),
+        logger.info("----------> [RESPONSE Dao] : {}({}) = {} ({}ms)", pjp.getSignature().getDeclaringTypeName(),
                 pjp.getSignature().getName(), result, endAt-startAt);
 
         return result;
     }
-    
+
     private String getRequestParams() {
 
         String params = "";
@@ -71,21 +108,21 @@ public class LogAspectController {
                         entry.getKey(), Joiner.on(",").join(entry.getValue())))
                 .collect(Collectors.joining(", "));
     }
-    
-    
+
+
 //    @Pointcut("execution(* com.lottecard.controller.*.*(..))")
 //    public void cut() {
-//    	
+//
 //    }
-//    
+//
 //    @Around("cut()")
 //    public Object validationHandler(ProceedingJoinPoint joinPoint) throws Throwable {
 //    	String type = joinPoint.getSignature().getDeclaringTypeName();
 //    	String method = joinPoint.getSignature().getName();
-//    	
+//
 //    	logger.info("validation handler type = {}", type);
 //    	logger.info("validation handler method = {}", method);
-//    	
+//
 //        String requestMethod = request.getMethod();
 //        String requestURI = request.getRequestURI();
 //        logger.info("[HTTP Request] Method: {} URI: {}", requestMethod, requestURI);
@@ -109,7 +146,7 @@ public class LogAspectController {
 //
 //        return result;
 //    }
-    
+
 //
 //    @Around("@annotation(javax.validation.Valid)")
 //    public Object logValidatedMethods(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
@@ -117,22 +154,22 @@ public class LogAspectController {
 //        Method method = methodSignature.getMethod();
 //
 //        logger.debug("Validating method: {}", method.getName());
-//        
+//
 //        // do something before
-//        
+//
 //        Object result = proceedingJoinPoint.proceed();
-//        
+//
 //        // do something after
 //
 //        return result;
 //    }
-//    
+//
 //    @Before("execution(* com.lottecard.controller.*.*(..))")
 //    public void logBefore(ProceedingJoinPoint joinPoint) {
 //    	logger.info("----------> Controller Start Log :");
-//    	
+//
 //    	String params = getRequestParams();
-//    	
+//
 //    	logger.info("----------> REQUEST : {}({}) = {}", joinPoint.getSignature().getDeclaringTypeName(),
 //              joinPoint.getSignature().getName(), params);
 //        System.out.println("Before executing method: " + joinPoint.getSignature().getName());
@@ -147,7 +184,7 @@ public class LogAspectController {
 //      logger.info("----------> RESPONSE : {}({}) = {} ({}ms)", joinPoint.getSignature().getDeclaringTypeName(),
 //    		  joinPoint.getSignature().getName(), result);
 //    }
-    
+
 //    @Around("execution(* org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handle(..)) && args(request, ..)")
 //    public Object validateMethodArguments(ProceedingJoinPoint joinPoint, HttpServletRequest request) throws Throwable {
 //        MethodParameter[] methodParameters = ((HandlerMethod) request.getAttribute("org.springframework.web.servlet.HandlerMapping.bestMatchingHandler")).getMethodParameters();
@@ -167,5 +204,5 @@ public class LogAspectController {
 //        }
 //        return joinPoint.proceed();
 //    }
- 
+
 }
