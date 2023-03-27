@@ -8,6 +8,8 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,11 +18,11 @@ import org.slf4j.MDC;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class MdcFilter implements Filter{
-	
+public class MdcFilter implements Filter {
+
     private static final Logger logger = LoggerFactory.getLogger(MdcFilter.class);
     private static final String TRACE_ID = "traceId";
-	
+
     @Override
     public void doFilter(final ServletRequest servletRequest, final ServletResponse servletResponse, final FilterChain filterChain) throws IOException, ServletException {
 		// TODO Auto-generated method stub
@@ -28,10 +30,15 @@ public class MdcFilter implements Filter{
 		MDC.put(TRACE_ID,traceId);
 		logger.info("----------> [Filter MDC Start] ");
 
-	    filterChain.doFilter(servletRequest, servletResponse);
+        HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
+        HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
+
+        httpServletResponse.setHeader("uuid", traceId);
+	    filterChain.doFilter(httpServletRequest, httpServletResponse);
+
 		logger.info("----------> [Filter MDC End] ");
 	    MDC.clear();
-		
+
 	}
 
 	@Override
@@ -39,6 +46,6 @@ public class MdcFilter implements Filter{
 		// TODO Auto-generated method stub
 		Filter.super.destroy();
 	}
-	
+
 
 }
