@@ -1,7 +1,6 @@
 package com.lottecard.myd.be;
 
 import java.util.Map;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,7 +11,6 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.slf4j.MDC;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;
@@ -24,8 +22,8 @@ import com.google.common.base.Joiner;
 @Aspect
 @Component
 @Order(1)
-public class LogAspectController {
-    private static final Logger logger = LoggerFactory.getLogger(LogAspectController.class);
+public class LogAspect {
+    private static final Logger logger = LoggerFactory.getLogger(LogAspect.class);
 
     //추후에 컨트롤러 경로로 수정해야함
     @Pointcut("execution(* com.lottecard.myd.test.controller.*.*(..))")
