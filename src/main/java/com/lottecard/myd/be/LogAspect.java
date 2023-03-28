@@ -28,22 +28,27 @@ public class LogAspect {
 
     @Around("execution(* com.lottecard.myd..controller.*.*(..))")
     public Object logging(ProceedingJoinPoint pjp) throws Throwable {
-
         String params = getRequestParams();
 
         long startAt = System.currentTimeMillis();
 
-        logger.info("----------> [REQUEST] : {}({}) = {}", pjp.getSignature().getDeclaringTypeName(),
+        logger.info("----------> [REQUEST CONTROLLER] : {}({}) = {}", pjp.getSignature().getDeclaringTypeName(),
                 pjp.getSignature().getName(), params);
 
-        Object result = pjp.proceed();
+        Object result = null;
+    	try {
 
-        long endAt = System.currentTimeMillis();
+    		result = pjp.proceed();
 
-        logger.info("----------> [RESPONSE] : {}({}) = {} ({}ms)", pjp.getSignature().getDeclaringTypeName(),
-                pjp.getSignature().getName(), result, endAt-startAt);
+		} finally {
 
-        return result;
+            long endAt = System.currentTimeMillis();
+
+            logger.info("----------> [RESPONSE CONTROLLER] : {}({}) = {} ({}ms)", pjp.getSignature().getDeclaringTypeName(),
+                    pjp.getSignature().getName(), result, endAt-startAt);
+
+		}
+    	return result;
     }
 
     private String getRequestParams() {

@@ -25,7 +25,7 @@ import com.google.common.base.Joiner;
 @Order(2)
 public class LogAspectDao {
     private static final Logger logger = LoggerFactory.getLogger(LogAspectDao.class);
-    	
+
     @Around("execution(* com.lottecard.myd..dao.*.*(..))")
     public Object logging(ProceedingJoinPoint pjp) throws Throwable {
 
@@ -33,17 +33,23 @@ public class LogAspectDao {
 
         long startAt = System.currentTimeMillis();
 
-        logger.info("----------> [REQUEST] : {}({}) = {}", pjp.getSignature().getDeclaringTypeName(),
+        logger.info("----------> [REQUEST DAO] : {}({}) = {}", pjp.getSignature().getDeclaringTypeName(),
                 pjp.getSignature().getName(), params);
 
-        Object result = pjp.proceed();
+        Object result = null;
+    	try {
 
-        long endAt = System.currentTimeMillis();
+    		result = pjp.proceed();
 
-        logger.info("----------> [RESPONSE] : {}({}) = {} ({}ms)", pjp.getSignature().getDeclaringTypeName(),
-                pjp.getSignature().getName(), result, endAt-startAt);
+		} finally {
 
-        return result;
+            long endAt = System.currentTimeMillis();
+
+            logger.info("----------> [RESPONSE DAO] : {}({}) = {} ({}ms)", pjp.getSignature().getDeclaringTypeName(),
+                    pjp.getSignature().getName(), result, endAt-startAt);
+
+		}
+    	return result;
     }
 
     private String getRequestParams() {
