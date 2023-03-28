@@ -61,7 +61,7 @@ public class HomeController {
 
 	@RequestMapping(value="/home1", method=RequestMethod.POST)
 	@ResponseBody
-    public BookTbOutDto home1(@RequestParam Map<String, Object> map) throws IOException {
+    public BookTbOutDto home1(@RequestParam Map<String, Object> map) throws Throwable {
 
 		String name = map.get("name").toString();
 

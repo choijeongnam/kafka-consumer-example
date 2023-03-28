@@ -26,7 +26,7 @@ import com.google.common.base.Joiner;
 public class LogAspect {
     private static final Logger logger = LoggerFactory.getLogger(LogAspect.class);
 
-    @Around("execution(* com.lottecard.myd..*.*(..))")
+    @Around("execution(* com.lottecard.myd..controller.*.*(..))")
     public Object logging(ProceedingJoinPoint pjp) throws Throwable {
 
         String params = getRequestParams();

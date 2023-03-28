@@ -9,7 +9,7 @@ import com.lottecard.myd.test.model.vo.BookTbEntity;
 @Repository
 public class BookTbDao extends OracleAbstractMapper {
 
-	public int insertOne(BookTbEntity entity) {
+	public int insertOne(BookTbEntity entity) throws Throwable {
 		return getSqlSession().getMapper(BookTbMapper.class).insertOne(entity);
 	}
 

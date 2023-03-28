@@ -28,7 +28,7 @@ public class BookTbServiceImpl implements BookTbService {
 
 	@Override
 	@Transactional(rollbackFor = RuntimeException.class)
-	public void insertOne(String query) throws IOException {
+	public void insertOne(String query) throws Throwable {
 		BookTbEntity bookTbEntity = new BookTbEntity();
 
 		Call<BookTbInDto> call = retrofit.create(BookApi.class).SelectOne(query, 1, 1);

@@ -7,7 +7,7 @@ import com.lottecard.myd.test.model.vo.BookTbEntity;
 
 public interface BookTbService {
 
-	public void insertOne(String query) throws IOException;
+	public void insertOne(String query) throws Throwable;
 
 	public BookTbEntity SelectOne(String query) throws IOException;
  }
