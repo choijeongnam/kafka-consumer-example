@@ -2,18 +2,19 @@ package com.lottecard.myd.test.model.dto;
 
 import com.lottecard.myd.annotations.LocaValidation;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 public class TestDTO {
 	
-	@LocaValidation(name="AP01", example="AP01", required = true)
+	@LocaValidation(example="AP01", required = true, description = "이름") 
 	private String name;
 	
-	@LocaValidation(name="LC01", example="1000", required = true)
+	@LocaValidation(example="1000", required = true, description = "밸류")
 	private Long value;
 	
-	@LocaValidation(name="LC02", example="true", required = true)
+	@LocaValidation(example="true", required = true, description = "플래그값")
 	private boolean flag;
 
 	public String getName() {

@@ -43,7 +43,11 @@ public class LocaValidator implements ModelPropertyBuilderPlugin, ConstraintVali
 		Optional<LocaValidation> locaValidation = extractAnnotation(context);
 		
 		if(locaValidation.isPresent()) {
-			context.getBuilder().required(locaValidation.get().required()).example(locaValidation.get().example()).build();
+			context.getBuilder()
+				.required(locaValidation.get().required())
+				.example(locaValidation.get().example())
+				.description(locaValidation.get().description())
+			.build();
 		}
 
 		

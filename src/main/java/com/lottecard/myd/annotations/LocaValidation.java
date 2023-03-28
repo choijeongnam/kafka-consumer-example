@@ -33,6 +33,11 @@ public @interface LocaValidation {
     String value() default "";
 
     /**
+     * A brief description of this property.
+     */
+    String description() default "";
+    
+    /**
      * Allows overriding the name of the property.
      *
      * @return the overridden property name
