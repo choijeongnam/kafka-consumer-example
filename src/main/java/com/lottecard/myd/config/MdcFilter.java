@@ -1,6 +1,7 @@
 package com.lottecard.myd.config;
 
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.UUID;
 
 import javax.servlet.Filter;
@@ -33,9 +34,15 @@ public class MdcFilter implements Filter {
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
         HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
 
-        httpServletResponse.setHeader("uuid", traceId);
-	    filterChain.doFilter(httpServletRequest, httpServletResponse);
+        String locaGuid = httpServletRequest.getHeader("Loca-Guid");
 
+        if(locaGuid != null) {
+        	httpServletResponse.setHeader("Loca-Guid", locaGuid);
+        } else {
+        	httpServletResponse.setHeader("Loca-Guid", traceId);
+        }
+
+        filterChain.doFilter(httpServletRequest, httpServletResponse);
 		logger.info("----------> [Filter MDC End] ");
 	    MDC.clear();
 
