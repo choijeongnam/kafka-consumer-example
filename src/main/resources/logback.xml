@@ -2,21 +2,35 @@
 <!-- 60초마다 설정 파일의 변경을 확인 하여 변경시 갱신 -->
 <configuration scan="true" scanPeriod="60 seconds">
     <!--springProfile 태그를 사용하면 logback 설정파일에서 복수개의 프로파일을 설정할 수 있다.-->
+     <springProfile name="default">
+        <property resource="logback-default.properties"/>
+    </springProfile>
+    
     <springProfile name="local">
         <property resource="logback-local.properties"/>
     </springProfile>
+    
     <springProfile name="dev">
         <property resource="logback-dev.properties"/>
     </springProfile>
+    
+        <springProfile name="cbo">
+        <property resource="logback-cbo.properties"/>
+    </springProfile>
+    
+        <springProfile name="prod">
+        <property resource="logback-prod.properties"/>
+    </springProfile>
+    
     <!--Environment 내의 프로퍼티들을 개별적으로 설정할 수도 있다.-->
     <springProperty scope="context" name="LOG_LEVEL" source="logging.level.root"/>
 
     <!-- log file path -->
-    <property name="LOG_PATH" value="C:/logs"/>
+    <property name="LOG_PATH" value="${log.config.path}"/>
     <!-- log file name -->
-    <property name="LOG_FILE_NAME" value="local_log"/>
+    <property name="LOG_FILE_NAME" value="${log.config.filename}"/>
     <!-- err log file name -->
-    <property name="ERR_LOG_FILE_NAME" value="err_log"/>
+    <property name="ERR_LOG_FILE_NAME" value="${log.config.error.filename}"/>
     <!-- pattern -->
 <!--     <property name="LOG_PATTERN" value="[%-5level] - [%d{yy-MM-dd HH:mm:ss.SSS}] - [%thread] - [%X{traceId}] - [%logger{0}:%line] - %msg%n"/> -->
 <property name="LOG_PATTERN" value="[%.-1level][%-19.19d{yyMMdd HH:mm:ss.SSS}][%-21.21thread]- [%X{traceId}] - [%-4X{req.method} %X{req.requestURI}][%-60.60c][%-20.20M:%4.4line] - %msg%n"/>
@@ -90,6 +104,7 @@
     <root level="${LOG_LEVEL}">
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="FILE"/>
+<!--  		<appender-ref ref="${log.config.type}"/> -->
         <appender-ref ref="Error"/>
         <appender-ref ref="MASK"/>
     </root>
@@ -98,6 +113,7 @@
     <logger name="org.apache.ibatis" level="DEBUG" additivity="false">
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="FILE"/>
+<!-- 		<appender-ref ref="${log.config.type}"/> -->
         <appender-ref ref="Error"/>
         <appender-ref ref="MASK"/>
     </logger>
