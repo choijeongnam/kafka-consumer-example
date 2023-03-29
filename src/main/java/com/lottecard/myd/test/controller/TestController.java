@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.lottecard.myd.cmn.model.ResponseCode;
 import com.lottecard.myd.cmn.model.dto.ResponseDTO;
 import com.lottecard.myd.test.model.dto.TestDTO;
 import com.lottecard.myd.test.model.vo.COMMONCodeVO;
@@ -31,8 +32,8 @@ public class TestController {
 	@RequestMapping(value="/test", method=RequestMethod.GET)
 	public ResponseDTO test() throws Exception {
 		ResponseDTO res = new ResponseDTO();
-		res.setCode(200);
-		res.setMessage("SUCCESS");
+		res.setCode("200");
+		res.setMessage(ResponseCode.TEST_ERROR.getValue());
 
 		return res;
 	}
@@ -48,7 +49,9 @@ public class TestController {
 		//유효성 검증과 요청 메시지 읽기는 스프링에서 다른 과정으로 처리되므로, 발생하는 예외도 서로 다를 수 있습니다. 따라서 HttpMessageNotReadableException이 발생하는 경우, 요청 바디의 형식이나 필드 값이 잘못되었는지 확인해야 합니다.
 		COMMONCodeVO vo = new COMMONCodeVO();
 		ResponseDTO res = new ResponseDTO();
-		res.setCode(200);
+
+		res.setCode(ResponseCode.TEST_ERROR.getKey());
+		res.setMessage(ResponseCode.TEST_ERROR.getValue());
 		//res.setMessage("Sucess");
 		//res.setMessage(objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(cmon.selectList(vo)));
 		vo.setGroupCode("10000");

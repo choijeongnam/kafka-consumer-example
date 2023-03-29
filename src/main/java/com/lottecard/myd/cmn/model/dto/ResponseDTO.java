@@ -1,13 +1,13 @@
 package com.lottecard.myd.cmn.model.dto;
 
 public class ResponseDTO {
-	private int code;
+	private String code;
 	private String message;
-	
-	public int getCode() {
+
+	public String getCode() {
 		return code;
 	}
-	public void setCode(int code) {
+	public void setCode(String code) {
 		this.code = code;
 	}
 	public String getMessage() {
@@ -16,6 +16,6 @@ public class ResponseDTO {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	
-	
+
+
 }
