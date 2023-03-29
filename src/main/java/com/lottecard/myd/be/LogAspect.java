@@ -8,8 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
@@ -115,21 +113,7 @@ public class LogAspect {
 //    }
 
 //
-//    @Around("@annotation(javax.validation.Valid)")
-//    public Object logValidatedMethods(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
-//        MethodSignature methodSignature = (MethodSignature) proceedingJoinPoint.getSignature();
-//        Method method = methodSignature.getMethod();
-//
-//        logger.debug("Validating method: {}", method.getName());
-//
-//        // do something before
-//
-//        Object result = proceedingJoinPoint.proceed();
-//
-//        // do something after
-//
-//        return result;
-//    }
+
 //
 //    @Before("execution(* com.lottecard.controller.*.*(..))")
 //    public void logBefore(ProceedingJoinPoint joinPoint) {

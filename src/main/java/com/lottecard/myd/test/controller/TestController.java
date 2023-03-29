@@ -22,7 +22,7 @@ import com.lottecard.myd.test.service.impl.COMMONCodeServiceImpl;
 
 import lombok.RequiredArgsConstructor;
 
-@Controller
+@RestController
 public class TestController {
 
 	@Autowired

@@ -1,4 +1,4 @@
-package com.lottecard.exception;
+package com.lottecard.myd.test.controller;
 
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
