@@ -27,21 +27,20 @@ public class MdcFilter implements Filter {
     @Override
     public void doFilter(final ServletRequest servletRequest, final ServletResponse servletResponse, final FilterChain filterChain) throws IOException, ServletException {
 		// TODO Auto-generated method stub
-		String traceId = UUID.randomUUID().toString();
-		MDC.put(TRACE_ID,traceId);
-		logger.info("----------> [Filter MDC Start] ");
 
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
         HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
 
         String locaGuid = httpServletRequest.getHeader("Loca-Guid");
-
+        
         if(locaGuid != null) {
-        	httpServletResponse.setHeader("Loca-Guid", locaGuid);
+        	MDC.put(TRACE_ID,locaGuid);
         } else {
-        	httpServletResponse.setHeader("Loca-Guid", traceId);
+        	String traceId = UUID.randomUUID().toString();
+    		MDC.put(TRACE_ID,traceId);
         }
-
+        
+		logger.info("----------> [Filter MDC Start] ");
         filterChain.doFilter(httpServletRequest, httpServletResponse);
 		logger.info("----------> [Filter MDC End] ");
 	    MDC.clear();
