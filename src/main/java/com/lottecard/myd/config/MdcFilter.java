@@ -32,14 +32,16 @@ public class MdcFilter implements Filter {
         HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
 
         String locaGuid = httpServletRequest.getHeader("Loca-Guid");
-        
+
         if(locaGuid != null) {
         	MDC.put(TRACE_ID,locaGuid);
+        	httpServletResponse.setHeader("Loca-Guid", locaGuid);
         } else {
         	String traceId = UUID.randomUUID().toString();
     		MDC.put(TRACE_ID,traceId);
+    		httpServletResponse.setHeader("Loca-Guid", traceId);
         }
-        
+
 		logger.info("----------> [Filter MDC Start] ");
         filterChain.doFilter(httpServletRequest, httpServletResponse);
 		logger.info("----------> [Filter MDC End] ");

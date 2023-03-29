@@ -6,18 +6,17 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
+@Getter
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum ResponseCode implements EnumModel {
 
-    TEST_ERROR("9999", "ERROR", "ERROR");
+	TEST_SUCCESS("200", "SUCCESS", "성공"),
+    TEST_ERROR("400", "ERROR", "에러발생");
 
-    @Getter
     private String code;
 
-    @Getter
     private String description;
 
-    @Getter
     private String message;
 
     ResponseCode(String code, String description, String message) {
