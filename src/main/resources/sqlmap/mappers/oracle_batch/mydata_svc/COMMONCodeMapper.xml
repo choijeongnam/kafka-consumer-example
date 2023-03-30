@@ -34,7 +34,7 @@
 					AND UPDATE_ID = #{updateId}
 		</if>
 	</sql>
-	
+
 
 	<sql id="insert-condition">
 		, GROUP_CODE
@@ -103,7 +103,7 @@
 		</if>
 	</sql>
 
-	<insert id="insertOne" parameterType="COMMONCodeVO">
+	<insert id="insertOne" parameterType="COMMONCodeEntity">
 		INSERT INTO COMMON_CODE
 		(
 			<trim prefix="" prefixOverrides=",">
@@ -120,7 +120,7 @@
 		)
 	</insert>
 
-	<update id="updateOne" parameterType="COMMONCodeVO">
+	<update id="updateOne" parameterType="COMMONCodeEntity">
 		UPDATE COMMON_CODE
 		<set>
 			<include refid="update-condition"/>
@@ -131,7 +131,7 @@
 		</where>
 	</update>
 
-	<update id="updates" parameterType="COMMONCodeVO">
+	<update id="updates" parameterType="COMMONCodeEntity">
 		UPDATE COMMON_CODE
 		<set>
 			<include refid="update-condition"/>
@@ -142,21 +142,21 @@
 		</where>
 	</update>
 
-	<delete id="deleteOne" parameterType="COMMONCodeVO">
+	<delete id="deleteOne" parameterType="COMMONCodeEntity">
 		DELETE FROM COMMON_CODE
 		<where>
 			<include refid="where-key"/>
 		</where>
 	</delete>
 
-	<delete id="deletes" parameterType="COMMONCodeVO">
+	<delete id="deletes" parameterType="COMMONCodeEntity">
 		DELETE FROM COMMON_CODE
 		<where>
 			1=2 OR (<trim prefix="" prefixOverrides="AND|OR"><include refid="where-models"/></trim>)
 		</where>
 	</delete>
 
-	<select id="selectOne" parameterType="COMMONCodeVO" resultType="COMMONCodeVO">
+	<select id="selectOne" parameterType="COMMONCodeEntity" resultType="COMMONCodeEntity">
 		SELECT
 			*
 		FROM COMMON_CODE
@@ -165,7 +165,7 @@
 		</where>
 	</select>
 
-	<select id="selectList" parameterType="COMMONCodeVO" resultType="COMMONCodeVO">
+	<select id="selectList" parameterType="COMMONCodeEntity" resultType="COMMONCodeEntity">
 		SELECT
 			*
 		FROM COMMON_CODE
@@ -174,7 +174,7 @@
 		</where>
 	</select>
 
-	<select id="selectCount" parameterType="COMMONCodeVO" resultType="COMMONCodeVO">
+	<select id="selectCount" parameterType="COMMONCodeEntity" resultType="COMMONCodeEntity">
 		SELECT
 			COUNT(*)
 		FROM COMMON_CODE
@@ -182,7 +182,7 @@
 			<include refid="where-models"/>
 		</where>
 	</select>
-	<update id="mergeUpdateOne" parameterType="COMMONCodeVO">
+	<update id="mergeUpdateOne" parameterType="COMMONCodeEntity">
 		MERGE INTO COMMON_CODE
 			USING DUAL
 			ON (<trim prefix="" prefixOverrides="AND|OR"><include refid="where-key" /></trim>)

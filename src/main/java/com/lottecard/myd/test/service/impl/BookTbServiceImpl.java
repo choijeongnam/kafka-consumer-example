@@ -58,6 +58,7 @@ public class BookTbServiceImpl implements BookTbService {
 			bookTbEntity.setTitle(inDto.getDocuments().get(0).getTitle());
 			bookTbEntity.setContents(inDto.getDocuments().get(0).getContents());
 			bookTbEntity.setIsbn(inDto.getDocuments().get(0).getIsbn());
+			System.err.println("headers" + call.request().headers());
 			System.out.println("result: "+ bookTbEntity.toString());
 		} else {
 			System.out.println("fail");

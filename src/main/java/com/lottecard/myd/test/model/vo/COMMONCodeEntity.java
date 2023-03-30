@@ -89,7 +89,7 @@ public class COMMONCodeEntity extends AbstractEntity {
 
 	@Override
 	public String toString() {
-		return "COMMONCodeVO [groupCode=" + groupCode + ", code=" + code + ", codeName=" + codeName + ", usageStatus="
+		return "COMMONCodeEntity [groupCode=" + groupCode + ", code=" + code + ", codeName=" + codeName + ", usageStatus="
 				+ usageStatus + ", createDt=" + createDt + ", createId=" + createId + ", updateDt=" + updateDt
 				+ ", updateId=" + updateId + "]";
 	}

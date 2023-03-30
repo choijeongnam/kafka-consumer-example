@@ -1,27 +1,19 @@
 package com.lottecard.myd.test.controller;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lottecard.myd.cmn.model.ResponseCode;
 import com.lottecard.myd.cmn.model.dto.ResponseDTO;
 import com.lottecard.myd.test.model.dto.TestDTO;
-import com.lottecard.myd.test.model.vo.COMMONCodeVO;
+import com.lottecard.myd.test.model.vo.COMMONCodeEntity;
 import com.lottecard.myd.test.service.COMMONCodeService;
-import com.lottecard.myd.test.service.impl.COMMONCodeServiceImpl;
-
-import lombok.RequiredArgsConstructor;
 
 @RestController
 public class TestController {
@@ -47,7 +39,7 @@ public class TestController {
 		//반면, HttpMessageNotReadableException은 요청 메시지를 읽을 때 발생할 수 있는 예외입니다. 예를 들어, 요청 바디가 JSON 형식이고, 해당 JSON의 필드에 필수 값이 누락된 경우 HttpMessageNotReadableException이 발생할 수 있습니다.
 		//따라서 MethodArgumentNotValidException이 발생하지 않고 HttpMessageNotReadableException이 발생하는 이유는 유효성 검증이 수행되기 전에 요청 메시지를 읽을 때 발생하는 예외로, 요청 바디의 형식이나 필드 값이 잘못된 경우 발생할 수 있습니다.
 		//유효성 검증과 요청 메시지 읽기는 스프링에서 다른 과정으로 처리되므로, 발생하는 예외도 서로 다를 수 있습니다. 따라서 HttpMessageNotReadableException이 발생하는 경우, 요청 바디의 형식이나 필드 값이 잘못되었는지 확인해야 합니다.
-		COMMONCodeVO vo = new COMMONCodeVO();
+		COMMONCodeEntity vo = new COMMONCodeEntity();
 		ResponseDTO res = new ResponseDTO();
 
 		res.setCode(ResponseCode.TEST_ERROR.getKey());
@@ -55,7 +47,7 @@ public class TestController {
 		//res.setMessage("Sucess");
 		//res.setMessage(objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(cmon.selectList(vo)));
 		vo.setGroupCode("10000");
-		//List<COMMONCodeVO> list = cmon.selectBatchList(vo);
+		//List<COMMONCodeEntity> list = cmon.selectBatchList(vo);
 		//res.setMessage(list.toString());
 		return res;
 	}

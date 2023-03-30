@@ -18,7 +18,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import com.lottecard.myd.test.model.vo.BookTbEntity;
-import com.lottecard.myd.test.model.vo.COMMONCodeVO;
+import com.lottecard.myd.test.model.vo.COMMONCodeEntity;
 import com.zaxxer.hikari.HikariDataSource;
 
 @Configuration
@@ -113,7 +113,7 @@ public class DataSourceConfig extends AbstractJdbcConfiguration {
     			.getResources("classpath:/sqlmap/mappers/oracle/**/*.xml"));
 
     	sessionFactoryBean.setTypeAliases (new Class[] {
-    			COMMONCodeVO.class,
+    			COMMONCodeEntity.class,
     			BookTbEntity.class
 //    			TMcGaHistVO.class,
 //    			TMcSfCmpnMstVO.class
@@ -146,7 +146,7 @@ public class DataSourceConfig extends AbstractJdbcConfiguration {
     			.getResources("classpath:/sqlmap/mappers/oracle_batch/**/*.xml"));
 
     	sessionFactoryBean.setTypeAliases (new Class[] {
-    			COMMONCodeVO.class,
+    			COMMONCodeEntity.class,
     			BookTbEntity.class
 //    			TMcGaHistVO.class,
 //    			TMcSfCmpnMstVO.class

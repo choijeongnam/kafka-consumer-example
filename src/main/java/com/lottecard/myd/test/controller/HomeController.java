@@ -1,15 +1,11 @@
 package com.lottecard.myd.test.controller;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.configurationprocessor.json.JSONArray;
-import org.springframework.boot.configurationprocessor.json.JSONException;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,13 +17,7 @@ import com.lottecard.myd.test.model.dto.BookTbOutDto;
 import com.lottecard.myd.test.model.vo.BookTbEntity;
 import com.lottecard.myd.test.service.BookTbService;
 
-import okhttp3.HttpUrl;
-import okhttp3.Interceptor.Chain;
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 
 @Controller
 public class HomeController {
@@ -47,17 +37,24 @@ public class HomeController {
     }
 
 	@RequestMapping(value="/home", method=RequestMethod.GET)
-    public String home(){
+    public String home() throws IOException {
 
-		Map<String, String> user = new HashMap<String, String>();
+		bookTbService.SelectOne("별이빛나는밤에");
 
-		user.put("email_id", "sookyeonghan@dongkuk.com");
-		JSONObject userDetails = new JSONObject(user);
+			//Thread.sleep(2000);
 
-		logger.debug("마스킹 되냐고요 :{}" , userDetails);
+		//BookTbEntity bookTbEntity = bookTbService.SelectOne("별이빛나는밤에");
+
+//		Map<String, String> user = new HashMap<String, String>();
+//
+//		user.put("email_id", "sookyeonghan@dongkuk.com");
+//		JSONObject userDetails = new JSONObject(user);
+//
+//		logger.debug("마스킹 되냐고요 :{}" , userDetails);
 
         return "home";
     }
+
 
 	@RequestMapping(value="/home1", method=RequestMethod.POST)
 	@ResponseBody

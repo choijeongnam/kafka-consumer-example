@@ -27,7 +27,6 @@ public class ApiTest {
 	@Autowired
 	private BookTbService bookTbService;
 
-	// async로 동작
 	@Async
 	public void getTestAsync() throws IOException, InterruptedException {
 		bookTbService.SelectOne("별이빛나는밤에");
