@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class TestDTO {
 	
-	@LocaValidation(example="AP01", required = true, description = "이름") 
+	@LocaValidation(example="'20320101'", required = true, description = "이름", pattern = "yyyyMMdd") 
 	private String name;
 	
 	@LocaValidation(example="1000", required = true, description = "밸류")

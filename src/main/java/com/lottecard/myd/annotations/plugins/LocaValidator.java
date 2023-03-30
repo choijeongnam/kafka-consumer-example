@@ -5,6 +5,7 @@ import static springfox.bean.validators.plugins.Validators.annotationFromBean;
 import static springfox.bean.validators.plugins.Validators.annotationFromField;
 
 import java.net.BindException;
+import java.text.ParseException;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -29,6 +30,8 @@ import springfox.documentation.spi.schema.contexts.ModelPropertyContext;
 public class LocaValidator implements ModelPropertyBuilderPlugin, ConstraintValidator<LocaValidation, Object>{
 	
 	private boolean required;
+	private String pattern;
+	String[] parsePatterns = {"yyyyMMdd"};
 	
 	@Override
 	public boolean supports(DocumentationType delimiter) {
@@ -38,99 +41,44 @@ public class LocaValidator implements ModelPropertyBuilderPlugin, ConstraintVali
 	
 	@Override
 	public void apply(ModelPropertyContext context) {
-		// TODO Auto-generated method stub
-		
 		Optional<LocaValidation> locaValidation = extractAnnotation(context);
-		
+
 		if(locaValidation.isPresent()) {
 			context.getBuilder()
+				.pattern(locaValidation.get().pattern())
 				.required(locaValidation.get().required())
-				.example(locaValidation.get().example())
+				.example((Object)locaValidation.get().example())
 				.description(locaValidation.get().description())
 			.build();
 		}
-
-		
-		
-//		Optional<CheckValidator> c = extractAnnotation(context);
-//		if(c.isPresent()) {
-//			System.err.println(c.get().name());
-//			context.getBuilder().required(c.isPresent()).build();
-//		}
-		//.example(c.get().example())
-		
 	}
 
 	@VisibleForTesting
 	private Optional<LocaValidation> extractAnnotation(ModelPropertyContext context) {
-		// TODO Auto-generated method stub
 		return annotationFromBean(context, LocaValidation.class).or(annotationFromField(context, LocaValidation.class));
 	}
 	
 	public void initialize(LocaValidation constraintAnnotation) {
-		//this.ALLOW_ARRAY = constraintAnnotation.codes(); // 허용할 코드 설정
 		this.required = constraintAnnotation.required();
+		this.pattern = constraintAnnotation.pattern();
+		System.out.println(this.pattern);
 	}
 
 	@Override
 	public boolean isValid(Object value, ConstraintValidatorContext context) {
-		// TODO Auto-generated method stub
-		
-		//Class<?> valueType = value.getClass();
-		System.err.println(value);
-		
 		if(required) {
-			if(value == null) {
-				//throw new MethodArgumentNotValidException(value, bindingResult)
-//				try {
-//					throw new BindException();
-//				} catch(Exception e) {
-//					return false;
-//				}
-				return false;
-			}
+			if(value == null) return false;
 		}
 		
-//	    if (required) {
-//	        if (value == null) {
-//	        	return false;
-//	        }
-//	    }
-	    
-//        if (value instanceof String) {
-//            // validate string value
-//        } else if (value instanceof Long) {
-//            // validate integer value
-//        } else {
-//            // invalid data type
-//            context.buildConstraintViolationWithTemplate("Invalid data type")
-//                    .addConstraintViolation();
-//            return false;
-//        }
+//		if(pattern == "yyyyMMdd") {
+//			try {
+//				org.apache.commons.lang3.time.DateUtils.parseDate(value, parsePatterns);
+//			} catch (ParseException e) {
+//				return false;
+//			}
+//		}
+		
 		return true;
 	}
 	
-	
-	
-	
-//    @Override
-//    public void initialize(CheckValidator constraintAnnotation) {
-//    	//this.ALLOW_ARRAY = constraintAnnotation.codes(); // 허용할 코드 설정
-//    	this.name = constraintAnnotation.name();
-//    	this.example = constraintAnnotation.example();
-//    }
-//
-//	@Override
-//	public boolean isValid(Object arg0, ConstraintValidatorContext arg1) {
-//		// TODO Auto-generated method stub
-//		String value = arg0.toString();
-//		
-//		System.err.println("찍어보자? 되긴하나");
-//		System.err.println("찍어보자? isValid" + name);
-//		if(value == null) {
-//			return false;
-//		} 
-//		
-//		return true;
-//	}
 }

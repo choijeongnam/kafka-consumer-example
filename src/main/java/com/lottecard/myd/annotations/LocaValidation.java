@@ -37,7 +37,7 @@ public @interface LocaValidation {
      */
     String description() default "";
     
-    /**
+    /**`
      * Allows overriding the name of the property.
      *
      * @return the overridden property name
@@ -99,6 +99,8 @@ public @interface LocaValidation {
      */
     String example() default "";
 
+    String pattern() default "";
+    
     /**
      * Allows a model property to be designated as read only.
      *
