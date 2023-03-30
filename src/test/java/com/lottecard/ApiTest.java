@@ -5,20 +5,15 @@ import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.Test;
 
-import com.lottecard.myd.test.model.dto.BookTbInDto;
 import com.lottecard.myd.test.model.dto.ExampleInDto;
 import com.lottecard.myd.test.service.ExampleApi;
 
 import okhttp3.ConnectionPool;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.converter.jackson.JacksonConverterFactory;
 import retrofit2.converter.jaxb.JaxbConverterFactory;
-import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 
 public class ApiTest {
 	@Test
