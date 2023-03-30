@@ -34,6 +34,7 @@
 		<tikxml.version>0.8.13</tikxml.version>
 		<validation-api.version>2.0.1.Final</validation-api.version>
 		<log4jdbc-log4j2.version>1.16</log4jdbc-log4j2.version>
+		
 
 		<deploy.jboss.host>127.0.0.1</deploy.jboss.host>
 		<deploy.jboss.port>9990</deploy.jboss.port>
@@ -251,25 +252,11 @@
 			<version>${okhttp3.version}</version>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/com.squareup.retrofit2/converter-jackson -->
-		<dependency>
-			<groupId>com.squareup.retrofit2</groupId>
-			<artifactId>converter-jackson</artifactId>
-			<version>2.9.0</version>
-		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/com.squareup.retrofit2/converter-simplexml -->
-		<dependency>
-			<groupId>com.squareup.retrofit2</groupId>
-			<artifactId>converter-simplexml</artifactId>
-			<version>2.9.0</version>
-		</dependency>
-
 		<!-- https://mvnrepository.com/artifact/com.squareup.retrofit2/converter-jaxb -->
 		<dependency>
 			<groupId>com.squareup.retrofit2</groupId>
 			<artifactId>converter-jaxb</artifactId>
-			<version>2.9.0</version>
+			<version>${retrofit2.version}</version>
 		</dependency>
 
 	</dependencies>
