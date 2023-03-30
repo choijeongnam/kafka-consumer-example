@@ -6,45 +6,45 @@ import org.springframework.stereotype.Repository;
 
 import com.lottecard.myd.cmn.dao.OracleAbstractMapper;
 import com.lottecard.myd.test.dao.mapper.COMMONCodeMapper;
-import com.lottecard.myd.test.model.vo.COMMONCodeVO;
+import com.lottecard.myd.test.model.vo.COMMONCodeEntity;
 
 
 @Repository
 public class COMMONCodeDao extends OracleAbstractMapper  {
 
-	public int insertOne(COMMONCodeVO vo) {
+	public int insertOne(COMMONCodeEntity vo) {
 		return getSqlSession().getMapper(COMMONCodeMapper.class).insertOne(vo);
 	}
 
-	public int updateOne(COMMONCodeVO vo) {
+	public int updateOne(COMMONCodeEntity vo) {
 		return getSqlSession().getMapper(COMMONCodeMapper.class).updateOne(vo);
 	}
 
-	public int updateMany(COMMONCodeVO vo) {
+	public int updateMany(COMMONCodeEntity vo) {
 		return getSqlSession().getMapper(COMMONCodeMapper.class).updateMany(vo);
 	}
 
-	public int deleteOne(COMMONCodeVO vo) {
+	public int deleteOne(COMMONCodeEntity vo) {
 		return getSqlSession().getMapper(COMMONCodeMapper.class).deleteOne(vo);
 	}
 
-	public int deleteMany(COMMONCodeVO vo) {
+	public int deleteMany(COMMONCodeEntity vo) {
 		return getSqlSession().getMapper(COMMONCodeMapper.class).deleteMany(vo);
 	}
 
-	public int mergeUpdateOne(COMMONCodeVO vo) {
+	public int mergeUpdateOne(COMMONCodeEntity vo) {
 		return getSqlSession().getMapper(COMMONCodeMapper.class).mergeUpdateOne(vo);
 	}
 
-	public int selectCount(COMMONCodeVO vo) {
+	public int selectCount(COMMONCodeEntity vo) {
 		return getSqlSession().getMapper(COMMONCodeMapper.class).selectCount(vo);
 	}
 
-	public COMMONCodeVO selectOne(COMMONCodeVO vo) {
+	public COMMONCodeEntity selectOne(COMMONCodeEntity vo) {
 		return getSqlSession().getMapper(COMMONCodeMapper.class).selectOne(vo);
 	}
 
-	public List<COMMONCodeVO> selectList(COMMONCodeVO vo) {
+	public List<COMMONCodeEntity> selectList(COMMONCodeEntity vo) {
 		return getSqlSession().getMapper(COMMONCodeMapper.class).selectList(vo);
 	}
 

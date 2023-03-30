@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.lottecard.myd.test.dao.COMMONCodeBatchDao;
 import com.lottecard.myd.test.dao.COMMONCodeDao;
-import com.lottecard.myd.test.model.vo.COMMONCodeVO;
+import com.lottecard.myd.test.model.vo.COMMONCodeEntity;
 import com.lottecard.myd.test.service.COMMONCodeService;
 
 
@@ -25,14 +25,14 @@ public class COMMONCodeServiceImpl implements COMMONCodeService {
 	@Override
 //	@Transactional(value="txManagerOra", rollbackFor={Exception.class})
 	@Transactional(rollbackFor={Exception.class})
-    public List<COMMONCodeVO> selectList(COMMONCodeVO vo) throws Exception{
+    public List<COMMONCodeEntity> selectList(COMMONCodeEntity vo) throws Exception{
 		return cOMMONCodeDao.selectList(vo);
     }
 	
 	@Override
 //	@Transactional(value="txManagerOra", rollbackFor={Exception.class})
 	@Transactional(rollbackFor={Exception.class})
-    public List<COMMONCodeVO> selectBatchList(COMMONCodeVO vo) throws Exception{
+    public List<COMMONCodeEntity> selectBatchList(COMMONCodeEntity vo) throws Exception{
 		return cOMMONCodeBatchDao.selectList(vo);
     }
 	

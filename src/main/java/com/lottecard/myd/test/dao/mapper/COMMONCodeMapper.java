@@ -2,26 +2,26 @@ package com.lottecard.myd.test.dao.mapper;
 
 import java.util.List;
 
-import com.lottecard.myd.test.model.vo.COMMONCodeVO;
+import com.lottecard.myd.test.model.vo.COMMONCodeEntity;
 
 public interface COMMONCodeMapper {
 
-	public int insertOne(COMMONCodeVO vo);
+	public int insertOne(COMMONCodeEntity vo);
 
-	public int updateOne(COMMONCodeVO vo);
+	public int updateOne(COMMONCodeEntity vo);
 
-	public int updateMany(COMMONCodeVO vo);
+	public int updateMany(COMMONCodeEntity vo);
 
-	public int deleteOne(COMMONCodeVO vo);
+	public int deleteOne(COMMONCodeEntity vo);
 
-	public int deleteMany(COMMONCodeVO vo);
+	public int deleteMany(COMMONCodeEntity vo);
 
-	public int selectCount(COMMONCodeVO vo);
+	public int selectCount(COMMONCodeEntity vo);
 
-	public COMMONCodeVO selectOne(COMMONCodeVO vo);
+	public COMMONCodeEntity selectOne(COMMONCodeEntity vo);
 
-	public List<COMMONCodeVO> selectList(COMMONCodeVO vo);
+	public List<COMMONCodeEntity> selectList(COMMONCodeEntity vo);
 
-	public int mergeUpdateOne(COMMONCodeVO vo);
+	public int mergeUpdateOne(COMMONCodeEntity vo);
 
 }

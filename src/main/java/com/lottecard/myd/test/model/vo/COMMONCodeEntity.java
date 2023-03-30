@@ -3,14 +3,10 @@ package com.lottecard.myd.test.model.vo;
 
 import java.util.Set;
 
-import com.lottecard.myd.cmn.model.vo.AbstractVO;
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.lottecard.myd.cmn.model.vo.AbstractEntity;
 
 
-public class COMMONCodeVO extends AbstractVO  {
+public class COMMONCodeEntity extends AbstractEntity {
 
 	private String groupCode;
 	private String code;
@@ -84,7 +80,7 @@ public class COMMONCodeVO extends AbstractVO  {
 	public String getUpdateId() {
 		return updateId;
 	}
-	
+
 	@Override
 	public void setAssignParameters(Set<String> assignParameters) {
 		// TODO Auto-generated method stub
@@ -97,5 +93,5 @@ public class COMMONCodeVO extends AbstractVO  {
 				+ usageStatus + ", createDt=" + createDt + ", createId=" + createId + ", updateDt=" + updateDt
 				+ ", updateId=" + updateId + "]";
 	}
-	
+
 }

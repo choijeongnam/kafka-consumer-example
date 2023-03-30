@@ -13,6 +13,7 @@ import okhttp3.ConnectionPool;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.Request.Builder;
 import okhttp3.Response;
 import retrofit2.Retrofit;
 
@@ -20,14 +21,16 @@ import retrofit2.Retrofit;
 public class ApiConfig {
     private static final Logger logger = LoggerFactory.getLogger(ApiConfig.class);
 
-    private ConnectionPool okhttpConnPool = new ConnectionPool(5, 20L, TimeUnit.SECONDS);
+    private ConnectionPool okhttpConnPool = new ConnectionPool(20, 40L, TimeUnit.SECONDS);
 	private static final String TRACE_ID = "traceId";
 
 	Interceptor requestInterceptor = new Interceptor() {
 		@Override
 		public Response intercept(Chain chain) throws IOException {
-			Request request = chain.request().newBuilder()
-					.addHeader("Loca-Guid", (String) MDC.get(TRACE_ID)).build();
+			Request originalRequest = chain.request();
+			Builder builder = originalRequest.newBuilder()
+					.addHeader("Loca-Guid", (String) MDC.get(TRACE_ID));
+			Request request = builder.build();
 			return chain.proceed(request);
 		}
 	};
@@ -35,6 +38,7 @@ public class ApiConfig {
 	@Bean
 	OkHttpClient okHttpClient() {
 		logger.debug("ConnectionPool count: {}", okhttpConnPool.connectionCount());
+		logger.debug("idleConnectionCount count: {}", okhttpConnPool.idleConnectionCount());
 		return new OkHttpClient()
 					.newBuilder()
 					.callTimeout(60, TimeUnit.SECONDS)
