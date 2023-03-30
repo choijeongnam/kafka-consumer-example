@@ -6,7 +6,7 @@ import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-public class AbstractVO implements Serializable {
+public class AbstractEntity implements Serializable {
 	private static final long serialVersionUID = 1028061241484497901L;
 
 	@JsonIgnore
