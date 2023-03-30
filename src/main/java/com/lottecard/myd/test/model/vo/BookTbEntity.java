@@ -1,11 +1,15 @@
 package com.lottecard.myd.test.model.vo;
 
-import com.lottecard.myd.cmn.model.vo.AbstractVO;
+import com.lottecard.myd.cmn.model.vo.AbstractEntity;
 
 import lombok.Getter;
 
-public class BookTbEntity extends AbstractVO {
+public class BookTbEntity extends AbstractEntity {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String title;
 	private String contents;
 	private String url;
