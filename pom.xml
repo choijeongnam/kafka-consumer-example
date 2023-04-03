@@ -31,7 +31,6 @@
 		<retrofit2.version>2.9.0</retrofit2.version>
 		<okhttp3.version>3.14.9</okhttp3.version>
 		<okio.version>1.17.2</okio.version>
-		<tikxml.version>0.8.13</tikxml.version>
 		<validation-api.version>2.0.1.Final</validation-api.version>
 		<log4jdbc-log4j2.version>1.16</log4jdbc-log4j2.version>
 		
@@ -40,7 +39,7 @@
 
 		<maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
 		<maven-surfile-plugin.version>2.22.2</maven-surfile-plugin.version>
-		<maven-war-plugin.version>2.4</maven-war-plugin.version>
+		<maven-war-plugin.version>3.3.2</maven-war-plugin.version>
 		<maven-dependency-plugin.version>3.3.0</maven-dependency-plugin.version>
 	</properties>
 
