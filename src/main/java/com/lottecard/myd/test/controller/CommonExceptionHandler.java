@@ -14,17 +14,30 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver;
 
+import com.lottecard.myd.cmn.exception.LocaException;
 import com.lottecard.myd.cmn.model.dto.ResponseDTO;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestControllerAdvice
-public class ExceptionController extends DefaultHandlerExceptionResolver {
+public class CommonExceptionHandler {
+    private static final Logger logger = LoggerFactory.getLogger(CommonExceptionHandler.class);
 
-    private static final Logger logger = LoggerFactory.getLogger(ExceptionController.class);
+    @ExceptionHandler(LocaException.class)
+    public ResponseEntity<ResponseDTO> LocaException(LocaException e){
+    	//logger.error("LocaException 발생!!! url:{}, trace:{}",request.getRequestURI(), e.getStackTrace());
+
+        return new ResponseEntity<ResponseDTO>(new ResponseDTO(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ResponseDTO> Exception(Exception e, HttpServletRequest request){
+    	//logger.error("Exception 발생!!! url:{}, trace:{}",request.getRequestURI(), e.getStackTrace());
+
+        return new ResponseEntity<ResponseDTO>(new ResponseDTO(), HttpStatus.BAD_REQUEST);
+    }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ResponseDTO> methodValidException(MethodArgumentNotValidException e, HttpServletRequest request){
