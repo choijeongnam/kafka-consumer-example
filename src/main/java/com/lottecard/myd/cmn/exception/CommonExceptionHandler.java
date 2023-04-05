@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.lottecard.myd.cmn.model.dto.ResponseDTO;
+import com.lottecard.myd.cmn.utils.StringUtil;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,16 +26,22 @@ public class CommonExceptionHandler {
     private static final Logger logger = LoggerFactory.getLogger(CommonExceptionHandler.class);
 
     @ExceptionHandler(LocaException.class)
-    public ResponseEntity<ResponseDTO> LocaException(LocaException e, HttpServletRequest request){
-    	logger.error("LocaException 발생!!! url:{}, trace:{}",request.getRequestURI(), e.getStackTrace());
-
-        return new ResponseEntity<ResponseDTO>(new ResponseDTO(), HttpStatus.BAD_REQUEST);
+    public ResponseEntity<ResponseDTO> locaException(LocaException e, HttpServletRequest request){
+    	ResponseDTO res = new ResponseDTO();
+    	res.setCode("400");
+    	res.setMessage(HttpStatus.BAD_REQUEST.getReasonPhrase());
+    	logger.error("LocaException url:{}, code:{}, message:{}, trace:{}", request.getRequestURI(), res.getCode(), res.getMessage(), e.getStackTrace());
+        
+    	return new ResponseEntity<ResponseDTO>(res, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ResponseDTO> Exception(Exception e, HttpServletRequest request){
-    	logger.error("Exception 발생!!! url:{}, trace:{}",request.getRequestURI(), e.getStackTrace());
+    public ResponseEntity<ResponseDTO> exception(Exception e, HttpServletRequest request){
+    	ResponseDTO res = new ResponseDTO();
+    	res.setCode("400");
+    	res.setMessage(HttpStatus.BAD_REQUEST.getReasonPhrase());
+    	logger.error("Exception url:{}, code:{}, message:{}, trace:{}", request.getRequestURI(), res.getCode(), res.getMessage(), e.getStackTrace());
 
-        return new ResponseEntity<ResponseDTO>(new ResponseDTO(), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<ResponseDTO>(res, HttpStatus.BAD_REQUEST);
     }
 }
