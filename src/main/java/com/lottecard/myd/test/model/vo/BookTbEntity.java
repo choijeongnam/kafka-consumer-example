@@ -1,6 +1,6 @@
 package com.lottecard.myd.test.model.vo;
 
-import com.lottecard.myd.cmn.model.vo.AbstractEntity;
+import com.lottecard.myd.cmn.model.entity.AbstractEntity;
 
 import lombok.Getter;
 

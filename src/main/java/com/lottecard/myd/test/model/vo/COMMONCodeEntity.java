@@ -3,7 +3,7 @@ package com.lottecard.myd.test.model.vo;
 
 import java.util.Set;
 
-import com.lottecard.myd.cmn.model.vo.AbstractEntity;
+import com.lottecard.myd.cmn.model.entity.AbstractEntity;
 
 
 public class COMMONCodeEntity extends AbstractEntity {
