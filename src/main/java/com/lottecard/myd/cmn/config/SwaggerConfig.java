@@ -1,4 +1,4 @@
-package com.lottecard.myd.config;
+package com.lottecard.myd.cmn.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

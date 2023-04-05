@@ -1,4 +1,4 @@
-package com.lottecard.myd.config;
+package com.lottecard.myd.cmn.config;
 
 import java.io.FileNotFoundException;
 
@@ -29,12 +29,12 @@ import com.zaxxer.hikari.HikariDataSource;
 //@EnableConfigurationProperties
 //@PropertySource("classpath:application.properties")
 //@PropertySource("classpath:hikari-basic.properties")
-@PropertySource("classpath:hikari.properties") 	
+@PropertySource("classpath:hikari.properties")
 public class DataSourceConfig extends AbstractJdbcConfiguration {
-	
+
 	@Autowired
 	Environment env;
-	
+
 	public Environment getEnv() {
 		return env;
 	}
@@ -43,7 +43,7 @@ public class DataSourceConfig extends AbstractJdbcConfiguration {
 	@Bean(name="dataSourceOracle")
 //	@ConfigurationProperties("spring.datasource.hikari")
     public DataSource dataSourceOracle() throws  FileNotFoundException {
-		
+
 		HikariConfig config = new HikariConfig();
 		config.setDriverClassName(env.getProperty("spring.datasource.hikari.driver-class-name"));
 		config.setJdbcUrl(env.getProperty("spring.datasource.hikari.jdbc-url"));
@@ -69,11 +69,11 @@ public class DataSourceConfig extends AbstractJdbcConfiguration {
 //	    config.addDataSourceProperty("maintainTimeStats", Boolean.FALSE.toString());
 //	    config.addDataSourceProperty("netTimeoutForStreamingResults", 0);
 
-		
+
 	    HikariDataSource hikariDataSource = new HikariDataSource(config);
-	    
+
 //		HikariDataSource hikariDataSource = new HikariDataSource();
-	    
+
 //		DataSourceBuilder builder = DataSourceBuilder.create();
 //        builder.type(HikariDataSource);
         return hikariDataSource;
@@ -97,11 +97,11 @@ public class DataSourceConfig extends AbstractJdbcConfiguration {
 //			return dataSource;
 
     }
-	
+
 	@Bean(name="dataSourceOracleBatch")
 //	@ConfigurationProperties("spring.datasource.hikari")
     public DataSource dataSourceOracleBatch() throws FileNotFoundException {
-		
+
 		HikariConfig config = new HikariConfig();
 		config.setDriverClassName(env.getProperty("spring.datasource.hikari.driver-class-name"));
 		config.setJdbcUrl(env.getProperty("spring.datasource.hikari.jdbc-url"));
@@ -126,16 +126,16 @@ public class DataSourceConfig extends AbstractJdbcConfiguration {
 //	    config.addDataSourceProperty("elideSetAutoCommits", Boolean.TRUE.toString());
 //	    config.addDataSourceProperty("maintainTimeStats", Boolean.FALSE.toString());
 //	    config.addDataSourceProperty("netTimeoutForStreamingResults", 0);
-	    
+
 	    HikariDataSource hikariDataSourceBatch = new HikariDataSource(config);
-	    
-	    
+
+
 	    return hikariDataSourceBatch;
 
     }
-	
-	
-	
+
+
+
 //    HikariDataSource hikariDataSource = new HikariDataSource();
 //    hikariDataSource.setJdbcUrl(sourceDataSourceProperties.getUrl());
 //    hikariDataSource.setUsername(sourceDataSourceProperties.getUsername());
@@ -147,8 +147,8 @@ public class DataSourceConfig extends AbstractJdbcConfiguration {
 //    hikariDataSource.setMaxLifetime(env.getProperty("spring.datasource.hikari.max-lifetime", Integer.class));
 //    hikariDataSource.setMinimumIdle(env.getProperty("spring.datasource.hikari.minimum-idle", Integer.class));
 //    hikariDataSource.setPoolName("SourceBatchHikariCP");
-	
-	
+
+
 
 //    @Bean(name = "backofficeDataSource")
 //

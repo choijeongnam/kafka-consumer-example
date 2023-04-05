@@ -1,6 +1,6 @@
 package com.lottecard.myd.test.model.dto;
 
-import com.lottecard.myd.annotations.LocaValidation;
+import com.lottecard.myd.cmn.annotations.LocaValidation;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;

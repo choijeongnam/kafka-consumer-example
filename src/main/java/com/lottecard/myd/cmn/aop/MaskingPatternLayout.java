@@ -1,4 +1,4 @@
-package com.lottecard.myd.be;
+package com.lottecard.myd.cmn.aop;
 
 import java.util.ArrayList;
 import java.util.List;

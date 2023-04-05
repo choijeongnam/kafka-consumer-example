@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.lottecard.myd.be.LogAspect;
+import com.lottecard.myd.cmn.aop.LogAspect;
 import com.lottecard.myd.test.model.dto.BookTbOutDto;
 import com.lottecard.myd.test.model.vo.BookTbEntity;
 import com.lottecard.myd.test.service.BookTbService;

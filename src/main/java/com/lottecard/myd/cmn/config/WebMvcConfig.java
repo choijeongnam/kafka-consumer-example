@@ -1,4 +1,4 @@
-package com.lottecard.myd.config;
+package com.lottecard.myd.cmn.config;
 
 import java.util.Arrays;
 

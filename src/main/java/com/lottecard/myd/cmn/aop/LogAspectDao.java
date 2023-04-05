@@ -1,4 +1,4 @@
-package com.lottecard.myd.be;
+package com.lottecard.myd.cmn.aop;
 
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -23,7 +23,7 @@ import com.google.common.base.Joiner;
 
 @Aspect
 @Component
-@Order(2)
+@Order(3)
 public class LogAspectDao {
     private static final Logger logger = LoggerFactory.getLogger(LogAspectDao.class);
 

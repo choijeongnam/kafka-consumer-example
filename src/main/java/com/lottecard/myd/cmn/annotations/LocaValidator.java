@@ -1,4 +1,4 @@
-package com.lottecard.myd.annotations.plugins;
+package com.lottecard.myd.cmn.annotations;
 
 
 import static springfox.bean.validators.plugins.Validators.annotationFromBean;
@@ -16,7 +16,6 @@ import org.springframework.stereotype.Component;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Optional;
-import com.lottecard.myd.annotations.LocaValidation;
 
 import springfox.bean.validators.plugins.Validators;
 import springfox.documentation.spi.DocumentationType;
