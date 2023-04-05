@@ -10,6 +10,7 @@ import java.text.ParseException;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
@@ -31,7 +32,7 @@ public class LocaValidator implements ModelPropertyBuilderPlugin, ConstraintVali
 	
 	private boolean required;
 	private String pattern;
-	String[] parsePatterns = {"yyyyMMdd"};
+	String[] parsePatterns = {"yyyyMMdd", "yyyy.MM.dd", "yyyy-MM-dd"};
 	
 	@Override
 	public boolean supports(DocumentationType delimiter) {
@@ -70,13 +71,13 @@ public class LocaValidator implements ModelPropertyBuilderPlugin, ConstraintVali
 			if(value == null) return false;
 		}
 		
-//		if(pattern == "yyyyMMdd") {
-//			try {
-//				org.apache.commons.lang3.time.DateUtils.parseDate(value, parsePatterns);
-//			} catch (ParseException e) {
-//				return false;
-//			}
-//		}
+		if(pattern == "yyyyMMdd") {
+			try {
+				DateUtils.parseDate((String) value, parsePatterns);
+			} catch (ParseException e) {
+				return false;
+			}
+		}
 		
 		return true;
 	}
