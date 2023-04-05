@@ -4,17 +4,15 @@ package com.lottecard.myd.annotations.plugins;
 import static springfox.bean.validators.plugins.Validators.annotationFromBean;
 import static springfox.bean.validators.plugins.Validators.annotationFromField;
 
-import java.net.BindException;
 import java.text.ParseException;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Optional;
@@ -36,7 +34,6 @@ public class LocaValidator implements ModelPropertyBuilderPlugin, ConstraintVali
 	
 	@Override
 	public boolean supports(DocumentationType delimiter) {
-		// TODO Auto-generated method stub
 		return true;
 	}
 	
@@ -62,16 +59,15 @@ public class LocaValidator implements ModelPropertyBuilderPlugin, ConstraintVali
 	public void initialize(LocaValidation constraintAnnotation) {
 		this.required = constraintAnnotation.required();
 		this.pattern = constraintAnnotation.pattern();
-		System.out.println(this.pattern);
 	}
 
 	@Override
 	public boolean isValid(Object value, ConstraintValidatorContext context) {
 		if(required) {
-			if(value == null) return false;
+			if(ObjectUtils.isEmpty(value)) return false;
 		}
 		
-		if(pattern == "yyyyMMdd") {
+		if(pattern == "yyyyMMdd" || pattern == "yyyy.MM.dd" || pattern == "yyyy-MM-dd") {
 			try {
 				DateUtils.parseDate((String) value, parsePatterns);
 			} catch (ParseException e) {
