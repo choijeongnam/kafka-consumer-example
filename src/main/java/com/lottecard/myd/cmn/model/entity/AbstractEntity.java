@@ -1,4 +1,4 @@
-package com.lottecard.myd.cmn.model.vo;
+package com.lottecard.myd.cmn.model.entity;
 
 import java.io.Serializable;
 import java.util.HashSet;

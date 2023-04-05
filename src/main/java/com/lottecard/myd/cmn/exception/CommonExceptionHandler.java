@@ -1,4 +1,4 @@
-package com.lottecard.myd.config;
+package com.lottecard.myd.cmn.exception;
 
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
@@ -15,7 +15,6 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.lottecard.myd.cmn.exception.LocaException;
 import com.lottecard.myd.cmn.model.dto.ResponseDTO;
 
 import lombok.extern.slf4j.Slf4j;
