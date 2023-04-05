@@ -15,7 +15,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.jaxb.JaxbConverterFactory;
 
-public class TestConverterFactory extends Converter.Factory {
+public class TypeConverterFactory extends Converter.Factory {
 	@Override
 	public Converter<ResponseBody, ?> responseBodyConverter(Type type, Annotation[] annotations, Retrofit retrofit) {
 		if (type instanceof Class && ((Class<?>) type).isAnnotationPresent(XmlRootElement.class)) {

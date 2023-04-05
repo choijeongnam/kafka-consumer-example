@@ -26,8 +26,6 @@ public class MdcFilter implements Filter {
 
     @Override
     public void doFilter(final ServletRequest servletRequest, final ServletResponse servletResponse, final FilterChain filterChain) throws IOException, ServletException {
-		// TODO Auto-generated method stub
-
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
         HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
 
@@ -51,7 +49,6 @@ public class MdcFilter implements Filter {
 
 	@Override
 	public void destroy() {
-		// TODO Auto-generated method stub
 		Filter.super.destroy();
 	}
 

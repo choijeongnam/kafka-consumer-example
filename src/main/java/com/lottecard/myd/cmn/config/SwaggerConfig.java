@@ -29,9 +29,9 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("스웨거 화면~!")
+                .title("[SAMPLE]API DOCUMENTATION")
                 .version("1.0.0")
-                .description("스프링부트의 swagger api 입니다.")
+                .description("description")
                 .build();
     }
 }

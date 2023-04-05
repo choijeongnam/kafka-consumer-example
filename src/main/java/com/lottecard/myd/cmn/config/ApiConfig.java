@@ -53,7 +53,7 @@ public class ApiConfig {
 				.Builder()
 					.baseUrl("https://dapi.kakao.com")
 					.client(okHttpClient())
-					.addConverterFactory(new TestConverterFactory())
+					.addConverterFactory(new TypeConverterFactory())
 				.build();
 	}
 
