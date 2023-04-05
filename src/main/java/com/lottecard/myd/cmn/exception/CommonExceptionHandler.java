@@ -25,58 +25,16 @@ public class CommonExceptionHandler {
     private static final Logger logger = LoggerFactory.getLogger(CommonExceptionHandler.class);
 
     @ExceptionHandler(LocaException.class)
-    public ResponseEntity<ResponseDTO> LocaException(LocaException e){
-    	//logger.error("LocaException 발생!!! url:{}, trace:{}",request.getRequestURI(), e.getStackTrace());
+    public ResponseEntity<ResponseDTO> LocaException(LocaException e, HttpServletRequest request){
+    	logger.error("LocaException 발생!!! url:{}, trace:{}",request.getRequestURI(), e.getStackTrace());
 
         return new ResponseEntity<ResponseDTO>(new ResponseDTO(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ResponseDTO> Exception(Exception e, HttpServletRequest request){
-    	//logger.error("Exception 발생!!! url:{}, trace:{}",request.getRequestURI(), e.getStackTrace());
+    	logger.error("Exception 발생!!! url:{}, trace:{}",request.getRequestURI(), e.getStackTrace());
 
         return new ResponseEntity<ResponseDTO>(new ResponseDTO(), HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ResponseDTO> methodValidException(MethodArgumentNotValidException e, HttpServletRequest request){
-    	logger.error("MethodArgumentNotValidException 발생!!! url:{}, trace:{}",request.getRequestURI(), e.getStackTrace());
-
-        return new ResponseEntity<ResponseDTO>(new ResponseDTO(), HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(BindException.class)
-    public ResponseEntity<ResponseDTO> errorValid(BindException e, HttpServletRequest request) {
-    	logger.error("BindException 발생!!! url:{}, trace:{}",request.getRequestURI(), e.getStackTrace());
-
-         return new ResponseEntity<ResponseDTO>(new ResponseDTO(), HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(SQLException.class)
-    public ResponseEntity<ResponseDTO> errorSQL(SQLException e, HttpServletRequest request) {
-    	logger.error("SQLException 발생!!! url:{}, trace:{}",request.getRequestURI(), e.getStackTrace());
-
-         return new ResponseEntity<ResponseDTO>(new ResponseDTO(), HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
-    public ResponseEntity<ResponseDTO> errorSQL(SQLIntegrityConstraintViolationException e, HttpServletRequest request) {
-    	logger.error("SQLIntegrityConstraintViolationException 발생!!! url:{}, trace:{}",request.getRequestURI(), e.getStackTrace());
-
-         return new ResponseEntity<ResponseDTO>(new ResponseDTO(), HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(NullPointerException.class)
-    public ResponseEntity<ResponseDTO> errorSQL(NullPointerException e, HttpServletRequest request) {
-    	logger.error("NullPointerException 발생!!! url:{}, trace:{}",request.getRequestURI(), e.getStackTrace());
-
-         return new ResponseEntity<ResponseDTO>(new ResponseDTO(), HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-    public ResponseEntity<ResponseDTO> errorSQL(HttpRequestMethodNotSupportedException e, HttpServletRequest request) {
-    	logger.error("HttpRequestMethodNotSupportedException 발생!!! url:{}, trace:{}",request.getRequestURI(), e.getStackTrace());
-
-         return new ResponseEntity<ResponseDTO>(new ResponseDTO(), HttpStatus.BAD_REQUEST);
     }
 }
