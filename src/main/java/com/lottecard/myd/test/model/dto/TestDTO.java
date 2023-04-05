@@ -3,37 +3,20 @@ package com.lottecard.myd.test.model.dto;
 import com.lottecard.myd.annotations.LocaValidation;
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
+@Getter
 public class TestDTO {
 	
-	@LocaValidation(example="'20320101'", required = true, description = "이름", pattern = "yyyyMMdd") 
+	@LocaValidation(example="'20230401'", required = true, description = "name 필드에 대한 설명", pattern = "yyyyMMdd") 
 	private String name;
 	
-	@LocaValidation(example="1000", required = true, description = "밸류")
+	@LocaValidation(example="100", required = true, description = "value 필드에 대한 설명")
 	private Long value;
 	
-	@LocaValidation(example="true", required = true, description = "플래그값")
+	@LocaValidation(example="true", required = true, description = "flag 필드에 대한 설명")
 	private boolean flag;
-
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public Long getValue() {
-		return value;
-	}
-	public void setValue(Long value) {
-		this.value = value;
-	}
-	public boolean isFlag() {
-		return flag;
-	}
-	public void setFlag(boolean flag) {
-		this.flag = flag;
-	}
 
 }

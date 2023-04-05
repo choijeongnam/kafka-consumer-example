@@ -908,28 +908,4 @@ public class StringUtil extends StringUtils {
 	        return result;
 		}
 
-
-
-	    public static void main(String[] args) {
-	        Object val = "Test1";
-	        String rep_val = "Test2";
-	        logger.error(nvlObj(val, rep_val));
-
-	        val = "";
-	        rep_val = "Test3";
-	        logger.error(nvlObj(val, rep_val));
-
-	        val = null;
-	        rep_val = "Test4";
-	        logger.error(nvlObj(val, rep_val));
-
-	        val = null;
-	        rep_val = "";
-	        logger.error(nvlObj(val, rep_val));
-
-	        val = null;
-	        rep_val = null;
-	        logger.error(nvlObj(val, rep_val));
-
-	    }
 }
