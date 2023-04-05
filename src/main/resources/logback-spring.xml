@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 60초마다 설정 파일의 변경을 확인 하여 변경시 갱신 -->
 <configuration scan="true" scanPeriod="60 seconds">
-    
+
     <!--Environment 내의 프로퍼티들을 개별적으로 설정할 수도 있다.-->
 <!--     <springProperty scope="context" name="LOG_LEVEL" value="$logging.level.root" source="logging.level.root"/> -->
 
@@ -12,7 +12,7 @@
 	<property name="CONSOLE_LOG_PATTERN" value="${CONSOLE_LOG_PATTERN}"/>
 	<property name="FILE_LOG_PATTERN" value="${FILE_LOG_PATTERN}"/>
 	<property name="LOGBACK_ROLLINGPOLICY_MAX_HISTORY" value="${LOGBACK_ROLLINGPOLICY_MAX_HISTORY}"/>
-     
+
     <property name="ERR_LOG_FILE" value="${LOG_FILE}_error"/>
     <!-- pattern -->
 <!--     <property name="LOG_PATTERN" value="[%-5level] - [%d{yy-MM-dd HH:mm:ss.SSS}] - [%thread] - [%X{traceId}] - [%logger{0}:%line] - %msg%n"/> -->
@@ -83,14 +83,55 @@
         </rollingPolicy>
     </appender>
 
-    <!-- root레벨 설정 -->
+    <springProfile name="default">
+      <root level="${LOG_LEVEL}">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+        <appender-ref ref="Error"/>
+        <appender-ref ref="MASK"/>
+      </root>
+    </springProfile>
+
+    <springProfile name="local">
+      <root level="${LOG_LEVEL}">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+        <appender-ref ref="Error"/>
+        <appender-ref ref="MASK"/>
+      </root>
+    </springProfile>
+
+    <springProfile name="dev">
+      <root level="${LOG_LEVEL}">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+        <appender-ref ref="Error"/>
+        <appender-ref ref="MASK"/>
+      </root>
+    </springProfile>
+
+    <springProfile name="prod">
+      <root level="${LOG_LEVEL}">
+        <appender-ref ref="FILE"/>
+        <appender-ref ref="Error"/>
+      </root>
+    </springProfile>
+
+    <springProfile name="cbo">
+      <root level="${LOG_LEVEL}">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+        <appender-ref ref="Error"/>
+      </root>
+    </springProfile>
+
+    <!-- root레벨 설정
     <root level="${LOG_LEVEL}">
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="FILE"/>
-<!--  		<appender-ref ref="${log.config.type}"/> -->
         <appender-ref ref="Error"/>
         <appender-ref ref="MASK"/>
-    </root>
+    </root> -->
 
     <!-- 특정패키지 로깅레벨 설정 -->
     <logger name="org.apache.ibatis" level="DEBUG" additivity="false">
