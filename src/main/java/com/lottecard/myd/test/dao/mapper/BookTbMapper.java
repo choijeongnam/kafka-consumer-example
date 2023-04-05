@@ -4,7 +4,7 @@ import com.lottecard.myd.test.model.vo.BookTbEntity;
 
 public interface BookTbMapper {
 
-	public int insertOne(BookTbEntity entity) throws Throwable;
+	public int insertOne(BookTbEntity entity) throws Exception;
 
 	public int updateOne(BookTbEntity entity);
 

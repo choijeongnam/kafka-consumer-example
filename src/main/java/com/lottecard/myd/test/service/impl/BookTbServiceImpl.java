@@ -27,23 +27,29 @@ public class BookTbServiceImpl implements BookTbService {
 	private Retrofit retrofit;
 
 	@Override
-	@Transactional(rollbackFor = RuntimeException.class)
-	public void insertOne(String query) throws Throwable {
+	@Transactional
+	public void insertOne(String query) throws Exception {
 		BookTbEntity bookTbEntity = new BookTbEntity();
 
-		Call<BookTbInDto> call = retrofit.create(BookApi.class).SelectOne(query, 1, 1);
-		Response<BookTbInDto> response = call.execute();
+			bookTbEntity.setTitle("한수경88");
+			bookTbEntity.setContents("한수경88");
+			bookTbEntity.setIsbn("ㅇㅇ88");
+			bookTbDao.insertOne(bookTbEntity);
+		    throw new IOException();
 
-		if(response.isSuccessful()) {
-			BookTbInDto inDto = response.body();
-			bookTbEntity.setTitle(inDto.getDocuments().get(0).getTitle());
-			bookTbEntity.setContents(inDto.getDocuments().get(0).getContents());
-			bookTbEntity.setIsbn(inDto.getDocuments().get(0).getIsbn());
-	        int count = bookTbDao.insertOne(bookTbEntity);
-	        System.out.println("insert count: " + count);
-		} else {
-			System.out.println("Failure");
-		}
+//		Call<BookTbInDto> call = retrofit.create(BookApi.class).SelectOne(query, 1, 1);
+//		Response<BookTbInDto> response = call.execute();
+//
+//		if(response.isSuccessful()) {
+//			BookTbInDto inDto = response.body();
+//			bookTbEntity.setTitle(inDto.getDocuments().get(0).getTitle());
+//			bookTbEntity.setContents(inDto.getDocuments().get(0).getContents());
+//			bookTbEntity.setIsbn(inDto.getDocuments().get(0).getIsbn());
+//	        int count = bookTbDao.insertOne(bookTbEntity);
+//	        System.out.println("insert count: " + count);
+//		} else {
+//			System.out.println("Failure");
+//		}
 	}
 
 	@Override
