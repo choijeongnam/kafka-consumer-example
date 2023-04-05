@@ -2,6 +2,7 @@ package com.lottecard.myd.test.controller;
 
 import javax.validation.Valid;
 
+import org.apache.ibatis.exceptions.IbatisException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,11 +25,11 @@ public class TestController {
 
 	@ApiOperation(value = "GET Method SAMPLE", notes = "DESCRIPTION", response = ResponseDTO.class)
 	@GetMapping(value="/test")
-	public ResponseDTO test() throws Exception {
+	public ResponseDTO test() {
 		ResponseDTO res = new ResponseDTO();
 		res.setCode(ResponseCode.TEST_SUCCESS.getKey());
 		res.setMessage(ResponseCode.TEST_SUCCESS.getValue());
-
+		
 		return res;
 	}
 

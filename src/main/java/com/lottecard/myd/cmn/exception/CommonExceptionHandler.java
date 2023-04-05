@@ -44,4 +44,14 @@ public class CommonExceptionHandler {
 
         return new ResponseEntity<ResponseDTO>(res, HttpStatus.BAD_REQUEST);
     }
+    
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<ResponseDTO> exception(RuntimeException e, HttpServletRequest request){
+    	ResponseDTO res = new ResponseDTO();
+    	res.setCode("400");
+    	res.setMessage(HttpStatus.BAD_REQUEST.getReasonPhrase());
+    	logger.error("RuntimeException url:{}, code:{}, message:{}, trace:{}", request.getRequestURI(), res.getCode(), res.getMessage(), e.getStackTrace());
+
+        return new ResponseEntity<ResponseDTO>(res, HttpStatus.BAD_REQUEST);
+    }
 }
