@@ -25,14 +25,14 @@
         </encoder>
     </appender>
 
-   <appender name="MASK" class="ch.qos.logback.core.ConsoleAppender">
+<!--    <appender name="MASK" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
            <layout class="com.lottecard.myd.be.MaskingPatternLayout">
                <maskPattern>(\w+@\w+\.\w+)</maskPattern> Email pattern
                <pattern>%-5p [%d{ISO8601,UTC}] [%thread] %c: %m%n%rootException</pattern>
             </layout>
         </encoder>
-    </appender>
+    </appender> -->
 
     <!-- File Appender -->
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
@@ -88,7 +88,6 @@
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="FILE"/>
         <appender-ref ref="Error"/>
-        <appender-ref ref="MASK"/>
       </root>
     </springProfile>
 
@@ -97,7 +96,6 @@
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="FILE"/>
         <appender-ref ref="Error"/>
-        <appender-ref ref="MASK"/>
       </root>
     </springProfile>
 
@@ -106,7 +104,6 @@
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="FILE"/>
         <appender-ref ref="Error"/>
-        <appender-ref ref="MASK"/>
       </root>
     </springProfile>
 
@@ -139,6 +136,5 @@
         <appender-ref ref="FILE"/>
 <!-- 		<appender-ref ref="${log.config.type}"/> -->
         <appender-ref ref="Error"/>
-        <appender-ref ref="MASK"/>
     </logger>
 </configuration>
