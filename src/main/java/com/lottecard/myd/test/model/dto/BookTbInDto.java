@@ -2,10 +2,17 @@ package com.lottecard.myd.test.model.dto;
 
 import java.util.List;
 
-import com.lottecard.myd.test.model.vo.BookTbEntity;
+import com.lottecard.myd.cmn.annotations.LocaValidation;
 
+import io.swagger.annotations.ApiModel;
+
+@ApiModel(description="북dto")
 public class BookTbInDto {
+	
+	@LocaValidation(description="메타",  required = false)
 	private Meta meta;
+	
+	@LocaValidation(description="도큐먼트",  required = false)
 	private List<Document> documents;
 	
 	public Meta getMeta() {
@@ -26,8 +33,13 @@ public class BookTbInDto {
 
 
 	public static class Meta{
+		@LocaValidation(description="토탈카운트", example="10", required = false)
 		int totalCount;
+		
+		@LocaValidation(description="페이지카운트", example="1", required = false)
 		int pageableCount;
+		
+		@LocaValidation(description="페이지끝여부", example="true", required = false)
 		boolean isEnd;
 		public int getTotalCount() {
 			return totalCount;

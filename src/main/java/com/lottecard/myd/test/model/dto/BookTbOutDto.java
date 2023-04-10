@@ -1,10 +1,23 @@
 package com.lottecard.myd.test.model.dto;
 
+import com.lottecard.myd.cmn.annotations.LocaValidation;
+
 public class BookTbOutDto {
+	
+	@LocaValidation(description="타이틀", example="10")
 	private String title;
+	
+	@LocaValidation(description="컨텐츠 내용", example="10")
 	private String contents;
+	
+	@LocaValidation(description="주소", example="10")
 	private String url;
+	
+	@LocaValidation(description="아이에스비엔", example="10")
 	private String isbn;
+	
+	@LocaValidation(description="테스트 아웃불", example="true")
+	private Boolean testbool;
 
 	public void setTitle(String title) {
 		this.title = title;
