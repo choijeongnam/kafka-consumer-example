@@ -1,35 +1,74 @@
 package com.lottecard;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.beanio.Marshaller;
+import org.beanio.StreamFactory;
+import org.beanio.Unmarshaller;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.lottecard.myd.MydataApplication;
+import com.lottecard.myd.cmn.CommonData;
 import com.lottecard.myd.cmn.CommonHeader;
-import com.lottecard.myd.cmn.aop.LogAspect;
-import com.lottecard.myd.cmn.utils.BeanIOUtils;
-import com.lottecard.myd.test.service.BookTbService;
-
-import okhttp3.OkHttpClient;
+import com.lottecard.myd.cmn.RcvDenyChnlRgIz;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = MydataApplication.class)
 @AutoConfigureMockMvc
 class MydataApplicationTests {
+//
+//	@Autowired
+//	private BeanIOUtils beanIOUtils;
+//
+//	@Test
+//	void marshal() {
+//		// given
+//		BeanIODto dto = new BeanIODto();
+//
+//		Map<String, Object> header = new HashMap<>();
+//		header.put("TX_CODE", "a12");
+//		header.put("GUID", UUID.randomUUID().toString());
+//		header.put("LENGTH", 45);
+//		dto.setHeader(header);
+//
+//		Map<String, Object> body = new HashMap<>();
+//		body.put("MESSAGE", "HI !!");
+//		body.put("TO", "010-1234-5678");
+//		dto.setBody(body);
+//
+//		// when
+//		String result = beanIOUtils.marshal(dto);
+//
+//		// then
+//		assertThat(result).hasSize(79);
+//		//log.info("result: {}", result); // result: a12 70affc50-46fd-4145-a2a1-d495f73200045HI !! 010-1234-5678 @@
+//	}
+//
+//	@Test
+//	void unmarshal() {
+//		// given
+//		String record = "a12            b1ef6fcf-6371-4459-9ecb-b7e1d48a00045HI !!     010-1234-5678  @@";
+//
+//		// when
+//		BeanIODto dto = beanIOUtils.unmarshal(record);
+//
+//		// then
+//		assertAll(() -> assertThat(dto).isNotNull(), () -> assertThat(dto.getHeader()).hasSize(3),
+//				() -> assertThat(dto.getBody()).hasSize(2), () -> assertThat(dto.getEnd()).isEqualTo("@@"));
+//		//log.info("dto: {}", dto); // dto: BeanIODto(header={LENGTH=45, TX_CODE=a12,
+//									// GUID=b1ef6fcf-6371-4459-9ecb-b7e1d48a}, body={MESSAGE=HI !!,
+//									// TO=010-1234-5678}, end=@@)
+//	}
 
 	@Test
 	void contextLoads() throws IOException {
-		org.beanio.StreamFactory streamFactory = org.beanio.StreamFactory.newInstance();
+		StreamFactory streamFactory = StreamFactory.newInstance();
 		streamFactory.loadResource("beanIO/commonHeader.xml");
 		CommonHeader ch = new CommonHeader();
 		ch.setGramLnth(123);
@@ -38,15 +77,36 @@ class MydataApplicationTests {
 		ch.setGramNo("CMS03001");
 		ch.setAkRspDc("S");
 		ch.setRspBizDc("AU");
-		org.beanio.Marshaller marshaller = streamFactory.createMarshaller("request"); //stream name
+		Marshaller marshaller = streamFactory.createMarshaller("request"); //stream name
 		String fixed = marshaller.marshal("commonHeader", ch).toString();
 		byte[] byteArray = fixed.getBytes("MS949");
-		
-		String fixed2 = new String(byteArray, "MS949"); 
-		
-		org.beanio.Unmarshaller unmarshaller = streamFactory.createUnmarshaller("request");
+
+		String fixed2 = new String(byteArray, "MS949");
+
+		Unmarshaller unmarshaller = streamFactory.createUnmarshaller("request");
 		CommonHeader cc = (CommonHeader) unmarshaller.unmarshal(fixed2);
 		System.out.println(cc.toString());
+
+		CommonData cd = new CommonData();
+		RcvDenyChnlRgIz rcvDenyChnlRgIz = new RcvDenyChnlRgIz();
+		rcvDenyChnlRgIz.setRcvDenyYn("y");
+		rcvDenyChnlRgIz.setRgDt("f");
+		rcvDenyChnlRgIz.setRgrEno("f");
+		rcvDenyChnlRgIz.setRgrNm("f");
+		rcvDenyChnlRgIz.setChnlKndc("a");
+		rcvDenyChnlRgIz.setRcvDenyCnC("dsd");
+		List<RcvDenyChnlRgIz> list = new ArrayList();
+		list.add(rcvDenyChnlRgIz);
+
+		cd.setCno("fsdfdf");
+		cd.setRcvDenyChnlRgIz(list);
+		cd.setRcvDenyChnlRgIzCnt(12);
+
+
+		Marshaller marshallerData = streamFactory.createMarshaller("requestData"); //stream name
+		String fixedData = marshallerData.marshal("commonData", cd).toString();
+		System.out.println(fixedData.toString());
+
 	}
 
 }

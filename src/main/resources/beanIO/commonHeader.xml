@@ -14,4 +14,22 @@
         <field name="rspBizDc" length="2" justify="left" padding=" " type="String"/>
     </record>
   </stream>
+
+  <stream name="requestData" format="fixedlength" strict="true">
+    <parser>
+      <property name="recordTerminator" value=""/>
+    </parser>
+    <record name="commonData" class="com.lottecard.myd.cmn.CommonData" maxOccurs="1">
+      <field name="cno" length="22" justify="left" padding=" " type="String"/>
+      <field name="rcvDenyChnlRgIzCnt" length="3" padding="0" justify="right" type="int"/>
+          <segment name="rcvDenyChnlRgIz" class="com.lottecard.myd.cmn.RcvDenyChnlRgIz" collection="list" minOccurs="1" maxOccurs="unbounded">
+                <field name="rcvDenyYn" length="2" justify="left" padding=" " type="String"/>
+		        <field name="rgDt" length="16" justify="left" padding=" " type="String"/>
+		        <field name="rgrEno" length="14" justify="left" padding=" " type="String"/>
+		        <field name="rgrNm" length="40" justify="left" padding=" " type="String"/>
+		        <field name="chnlKndc" length="2" justify="left" padding=" " type="String"/>
+		        <field name="rcvDenyCnC" length="4" justify="left" padding=" " type="String"/>
+	      </segment>
+    </record>
+  </stream>
 </beanio>
