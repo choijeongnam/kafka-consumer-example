@@ -1,12 +1,15 @@
 package com.lottecard.myd.cmn;
 
-import org.springframework.context.annotation.PropertySource;
 
-@PropertySource("url-${spring.profiles.active:local}.properties")
-public class EAIExecutor {
-	public void execute() {
-		
-	}
+public interface EAIExecutor {
+	public RequestEAIInDto createHeader(RequestMCIInDto inDto, String interfaceName);
 	
+	public byte[] marshal(RequestMCIInDto inDto, String interfaceName);
+
+	public ResponseEAIOutDto unmarshal(byte[] response);
+
+	public byte[] read();
+
+	public void execute();
 	
 }
