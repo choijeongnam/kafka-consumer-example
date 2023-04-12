@@ -71,8 +71,8 @@ class MydataApplicationTests {
 	@Test
 	void contextLoads() throws IOException {
 		StreamFactory streamFactory = StreamFactory.newInstance();
-		
-	    
+
+
 	    org.beanio.builder.StreamBuilder builder = new StreamBuilder("CommonData")
 	        .format("fixedlength")
 	        .strict()
@@ -81,6 +81,8 @@ class MydataApplicationTests {
 
 	    streamFactory.define(builder);
 	    CommonData cd = new CommonData();
+
+
 		RcvDenyChnlRgIz rcvDenyChnlRgIz = new RcvDenyChnlRgIz();
 		rcvDenyChnlRgIz.setRcvDenyYn("y");
 		rcvDenyChnlRgIz.setRgDt("f");
@@ -94,12 +96,12 @@ class MydataApplicationTests {
 		cd.setCno("fsdfdf");
 		//cd.setRcvDenyChnlRgIz(list);
 		cd.setRcvDenyChnlRgIzCnt(12);
-
+//
 
 		Marshaller marshallerData = streamFactory.createMarshaller("CommonData"); //stream name
 		String fixedData = marshallerData.marshal("CommonData", cd).toString();
-		System.out.println(fixedData.toString());
-		
+		System.out.println("ccccccc" + fixedData.toString());
+
 //		CommonHeader ch = new CommonHeader();
 //		ch.setGramLnth(123);
 //		ch.setGuid("20230411CMS0523");
@@ -110,13 +112,13 @@ class MydataApplicationTests {
 //		Marshaller marshaller = streamFactory.createMarshaller("request"); //stream name
 //		String fixed = marshaller.marshal("commonHeader", ch).toString();
 //		byte[] byteArray = fixed.getBytes("MS949");
-//		
+//
 //		String fixed2 = new String(byteArray, "MS949");
 //
 //		Unmarshaller unmarshaller = streamFactory.createUnmarshaller("request");
 //		CommonHeader cc = (CommonHeader) unmarshaller.unmarshal(fixed2);
 //		System.out.println(cc.toString());
-//		
+//
 //		CommonData cd = new CommonData();
 //		RcvDenyChnlRgIz rcvDenyChnlRgIz = new RcvDenyChnlRgIz();
 //		rcvDenyChnlRgIz.setRcvDenyYn("y");
