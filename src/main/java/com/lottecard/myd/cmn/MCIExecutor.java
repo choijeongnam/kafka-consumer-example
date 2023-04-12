@@ -11,6 +11,7 @@ import java.net.UnknownHostException;
 import java.util.Arrays;
 
 import org.beanio.Unmarshaller;
+import org.beanio.builder.StreamBuilder;
 
 import com.lottecard.myd.cmn.exception.LocaException;
 import com.lottecard.myd.cmn.model.ifSpec;
@@ -44,6 +45,15 @@ public class MCIExecutor {
 	public byte[] marshal(RequestMCIInDto inDto, String interfaceName) throws Exception {
 		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 		org.beanio.StreamFactory streamFactory = org.beanio.StreamFactory.newInstance();
+		
+		org.beanio.builder.StreamBuilder builder = new StreamBuilder("CommonData") //enum 정의
+		        .format("fixedlength") //enum 정의
+		        .strict()
+		        .parser(new org.beanio.builder.FixedLengthParserBuilder())
+		        .addRecord(CommonData.class);
+
+		    streamFactory.define(builder);
+		
 		streamFactory.loadResource(ifSpec.valueOf(interfaceName).getHeaderPath()); //하드코딩 수정예정
 		org.beanio.Marshaller marshaller = streamFactory.createMarshaller("request"); //하드코딩 수정예정
 		String header = marshaller.marshal("commonHeader", inDto.commonHeader).toString(); //하드코딩 수정예정
