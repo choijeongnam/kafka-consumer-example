@@ -1,53 +1,69 @@
 package com.lottecard.myd.cmn;
 
-//@org.beanio.annotation.Record(maxOccurs = 1)
-public class CommonHeader {
-	//@org.beanio.annotation.Field(align = Align.RIGHT, type = Integer.class, length = 5, padding = 0)
+import org.beanio.annotation.Field;
+import org.beanio.annotation.Record;
+import org.beanio.builder.Align;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@Record(maxOccurs = 1)
+public abstract class CommonHeader {
+	@Field(align = Align.RIGHT, type = Integer.class, length = 5, padding = '0')
 	private int gramLnth;
-    private String guid;
-    private int gramPrgNo;
+	
+	@Field(align = Align.LEFT, type = String.class, length = 31, padding = ' ')
+	private String guid;
+	
+	@Field(align = Align.RIGHT, type = Integer.class, length = 2, padding = '0')
+	private int gramPrgNo;
+	
+	@Field(align = Align.LEFT, type = String.class, length = 8, padding = ' ')
     private String gramNo;
+	
+	@Field(align = Align.LEFT, type = String.class, length = 1, padding = ' ')
     private String akRspDc;
+	
+	@Field(align = Align.LEFT, type = String.class, length = 2, padding = ' ')
     private String rspBizDc;
-	public int getGramLnth() {
-		return gramLnth;
-	}
-	public void setGramLnth(int gramLnth) {
-		this.gramLnth = gramLnth;
-	}
-	public String getGuid() {
-		return guid;
-	}
-	public void setGuid(String guid) {
-		this.guid = guid;
-	}
-	public int getGramPrgNo() {
-		return gramPrgNo;
-	}
-	public void setGramPrgNo(int gramPrgNo) {
-		this.gramPrgNo = gramPrgNo;
-	}
-	public String getGramNo() {
-		return gramNo;
-	}
-	public void setGramNo(String gramNo) {
-		this.gramNo = gramNo;
-	}
-	public String getAkRspDc() {
-		return akRspDc;
-	}
-	public void setAkRspDc(String akRspDc) {
-		this.akRspDc = akRspDc;
-	}
-	public String getRspBizDc() {
-		return rspBizDc;
-	}
-	public void setRspBizDc(String rspBizDc) {
-		this.rspBizDc = rspBizDc;
-	}
-	@Override
-	public String toString() {
-		return "CommonHeader [gramLnth=" + gramLnth + ", guid=" + guid + ", gramPrgNo=" + gramPrgNo + ", gramNo="
-				+ gramNo + ", akRspDc=" + akRspDc + ", rspBizDc=" + rspBizDc + "]";
-	}
+	
+	@Field(align = Align.LEFT, type = String.class, length = 17, padding = ' ')
+    private String gramAkDtti;
+	
+	@Field(align = Align.LEFT, type = String.class, length = 16, padding = ' ')
+    private String ipAdd;
+	
+	@Field(align = Align.LEFT, type = String.class, length = 12, padding = ' ')
+    private String tgtSvId;
+	
+	@Field(align = Align.RIGHT, type = Integer.class, length = 9, padding = '0')
+    private int deNatvNo1;
+    
+	@Field(align = Align.RIGHT, type = Integer.class, length = 9, padding = '0')
+	private int deNatvNo2;
+	
+	@Field(align = Align.LEFT, type = String.class, length = 20, padding = ' ')
+    private String oriGrnCn;
+	
+	@Field(align = Align.LEFT, type = String.class, length = 1, padding = ' ')
+    private String smlDeYn;
+	
+	@Field(align = Align.LEFT, type = String.class, length = 17, padding = ' ')
+    private String gramRspDtti;
+	
+	@Field(align = Align.RIGHT, type = Integer.class, length = 1, padding = '0')
+    private int pcRc;
+	
+	@Field(align = Align.LEFT, type = String.class, length = 8, padding = ' ')
+    private String fstErrSysDc;
+	
+	@Field(align = Align.LEFT, type = String.class, length = 1, padding = ' ')
+    private String chnlHdExsYn;
+	
+	@Field(align = Align.LEFT, type = String.class, length = 40, padding = ' ')
+    private String exrFld;
 }
