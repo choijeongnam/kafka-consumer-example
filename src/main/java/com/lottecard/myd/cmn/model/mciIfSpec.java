@@ -2,7 +2,8 @@ package com.lottecard.myd.cmn.model;
 
 public enum mciIfSpec{
 
-	CMS00630 ("CMS00630", "", "", 0, "", "", "", "");
+	CMS00630("CMS00630", "", "", 0, "", "", "", ""),
+	CommonData("CommonData", "", "", 0, "", "", "", "");
 
 	private String replyGramNo;
 	private String bizTc;

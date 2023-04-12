@@ -9,6 +9,8 @@ import java.net.Socket;
 import java.net.SocketAddress;
 import java.net.UnknownHostException;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.beanio.Unmarshaller;
 import org.beanio.builder.StreamBuilder;
@@ -26,42 +28,39 @@ public class MCIExecutor {
 	private InputStream inputStream;
 	private OutputStream outputStream;
 	private final int headerLength = 800;
-	
+
 	public RequestMCIInDto createHeader(RequestMCIInDto inDto, String interfaceName) {
 		MciHeader mciHeader = new MciHeader();
-		
+
 		mciHeader.setGramLnth(headerLength); // + data 길이 더 해줘야함
 		mciHeader.setGuid(""); // 롯데카드 헤더값
 		mciHeader.setGramPrgNo(0);
 		mciHeader.setGramNo(""); //enum
 		mciHeader.setAkRspDc(""); //요청응답값
-		
+
 		//추가 header값 set
-		
+
 		return null;
 	}
-	
+
 	public byte[] marshal(RequestMCIInDto inDto, String interfaceName) throws Exception {
 		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 		org.beanio.StreamFactory streamFactory = org.beanio.StreamFactory.newInstance();
-		
-		org.beanio.builder.StreamBuilder builder = new StreamBuilder("CommonData") //enum 정의
+
+		//mci eai 분기처리 해줘야함
+		String classNm = mciIfSpec.valueOf(interfaceName).getReplyGramNo(); //명칭도 나중에 수정해야함
+		org.beanio.builder.StreamBuilder builder = new StreamBuilder(classNm) //enum 정의
 		        .format("fixedlength") //enum 정의
 		        .strict()
 		        .parser(new org.beanio.builder.FixedLengthParserBuilder())
-		        .addRecord(CommonData.class);
-
+		        .addRecord(interfaceName.getClass());
 	    streamFactory.define(builder);
-		
-		streamFactory.loadResource(mciIfSpec.valueOf(interfaceName).getReplyGramNo()); //하드코딩 수정예정
-		org.beanio.Marshaller marshaller = streamFactory.createMarshaller("request"); //하드코딩 수정예정
-		String header = marshaller.marshal("commonHeader", inDto.commonHeader).toString(); //하드코딩 수정예정
-		byte[] headerByteArray = header.getBytes(encoding);
 
-		byteArrayOutputStream.write(headerByteArray);
-
-		//본문부분 구현예정
-
+		streamFactory.loadResource(classNm);
+		org.beanio.Marshaller marshaller = streamFactory.createMarshaller(classNm);
+		String mciDto = marshaller.marshal(classNm, interfaceName.getClass()).toString();
+		byte[] byteArray = mciDto.getBytes(encoding);
+		byteArrayOutputStream.write(byteArray);
 		return byteArrayOutputStream.toByteArray();
 	}
 
