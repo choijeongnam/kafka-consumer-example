@@ -7,6 +7,12 @@ import org.beanio.annotation.Record;
 import org.beanio.annotation.Segment;
 import org.beanio.builder.Align;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+
 @Record(name = "CommonData", maxOccurs = 1)
 public class CommonData {
 	@Field(name="cno", length=22, align=Align.LEFT, type=String.class)
@@ -15,26 +21,6 @@ public class CommonData {
     private int rcvDenyChnlRgIzCnt;
 	@Segment(minOccurs=0, collection=List.class)
     private List<RcvDenyChnlRgIz> rcvDenyChnlRgIz;
-
-	public String getCno() {
-		return cno;
-	}
-	public void setCno(String cno) {
-		this.cno = cno;
-	}
-	public int getRcvDenyChnlRgIzCnt() {
-		return rcvDenyChnlRgIzCnt;
-	}
-	public void setRcvDenyChnlRgIzCnt(int rcvDenyChnlRgIzCnt) {
-		this.rcvDenyChnlRgIzCnt = rcvDenyChnlRgIzCnt;
-	}
-	public List<RcvDenyChnlRgIz> getRcvDenyChnlRgIz() {
-		return rcvDenyChnlRgIz;
-	}
-	public void setRcvDenyChnlRgIz(List<RcvDenyChnlRgIz> rcvDenyChnlRgIz) {
-		this.rcvDenyChnlRgIz = rcvDenyChnlRgIz;
-	}
-
 
 
 //	public String getCno() {
