@@ -19,6 +19,7 @@ import com.lottecard.myd.MydataApplication;
 import com.lottecard.myd.cmn.CommonData;
 import com.lottecard.myd.cmn.CommonHeader;
 import com.lottecard.myd.cmn.EaiHeader;
+import com.lottecard.myd.cmn.MciHeader;
 import com.lottecard.myd.cmn.RcvDenyChnlRgIz;
 
 @ExtendWith(SpringExtension.class)
@@ -73,15 +74,15 @@ class MydataApplicationTests {
 	void contextLoads() throws IOException {
 		StreamFactory streamFactory = StreamFactory.newInstance();
 
-		String EaiHeader = "EaiHeader";
+		String EaiHeader = "MciHeader";
 	    org.beanio.builder.StreamBuilder builder = new StreamBuilder(EaiHeader)
 	        .format("fixedlength")
 	        .strict()
 	        .parser(new org.beanio.builder.FixedLengthParserBuilder())
-	        .addRecord(EaiHeader.class);
+	        .addRecord(MciHeader.class);
 
 	    streamFactory.define(builder);
-	    EaiHeader eaiHeader = new EaiHeader();
+	    MciHeader eaiHeader = new MciHeader();
 	    eaiHeader.setGramLnth(123);
 	    eaiHeader.setGuid("20230411CMS0523");
 	    eaiHeader.setGramPrgNo(1);
@@ -105,7 +106,7 @@ class MydataApplicationTests {
 //
 
 		Marshaller marshallerData = streamFactory.createMarshaller(EaiHeader); //stream name
-		String fixedData = marshallerData.marshal("EaiHeader", eaiHeader).toString();
+		String fixedData = marshallerData.marshal("MciHeader", eaiHeader).toString();
 		System.out.println("toString" + fixedData.toString());
 		byte[] byteArray = fixedData.getBytes("MS949");
 		System.out.println("length: " +  byteArray.length);
