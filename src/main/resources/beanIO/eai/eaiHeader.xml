@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beanio xmlns="http://www.beanio.org/2012/03" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.beanio.org/2012/03 http://www.beanio.org/2012/03/mapping.xsd">
+  <stream name="requestHeader" format="fixedlength" strict="true">
+    <parser>
+      <property name="recordTerminator" value=""/>
+    </parser>
+    <record name="eaiHeader" class="com.lottecard.myd.cmn.EaiHeader" maxOccurs="1">
+        <field name="gramLnth" length="5" padding="0" justify="right" type="int"/>
+        <field name="guid" length="31" justify="left" padding=" " type="String"/>
+        <field name="gramPrgNo" length="2" padding="0" justify="right" type="int"/>
+        <field name="gramNo" length="8" justify="right" padding="0" type="String"/>
+        <field name="akRspDc" length="1" justify="right" padding=" " type="String"/>
+        <field name="rspBizDc" length="2" justify="left" padding=" " type="String"/>
+        <field name="gramAkDtti" length="17" justify="left" padding=" " type="String"/>
+        <field name="ipAdd" length="16" justify="left" padding=" " type="String"/>
+        <field name="tgtSvId" length="12" justify="left" padding=" " type="String"/>
+        <field name="deNatvNo1" length="9" justify="right" padding=" " type="int"/>
+        <field name="deNatvNo2" length="9" justify="right" padding=" " type="int"/>
+        <field name="oriGrnCn" length="20" justify="left" padding=" " type="String"/>
+        <field name="smlDeYn" length="1" justify="left" padding=" " type="String"/>
+        <field name="gramRspDtti" length="17" justify="left" padding=" " type="String"/>
+        <field name="pcRc" length="1" justify="right" padding=" " type="int"/>
+        <field name="fstErrSysDc" length="8" justify="left" padding=" " type="String"/>
+        <field name="chnlHdExsYn" length="1" justify="left" padding=" " type="String"/>
+        <field name="exrFld" length="40" justify="left" padding=" " type="String"/>
+    </record>
+  </stream>
+</beanio>

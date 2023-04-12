@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beanio xmlns="http://www.beanio.org/2012/03" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.beanio.org/2012/03 http://www.beanio.org/2012/03/mapping.xsd">
+  <stream name="request" format="fixedlength" strict="true">
+    <parser>
+      <property name="recordTerminator" value=""/>
+    </parser>
+    <record name="mciHeader" class="com.lottecard.myd.cmn.MciHeader" maxOccurs="1">
+        <field name="gramLnth" length="5" padding="0" justify="right" type="int"/>
+        <field name="guid" length="31" justify="left" padding=" " type="String"/>
+        <field name="gramPrgNo" length="2" padding="0" justify="right" type="int"/>
+        <field name="gramNo" length="8" justify="right" padding="0" type="String"/>
+        <field name="akRspDc" length="1" justify="right" padding=" " type="String"/>
+        <field name="rspBizDc" length="2" justify="left" padding=" " type="String"/>
+        <field name="gramAkDtti" length="17" justify="left" padding=" " type="String"/>
+        <field name="ipAdd" length="16" justify="left" padding=" " type="String"/>
+        <field name="tgtSvId" length="12" justify="left" padding=" " type="String"/>
+        <field name="deNatvNo1" length="9" justify="right" padding=" " type="int"/>
+        <field name="deNatvNo2" length="9" justify="right" padding=" " type="int"/>
+        <field name="oriGrnCn" length="20" justify="left" padding=" " type="String"/>
+        <field name="smlDeYn" length="1" justify="left" padding=" " type="String"/>
+        <field name="gramRspDtti" length="17" justify="left" padding=" " type="String"/>
+        <field name="pcRc" length="1" justify="right" padding=" " type="int"/>
+        <field name="fstErrSysDc" length="8" justify="left" padding=" " type="String"/>
+        <field name="chnlHdExsYn" length="1" justify="left" padding=" " type="String"/>
+        <field name="exrFld" length="40" justify="left" padding=" " type="String"/>
+        <field name="chnlDc" length="1" justify="left" padding=" " type="String"/>
+		<field name="ogc" length="5" justify="left" padding=" " type="String"/>
+		<field name="eno" length="7" justify="left" padding=" " type="String"/>
+		<field name="usid" length="13" justify="left" padding=" " type="String"/>
+		<field name="pagId" length="12" justify="left" padding=" " type="String"/>
+		<field name="urSecrGdc" length="1" justify="left" padding=" " type="String"/>
+		<field name="pagSecrGdc" length="1" justify="left" padding=" " type="String"/>
+		<field name="mciPrbYn" length="1" justify="left" padding=" " type="String"/>
+		<field name="exrFld1" length="19" justify="left" padding=" " type="String"/>
+		<field name="dePcRc" length="1" justify="left" padding=" " type="String"/>
+		<field name="dtaMaxCt" length="4" justify="right" padding=" " type="int"/>
+		<field name="inqPcCt" length="4" justify="right" padding=" " type="int"/>
+		<field name="psNtKey" length="180" justify="left" padding=" " type="String"/>
+		<field name="msgDspDc" length="1" justify="left" padding=" " type="String"/>
+		<field name="msgCn" length="80" justify="left" padding=" " type="String"/>
+		<field name="arbitMsgDc" length="8" justify="left" padding=" " type="String"/>
+		<field name="pgmErrInfCn" length="100" justify="left" padding=" " type="String"/>
+		<field name="exrFld2" length="22" justify="left" padding=" " type="String"/>
+		<field name="cdDc" length="1" justify="left" padding=" " type="String"/>
+		<field name="choDc" length="1" justify="left" padding=" " type="String"/>
+		<field name="incpDc" length="1" justify="left" padding=" " type="String"/>
+		<field name="pdDc" length="1" justify="left" padding=" " type="String"/>
+		<field name="cdno" length="16" justify="left" padding=" " type="String"/>
+		<field name="rrno" length="13" justify="left" padding=" " type="String"/>
+		<field name="acno" length="20" justify="left" padding=" " type="String"/>
+		<field name="pcDc" length="1" justify="left" padding=" " type="String"/>
+		<field name="urDfCn" length="80" justify="left" padding=" " type="String"/>
+		<field name="exrFld3" length="6" justify="left" padding=" " type="String"/>
+    </record>
+  </stream>
+</beanio>
