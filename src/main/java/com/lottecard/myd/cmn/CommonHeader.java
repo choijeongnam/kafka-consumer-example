@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public abstract class CommonHeader {
+public class CommonHeader {
 	@Field(align = Align.RIGHT, type = Integer.class, length = 5, padding = '0')
 	private int gramLnth;
 	
