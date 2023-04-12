@@ -25,7 +25,22 @@ public class MCIExecutor {
 	private Socket client;
 	private InputStream inputStream;
 	private OutputStream outputStream;
-
+	private final int headerLength = 800;
+	
+	public RequestMCIInDto createHeader(RequestMCIInDto inDto, String interfaceName) {
+		MciHeader mciHeader = new MciHeader();
+		
+		mciHeader.setGramLnth(headerLength); // + data 길이 더 해줘야함
+		mciHeader.setGuid(""); // 롯데카드 헤더값
+		mciHeader.setGramPrgNo(0);
+		mciHeader.setGramNo(""); //enum
+		mciHeader.setAkRspDc(""); //요청응답값
+		
+		//추가 header값 set
+		
+		return null;
+	}
+	
 	public byte[] marshal(RequestMCIInDto inDto, String interfaceName) throws Exception {
 		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 		org.beanio.StreamFactory streamFactory = org.beanio.StreamFactory.newInstance();
@@ -43,7 +58,6 @@ public class MCIExecutor {
 
 	public ResponseMCIOutDto unmarshal(byte[] response) throws Exception {
 		int responseLength = response.length;
-		int headerLength = 800;
 		int dataLength = responseLength - headerLength;
 		byte[] responseHeader = new byte[headerLength];
 		byte[] responseData = new byte[dataLength];
@@ -125,6 +139,7 @@ public class MCIExecutor {
 	}
 
 	public ResponseMCIOutDto execute(RequestMCIInDto inDto, String interfaceName, int connectTimeOut, int readTimeOut) throws Exception {
+		createHeader(inDto, interfaceName);
 		byte[] request = marshal(inDto, interfaceName);
 		create(connectTimeOut, readTimeOut);
 		outputStream.write(request);
@@ -136,6 +151,7 @@ public class MCIExecutor {
 		return outDto;
 	}
 	public ResponseMCIOutDto execute(RequestMCIInDto inDto, String interfaceName, int readTimeOut) throws Exception {
+		createHeader(inDto, interfaceName);
 		byte[] request = marshal(inDto, interfaceName);
 		create(this.connectTimeOut, readTimeOut);
 		outputStream.write(request);
@@ -147,6 +163,7 @@ public class MCIExecutor {
 		return outDto;
 	}
 	public ResponseMCIOutDto execute(RequestMCIInDto inDto, String interfaceName) throws Exception {
+		createHeader(inDto, interfaceName);
 		byte[] request = marshal(inDto, interfaceName);
 		create(this.connectTimeOut, this.readTimeOut);
 		outputStream.write(request);
