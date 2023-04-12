@@ -14,7 +14,7 @@ import org.beanio.Unmarshaller;
 import org.beanio.builder.StreamBuilder;
 
 import com.lottecard.myd.cmn.exception.LocaException;
-import com.lottecard.myd.cmn.model.ifSpec;
+import com.lottecard.myd.cmn.model.mciIfSpec;
 
 public class MCIExecutor {
 	private String id;
@@ -27,25 +27,25 @@ public class MCIExecutor {
 	private InputStream inputStream;
 	private OutputStream outputStream;
 	private final int headerLength = 800;
-	
+
 	public RequestMCIInDto createHeader(RequestMCIInDto inDto, String interfaceName) {
 		MciHeader mciHeader = new MciHeader();
-		
+
 		mciHeader.setGramLnth(headerLength); // + data 길이 더 해줘야함
 		mciHeader.setGuid(""); // 롯데카드 헤더값
 		mciHeader.setGramPrgNo(0);
 		mciHeader.setGramNo(""); //enum
 		mciHeader.setAkRspDc(""); //요청응답값
-		
+
 		//추가 header값 set
-		
+
 		return null;
 	}
-	
+
 	public byte[] marshal(RequestMCIInDto inDto, String interfaceName) throws Exception {
 		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 		org.beanio.StreamFactory streamFactory = org.beanio.StreamFactory.newInstance();
-		
+
 		org.beanio.builder.StreamBuilder builder = new StreamBuilder("CommonData") //enum 정의
 		        .format("fixedlength") //enum 정의
 		        .strict()
@@ -53,8 +53,8 @@ public class MCIExecutor {
 		        .addRecord(CommonData.class);
 
 		    streamFactory.define(builder);
-		
-		streamFactory.loadResource(ifSpec.valueOf(interfaceName).getHeaderPath()); //하드코딩 수정예정
+
+		streamFactory.loadResource(mciIfSpec.valueOf(interfaceName).getReplyGramNo()); //하드코딩 수정예정
 		org.beanio.Marshaller marshaller = streamFactory.createMarshaller("request"); //하드코딩 수정예정
 		String header = marshaller.marshal("commonHeader", inDto.commonHeader).toString(); //하드코딩 수정예정
 		byte[] headerByteArray = header.getBytes(encoding);
