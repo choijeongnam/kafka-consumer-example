@@ -15,8 +15,6 @@ import java.util.Map;
 import org.beanio.Unmarshaller;
 import org.beanio.builder.StreamBuilder;
 
-import com.lottecard.myd.cmn.model.mciIfSpec;
-
 public class MCIExecutor {
 	private String id;
 	private String serverUrl;
@@ -46,19 +44,24 @@ public class MCIExecutor {
 	}
 
 	public static byte[] marshal(Object object, String interfaceName) throws Exception {
+
 		org.beanio.StreamFactory streamFactory = org.beanio.StreamFactory.newInstance();
 		org.beanio.builder.StreamBuilder builder = new StreamBuilder(interfaceName) //enum 정의
 		        .format(format)
 		        .strict()
 		        .parser(new org.beanio.builder.FixedLengthParserBuilder())
-		        .addRecord(interfaceName.getClass());
+		        .addRecord(mciIfSpec.valueOf(interfaceName).getCls());
 	    streamFactory.define(builder);
 
 		org.beanio.Marshaller marshaller = streamFactory.createMarshaller(interfaceName);
-		String result = marshaller.marshal(interfaceName, interfaceName.getClass()).toString();
-		byte[] byteArray = result.getBytes(encoding);
+		String result = marshaller.marshal(interfaceName, object).toString();
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
-		return byteArray;
+		baos.write(result.getBytes());
+		baos.toString("MS949");
+		//byte[] byteArray = result.getBytes("MS949");
+
+		return baos.toByteArray();
 	}
 
 	public ResponseMCIOutDto unmarshal(byte[] response) throws Exception {
