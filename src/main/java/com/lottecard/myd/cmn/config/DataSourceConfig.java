@@ -1,7 +1,12 @@
 package com.lottecard.myd.cmn.config;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.lang.annotation.Annotation;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.annotation.Resource;
 import javax.sql.DataSource;
 
 import org.apache.ibatis.session.ExecutorType;
@@ -23,6 +28,9 @@ import com.lottecard.myd.test.model.vo.BookTbEntity;
 import com.lottecard.myd.test.model.vo.COMMONCodeEntity;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+
+import lombok.Data;
+import lombok.Getter;
 
 @Configuration
 //@EnableJdbcRepositories
@@ -209,6 +217,11 @@ public class DataSourceConfig extends AbstractJdbcConfiguration {
 //				.getResources("classpath:/sqlmap/mappers/postgresql/**/" + dbType + "/**/*.xml"));
     			.getResources("classpath:/sqlmap/mappers/oracle/**/*.xml"));
 
+    	
+    	List<Class<?>> classes = findClasses("com.lottecard.myd");
+    	  List<Class<?>> annotatedClasses = findAnnotatedClasses(classes, Data.class);
+    	  
+    
     	sessionFactoryBean.setTypeAliases (new Class[] {
     			COMMONCodeEntity.class,
     			BookTbEntity.class
@@ -253,6 +266,38 @@ public class DataSourceConfig extends AbstractJdbcConfiguration {
     	return sessionFactoryBean;
 
     }
+    
+    
+    
+    public  List<Class<?>> findAnnotatedClasses(List<Class<?>> classes, Class<? extends Annotation> annotationClass) throws ClassNotFoundException {
+        List<Class<?>> annotatedClasses = new ArrayList<Class<?>>();
+        
+        for (Class<?> clazz : classes) {
+            if (clazz.isAnnotationPresent(annotationClass)) {
+                annotatedClasses.add(clazz);
+            }
+        }
+        return annotatedClasses;
+    }
+    
+    
+    public  List<Class<?>> findClasses(String packageName) throws ClassNotFoundException {
+        String path = packageName.replace('.', '/');
+        File dir = new File(ClassLoader.getSystemClassLoader().getResource(path).getPath());
+        List<Class<?>> classes = new ArrayList<Class<?>>();
+        for (File file : dir.listFiles()) {
+            if (file.isDirectory()) {
+                classes.addAll(findClasses(packageName + "." + file.getName()));
+            } else if (file.getName().endsWith(".class")) {
+                String className = packageName + '.' + file.getName().substring(0, file.getName().length() - 6);
+                classes.add(Class.forName(className));
+            }
+        }
+        return classes;
+    }
+    
+  
+    
 
 //    @Bean(name="sqlSessionPostgresqlBatch")
 //    public SqlSessionFactoryBean sqlSessionFactoryPostgresqlBatch(@Qualifier("dataSourcePostgrSQL") DataSource dataSource) throws Exception {
