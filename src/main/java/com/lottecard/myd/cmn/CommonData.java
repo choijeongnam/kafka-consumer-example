@@ -13,7 +13,7 @@ import lombok.Setter;
 @Getter
 @Setter
 
-@Record(name = "CommonData", maxOccurs = 1)
+@Record(name = "YLS00006", maxOccurs = 1)
 public class CommonData {
 	@Field(name="cno", length=22, align=Align.LEFT, type=String.class)
     private String cno;

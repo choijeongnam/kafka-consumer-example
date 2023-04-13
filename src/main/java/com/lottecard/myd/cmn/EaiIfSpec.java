@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum EaiIfSpec {
-	YLS00006("", "S", "", 170, "S", "LP", "", "");
+	YLS00006("", "S", "YLS00006", 170, "S", "LP", "", "", CommonData.class, null);
 	
 	private String replyGramNo;
 	private String bizTc;
@@ -16,4 +16,6 @@ public enum EaiIfSpec {
 	private String rspBizDc;
 	private String tgtSvId;
 	private String exrFld;
+	private Class<?> requestData;
+	private Class<?> responseData;
 }

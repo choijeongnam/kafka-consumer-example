@@ -7,6 +7,7 @@ import java.util.List;
 import org.beanio.Marshaller;
 import org.beanio.StreamFactory;
 import org.beanio.Unmarshaller;
+import org.beanio.builder.FixedLengthParserBuilder;
 import org.beanio.builder.StreamBuilder;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,7 +19,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import com.lottecard.myd.MydataApplication;
 import com.lottecard.myd.cmn.CommonData;
 import com.lottecard.myd.cmn.CommonHeader;
+import com.lottecard.myd.cmn.EAIExecutorSync;
 import com.lottecard.myd.cmn.EaiHeader;
+import com.lottecard.myd.cmn.EaiIfSpec;
 import com.lottecard.myd.cmn.MciHeader;
 import com.lottecard.myd.cmn.RcvDenyChnlRgIz;
 
@@ -72,23 +75,9 @@ class MydataApplicationTests {
 
 	@Test
 	void contextLoads() throws IOException {
-		StreamFactory streamFactory = StreamFactory.newInstance();
-
-		String EaiHeader = "MciHeader";
-	    org.beanio.builder.StreamBuilder builder = new StreamBuilder(EaiHeader)
-	        .format("fixedlength")
-	        .strict()
-	        .parser(new org.beanio.builder.FixedLengthParserBuilder())
-	        .addRecord(MciHeader.class);
-
-	    streamFactory.define(builder);
-	    MciHeader eaiHeader = new MciHeader();
-	    eaiHeader.setGramLnth(123);
-	    eaiHeader.setGuid("20230411CMS0523");
-	    eaiHeader.setGramPrgNo(1);
-	    eaiHeader.setGramNo("CMS03001");
-	    eaiHeader.setAkRspDc("S");
-	    eaiHeader.setRspBizDc("AU");
+//		EAIExecutorSync executor = new EAIExecutorSync();
+//		EaiHeader
+//		executor.marshal(, interfaceName)
 
 //		RcvDenyChnlRgIz rcvDenyChnlRgIz = new RcvDenyChnlRgIz();
 //		rcvDenyChnlRgIz.setRcvDenyYn("y");
@@ -104,13 +93,6 @@ class MydataApplicationTests {
 //		//cd.setRcvDenyChnlRgIz(list);
 //		cd.setRcvDenyChnlRgIzCnt(12);
 //
-
-		Marshaller marshallerData = streamFactory.createMarshaller(EaiHeader); //stream name
-		String fixedData = marshallerData.marshal("MciHeader", eaiHeader).toString();
-		System.out.println("toString" + fixedData.toString());
-		byte[] byteArray = fixedData.getBytes("MS949");
-		System.out.println("length: " +  byteArray.length);
-		//
 //				String fixed2 = new String(byteArray, "MS949");
 
 //		CommonHeader ch = new CommonHeader();
@@ -149,7 +131,22 @@ class MydataApplicationTests {
 //		Marshaller marshallerData = streamFactory.createMarshaller("requestData"); //stream name
 //		String fixedData = marshallerData.marshal("commonData", cd).toString();
 //		System.out.println(fixedData.toString());
+		CommonData c = new CommonData();
+		c.setCno("1");
+		
+		StreamFactory streamFactory = StreamFactory.newInstance();
+		StreamBuilder builder = new StreamBuilder(EaiIfSpec.YLS00006.getServiceId())
+								        .format("fixedlength")
+								        .strict()
+								        .parser(new FixedLengthParserBuilder())
+								        .addRecord(EaiIfSpec.YLS00006.getRequestData());
+	    streamFactory.define(builder);
+		Marshaller marshaller = streamFactory.createMarshaller(EaiIfSpec.YLS00006.getServiceId());
+		String result = marshaller.marshal(EaiIfSpec.YLS00006.getServiceId(), c).toString();
+		System.out.println(result);
+		byte[] byteArray = result.getBytes("MS949");
 
+		
 	}
 
 }

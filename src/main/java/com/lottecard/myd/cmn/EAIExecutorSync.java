@@ -50,7 +50,6 @@ public class EAIExecutorSync implements EAIExecutor {
 								        .parser(new FixedLengthParserBuilder())
 								        .addRecord(interfaceName.getClass());
 	    streamFactory.define(builder);
-		streamFactory.loadResource(interfaceName);
 		Marshaller marshaller = streamFactory.createMarshaller(interfaceName);
 		String result = marshaller.marshal(interfaceName, interfaceName.getClass()).toString();
 		byte[] byteArray = result.getBytes(encoding);
@@ -69,7 +68,6 @@ public class EAIExecutorSync implements EAIExecutor {
 								        .parser(new FixedLengthParserBuilder())
 								        .addRecord(interfaceName.getClass());
 	    streamFactory.define(builder);
-		streamFactory.loadResource(interfaceName);
 		Unmarshaller unmarshaller = streamFactory.createUnmarshaller("stream명"); // enum으로 바꿔야 함
 		Object result = unmarshaller.unmarshal(responseStr);
 		
