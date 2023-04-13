@@ -1,6 +1,7 @@
 package com.lottecard.myd.cmn;
 
 import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -12,7 +13,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.beanio.StreamFactory;
 import org.beanio.Unmarshaller;
+import org.beanio.builder.FixedLengthParserBuilder;
 import org.beanio.builder.StreamBuilder;
 
 public class MCIExecutor {
@@ -55,16 +58,24 @@ public class MCIExecutor {
 
 		org.beanio.Marshaller marshaller = streamFactory.createMarshaller(interfaceName);
 		String result = marshaller.marshal(interfaceName, object).toString();
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
-		baos.write(result.getBytes());
-		baos.toString("MS949");
-		//byte[] byteArray = result.getBytes("MS949");
-
-		return baos.toByteArray();
+		byte[] byteArray = result.getBytes();
+		return byteArray;
 	}
 
-	public ResponseMCIOutDto unmarshal(byte[] response) throws Exception {
+	public ResponseMCIOutDto unmarshal(byte[] response, String interfaceName) throws Exception {
+		String responseStr = new String(response, encoding);
+
+		StreamFactory streamFactory = StreamFactory.newInstance();
+		StreamBuilder builder = new StreamBuilder("") // enum으로 바꿔야 함
+								        .format(format)
+								        .strict()
+								        .parser(new FixedLengthParserBuilder())
+								        .addRecord(mciIfSpec.valueOf(interfaceName).getCls());
+	    streamFactory.define(builder);
+		Unmarshaller unmarshaller = streamFactory.createUnmarshaller(interfaceName); // enum으로 바꿔야 함
+		Object result = unmarshaller.unmarshal(responseStr);
+
 		int responseLength = response.length;
 		int dataLength = responseLength - headerLength;
 		byte[] responseHeader = new byte[headerLength];
@@ -73,15 +84,18 @@ public class MCIExecutor {
 		responseHeader = Arrays.copyOf(response, headerLength);
 		responseData = Arrays.copyOfRange(response, headerLength, responseLength);
 
-		String header = new String(responseHeader, encoding);
-		org.beanio.StreamFactory streamFactory = org.beanio.StreamFactory.newInstance();
-		streamFactory.loadResource("beanIO/commonHeader.xml"); //하드코딩 수정예정
-		Unmarshaller unmarshaller = streamFactory.createUnmarshaller("request"); //하드코딩 수정예정
-		CommonHeader cc = (CommonHeader) unmarshaller.unmarshal(header); //하드코딩 수정예정
+		ResponseMCIOutDto responseMCIOutDto = new ResponseMCIOutDto();
+		responseMCIOutDto.setResponseData(result);
+
+//		String header = new String(responseHeader, encoding);
+//		org.beanio.StreamFactory streamFactory = org.beanio.StreamFactory.newInstance();
+//		streamFactory.loadResource("beanIO/commonHeader.xml"); //하드코딩 수정예정
+//		Unmarshaller unmarshaller = streamFactory.createUnmarshaller("request"); //하드코딩 수정예정
+//		CommonHeader cc = (CommonHeader) unmarshaller.unmarshal(header); //하드코딩 수정예정
 
 		//본문 부분
 
-		return null;
+		return responseMCIOutDto;
 	}
 
 	public void create(int connectTimeOut, int readTimeOut) throws UnknownHostException, IOException {
@@ -166,7 +180,7 @@ public class MCIExecutor {
 
 		byte[] response;
 		response = read();
-		ResponseMCIOutDto outDto = unmarshal(response);
+		ResponseMCIOutDto outDto = unmarshal(response, interfaceName);
 
 		return outDto;
 	}
