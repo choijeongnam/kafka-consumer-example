@@ -1,15 +1,16 @@
 package com.lottecard.myd.cmn;
 
+import java.io.UnsupportedEncodingException;
 
 public interface EAIExecutor {
-	public RequestEAIInDto createHeader(RequestMCIInDto inDto, String interfaceName);
+	public EaiHeader createHeader(String interfaceName);
 	
-	public byte[] marshal(RequestMCIInDto inDto, String interfaceName);
+	public byte[] marshal(Object object, String interfaceName) throws UnsupportedEncodingException;
 
-	public ResponseEAIOutDto unmarshal(byte[] response);
+	public Object unmarshal(byte[] response, String interfaceName) throws UnsupportedEncodingException;
 
-	public byte[] read();
+	public byte[] read(byte[] request);
 
-	public void execute();
+	public ResponseEAIOutDto execute(RequestEAIInDto inDto, String interfaceName) throws Exception;
 	
 }
