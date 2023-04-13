@@ -20,7 +20,7 @@ import com.lottecard.myd.cmn.model.mciIfSpec;
 public class MCIExecutor {
 	private String id;
 	private String serverUrl;
-	private String encoding;
+	private static String encoding;
 	private int connectTimeOut;
 	private int readTimeOut;
 	private int port;
@@ -28,6 +28,7 @@ public class MCIExecutor {
 	private InputStream inputStream;
 	private OutputStream outputStream;
 	private final int headerLength = 800;
+	private static String format = "fixedlength";
 
 	public RequestMCIInDto createHeader(RequestMCIInDto inDto, String interfaceName) {
 		MciHeader mciHeader = new MciHeader();
@@ -39,28 +40,24 @@ public class MCIExecutor {
 		mciHeader.setAkRspDc(""); //요청응답값
 
 		//추가 header값 set
+		inDto.setCommonHeader(mciHeader);
 
-		return null;
+		return inDto;
 	}
 
-	public byte[] marshal(Object inDto, String interfaceName) throws Exception {
-
+	public static byte[] marshal(Object object, String interfaceName) throws Exception {
 		org.beanio.StreamFactory streamFactory = org.beanio.StreamFactory.newInstance();
-
-		String recordName = mciIfSpec.valueOf(interfaceName).getReplyGramNo(); //명칭도 나중에 수정해야함
-		org.beanio.builder.StreamBuilder builder = new StreamBuilder(recordName) //enum 정의
-		        .format("fixedlength") //enum 정의
+		org.beanio.builder.StreamBuilder builder = new StreamBuilder(interfaceName) //enum 정의
+		        .format(format)
 		        .strict()
 		        .parser(new org.beanio.builder.FixedLengthParserBuilder())
 		        .addRecord(interfaceName.getClass());
 	    streamFactory.define(builder);
 
-		streamFactory.loadResource(recordName);
-		org.beanio.Marshaller marshaller = streamFactory.createMarshaller(recordName);
-		String mciDto = marshaller.marshal(recordName, inDto).toString();
-		byte[] byteArray = mciDto.getBytes(encoding);
-		//ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-		//byteArrayOutputStream.write(byteArray);
+		org.beanio.Marshaller marshaller = streamFactory.createMarshaller(interfaceName);
+		String result = marshaller.marshal(interfaceName, interfaceName.getClass()).toString();
+		byte[] byteArray = result.getBytes(encoding);
+
 		return byteArray;
 	}
 
@@ -157,6 +154,7 @@ public class MCIExecutor {
 		baos.write(requestData);
 
 		byte[] request = baos.toByteArray();
+
 
 		create(connectTimeOut, readTimeOut);
 		outputStream.write(request);
