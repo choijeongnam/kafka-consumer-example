@@ -43,25 +43,25 @@ public class MCIExecutor {
 		return null;
 	}
 
-	public byte[] marshal(RequestMCIInDto inDto, String interfaceName) throws Exception {
-		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+	public byte[] marshal(Object inDto, String interfaceName) throws Exception {
+
 		org.beanio.StreamFactory streamFactory = org.beanio.StreamFactory.newInstance();
 
-		//mci eai 분기처리 해줘야함
-		String classNm = mciIfSpec.valueOf(interfaceName).getReplyGramNo(); //명칭도 나중에 수정해야함
-		org.beanio.builder.StreamBuilder builder = new StreamBuilder(classNm) //enum 정의
+		String recordName = mciIfSpec.valueOf(interfaceName).getReplyGramNo(); //명칭도 나중에 수정해야함
+		org.beanio.builder.StreamBuilder builder = new StreamBuilder(recordName) //enum 정의
 		        .format("fixedlength") //enum 정의
 		        .strict()
 		        .parser(new org.beanio.builder.FixedLengthParserBuilder())
 		        .addRecord(interfaceName.getClass());
 	    streamFactory.define(builder);
 
-		streamFactory.loadResource(classNm);
-		org.beanio.Marshaller marshaller = streamFactory.createMarshaller(classNm);
-		String mciDto = marshaller.marshal(classNm, interfaceName.getClass()).toString();
+		streamFactory.loadResource(recordName);
+		org.beanio.Marshaller marshaller = streamFactory.createMarshaller(recordName);
+		String mciDto = marshaller.marshal(recordName, inDto).toString();
 		byte[] byteArray = mciDto.getBytes(encoding);
-		byteArrayOutputStream.write(byteArray);
-		return byteArrayOutputStream.toByteArray();
+		//ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+		//byteArrayOutputStream.write(byteArray);
+		return byteArray;
 	}
 
 	public ResponseMCIOutDto unmarshal(byte[] response) throws Exception {
@@ -148,10 +148,21 @@ public class MCIExecutor {
 
 	public ResponseMCIOutDto execute(RequestMCIInDto inDto, String interfaceName, int connectTimeOut, int readTimeOut) throws Exception {
 		createHeader(inDto, interfaceName);
-		byte[] request = marshal(inDto, interfaceName);
+
+		byte[] requestHeader = marshal(inDto.getCommonHeader(), interfaceName);
+		byte[] requestData = marshal(inDto.getRequestData(), interfaceName);
+
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		baos.write(requestHeader);
+		baos.write(requestData);
+
+		byte[] request = baos.toByteArray();
+
 		create(connectTimeOut, readTimeOut);
 		outputStream.write(request);
 		outputStream.flush();
+
+
 		byte[] response;
 		response = read();
 		ResponseMCIOutDto outDto = unmarshal(response);
