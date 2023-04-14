@@ -6,7 +6,6 @@ import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Resource;
 import javax.sql.DataSource;
 
 import org.apache.ibatis.session.ExecutorType;
@@ -14,6 +13,7 @@ import org.apache.ibatis.type.JdbcType;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -28,9 +28,6 @@ import com.lottecard.myd.test.model.vo.BookTbEntity;
 import com.lottecard.myd.test.model.vo.COMMONCodeEntity;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-
-import lombok.Data;
-import lombok.Getter;
 
 @Configuration
 //@EnableJdbcRepositories
@@ -218,16 +215,21 @@ public class DataSourceConfig extends AbstractJdbcConfiguration {
     			.getResources("classpath:/sqlmap/mappers/oracle/**/*.xml"));
 
     	
-    	List<Class<?>> classes = findClasses("com.lottecard.myd");
-    	  List<Class<?>> annotatedClasses = findAnnotatedClasses(classes, Data.class);
+		List<Class<?>> classes = findClasses("com.lottecard.myd");
+		Class[] rtn_classes = findAnnotatedClasses(classes, Cacheable.class);
     	  
-    
-    	sessionFactoryBean.setTypeAliases (new Class[] {
-    			COMMONCodeEntity.class,
-    			BookTbEntity.class
-//    			TMcGaHistVO.class,
-//    			TMcSfCmpnMstVO.class
-		});
+    	sessionFactoryBean.setTypeAliases (
+    			
+    			rtn_classes
+//    			new Class[] {
+//    			COMMONCodeEntity.class,
+//    			BookTbEntity.class
+////    			TMcGaHistVO.class,
+////    			TMcSfCmpnMstVO.class
+//		}
+    			
+    			
+    			);
 
 //    	return sessionFactoryBean.getObject();
     	return sessionFactoryBean;
@@ -267,18 +269,22 @@ public class DataSourceConfig extends AbstractJdbcConfiguration {
 
     }
     
-    
-    
-    public  List<Class<?>> findAnnotatedClasses(List<Class<?>> classes, Class<? extends Annotation> annotationClass) throws ClassNotFoundException {
-        List<Class<?>> annotatedClasses = new ArrayList<Class<?>>();
-        
+    public  Class[] findAnnotatedClasses(List<Class<?>> classes, Class<? extends Annotation> annotationClass) throws ClassNotFoundException {
+        List<Class> annotatedClasses = new ArrayList<Class>();
         for (Class<?> clazz : classes) {
             if (clazz.isAnnotationPresent(annotationClass)) {
-                annotatedClasses.add(clazz);
+            	annotatedClasses.add(clazz);
             }
         }
-        return annotatedClasses;
+        
+        int arrListSize = annotatedClasses.size();
+        Class[] rtn_classes = new Class[arrListSize];
+        for (int i = 0; i < arrListSize; i++) {
+            rtn_classes[i] = annotatedClasses.get(i);
+        }
+        return rtn_classes;
     }
+    
     
     
     public  List<Class<?>> findClasses(String packageName) throws ClassNotFoundException {
