@@ -7,8 +7,11 @@ import java.util.List;
 import org.beanio.Marshaller;
 import org.beanio.StreamFactory;
 import org.beanio.Unmarshaller;
+import org.beanio.builder.FixedLengthParserBuilder;
+import org.beanio.builder.StreamBuilder;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.shadow.com.univocity.parsers.annotations.FixedWidth;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -16,6 +19,10 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import com.lottecard.myd.MydataApplication;
 import com.lottecard.myd.cmn.CommonData;
 import com.lottecard.myd.cmn.CommonHeader;
+import com.lottecard.myd.cmn.EAIExecutorSync;
+import com.lottecard.myd.cmn.EaiHeader;
+import com.lottecard.myd.cmn.EaiIfSpec;
+import com.lottecard.myd.cmn.MciHeader;
 import com.lottecard.myd.cmn.RcvDenyChnlRgIz;
 
 @ExtendWith(SpringExtension.class)
@@ -68,45 +75,78 @@ class MydataApplicationTests {
 
 	@Test
 	void contextLoads() throws IOException {
+//		EAIExecutorSync executor = new EAIExecutorSync();
+//		EaiHeader
+//		executor.marshal(, interfaceName)
+
+//		RcvDenyChnlRgIz rcvDenyChnlRgIz = new RcvDenyChnlRgIz();
+//		rcvDenyChnlRgIz.setRcvDenyYn("y");
+//		rcvDenyChnlRgIz.setRgDt("f");
+//		rcvDenyChnlRgIz.setRgrEno("f");
+//		rcvDenyChnlRgIz.setRgrNm("f");
+//		rcvDenyChnlRgIz.setChnlKndc("a");
+//		rcvDenyChnlRgIz.setRcvDenyCnC("dsd");
+//		List<RcvDenyChnlRgIz> list = new ArrayList();
+//		list.add(rcvDenyChnlRgIz);
+//
+//		cd.setCno("fsdfdf");
+//		//cd.setRcvDenyChnlRgIz(list);
+//		cd.setRcvDenyChnlRgIzCnt(12);
+//
+//				String fixed2 = new String(byteArray, "MS949");
+
+//		CommonHeader ch = new CommonHeader();
+//		ch.setGramLnth(123);
+//		ch.setGuid("20230411CMS0523");
+//		ch.setGramPrgNo(1);
+//		ch.setGramNo("CMS03001");
+//		ch.setAkRspDc("S");
+//		ch.setRspBizDc("AU");
+//		Marshaller marshaller = streamFactory.createMarshaller("request"); //stream name
+//		String fixed = marshaller.marshal("commonHeader", ch).toString();
+//		byte[] byteArray = fixed.getBytes("MS949");
+//
+//		String fixed2 = new String(byteArray, "MS949");
+//
+//		Unmarshaller unmarshaller = streamFactory.createUnmarshaller("request");
+//		CommonHeader cc = (CommonHeader) unmarshaller.unmarshal(fixed2);
+//		System.out.println(cc.toString());
+//
+//		CommonData cd = new CommonData();
+//		RcvDenyChnlRgIz rcvDenyChnlRgIz = new RcvDenyChnlRgIz();
+//		rcvDenyChnlRgIz.setRcvDenyYn("y");
+//		rcvDenyChnlRgIz.setRgDt("f");
+//		rcvDenyChnlRgIz.setRgrEno("f");
+//		rcvDenyChnlRgIz.setRgrNm("f");
+//		rcvDenyChnlRgIz.setChnlKndc("a");
+//		rcvDenyChnlRgIz.setRcvDenyCnC("dsd");
+//		List<RcvDenyChnlRgIz> list = new ArrayList();
+//		list.add(rcvDenyChnlRgIz);
+//
+//		cd.setCno("fsdfdf");
+//		cd.setRcvDenyChnlRgIz(list);
+//		cd.setRcvDenyChnlRgIzCnt(12);
+//
+//
+//		Marshaller marshallerData = streamFactory.createMarshaller("requestData"); //stream name
+//		String fixedData = marshallerData.marshal("commonData", cd).toString();
+//		System.out.println(fixedData.toString());
+		CommonData c = new CommonData();
+		c.setCno("1");
+		
 		StreamFactory streamFactory = StreamFactory.newInstance();
-		streamFactory.loadResource("beanIO/commonHeader.xml");
-		CommonHeader ch = new CommonHeader();
-		ch.setGramLnth(123);
-		ch.setGuid("20230411CMS0523");
-		ch.setGramPrgNo(1);
-		ch.setGramNo("CMS03001");
-		ch.setAkRspDc("S");
-		ch.setRspBizDc("AU");
-		Marshaller marshaller = streamFactory.createMarshaller("request"); //stream name
-		String fixed = marshaller.marshal("commonHeader", ch).toString();
-		byte[] byteArray = fixed.getBytes("MS949");
+		StreamBuilder builder = new StreamBuilder(EaiIfSpec.YLS00006.getServiceId())
+								        .format("fixedlength")
+								        .strict()
+								        .parser(new FixedLengthParserBuilder())
+								        .addRecord(EaiIfSpec.YLS00006.getRequestData());
+	    streamFactory.define(builder);
+		Marshaller marshaller = streamFactory.createMarshaller(EaiIfSpec.YLS00006.getServiceId());
+		String result = marshaller.marshal(EaiIfSpec.YLS00006.getServiceId(), c).toString();
+		System.out.println(result);
+		byte[] byteArray = result.getBytes("MS949");
 
-		String fixed2 = new String(byteArray, "MS949");
-
-		Unmarshaller unmarshaller = streamFactory.createUnmarshaller("request");
-		CommonHeader cc = (CommonHeader) unmarshaller.unmarshal(fixed2);
-		System.out.println(cc.toString());
-
-		CommonData cd = new CommonData();
-		RcvDenyChnlRgIz rcvDenyChnlRgIz = new RcvDenyChnlRgIz();
-		rcvDenyChnlRgIz.setRcvDenyYn("y");
-		rcvDenyChnlRgIz.setRgDt("f");
-		rcvDenyChnlRgIz.setRgrEno("f");
-		rcvDenyChnlRgIz.setRgrNm("f");
-		rcvDenyChnlRgIz.setChnlKndc("a");
-		rcvDenyChnlRgIz.setRcvDenyCnC("dsd");
-		List<RcvDenyChnlRgIz> list = new ArrayList();
-		list.add(rcvDenyChnlRgIz);
-
-		cd.setCno("fsdfdf");
-		cd.setRcvDenyChnlRgIz(list);
-		cd.setRcvDenyChnlRgIzCnt(12);
-
-
-		Marshaller marshallerData = streamFactory.createMarshaller("requestData"); //stream name
-		String fixedData = marshallerData.marshal("commonData", cd).toString();
-		System.out.println(fixedData.toString());
-
+		
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.lottecard.myd.cmn;
 
 import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -9,16 +10,18 @@ import java.net.Socket;
 import java.net.SocketAddress;
 import java.net.UnknownHostException;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
+import org.beanio.StreamFactory;
 import org.beanio.Unmarshaller;
-
-import com.lottecard.myd.cmn.exception.LocaException;
-import com.lottecard.myd.cmn.model.ifSpec;
+import org.beanio.builder.FixedLengthParserBuilder;
+import org.beanio.builder.StreamBuilder;
 
 public class MCIExecutor {
 	private String id;
 	private String serverUrl;
-	private String encoding;
+	private static String encoding;
 	private int connectTimeOut;
 	private int readTimeOut;
 	private int port;
@@ -26,37 +29,53 @@ public class MCIExecutor {
 	private InputStream inputStream;
 	private OutputStream outputStream;
 	private final int headerLength = 800;
-	
+	private static String format = "fixedlength";
+
 	public RequestMCIInDto createHeader(RequestMCIInDto inDto, String interfaceName) {
 		MciHeader mciHeader = new MciHeader();
-		
+
 		mciHeader.setGramLnth(headerLength); // + data 길이 더 해줘야함
 		mciHeader.setGuid(""); // 롯데카드 헤더값
 		mciHeader.setGramPrgNo(0);
 		mciHeader.setGramNo(""); //enum
 		mciHeader.setAkRspDc(""); //요청응답값
-		
+
 		//추가 header값 set
-		
-		return null;
+		inDto.setCommonHeader(mciHeader);
+
+		return inDto;
 	}
-	
-	public byte[] marshal(RequestMCIInDto inDto, String interfaceName) throws Exception {
-		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
+	public static byte[] marshal(Object object, String interfaceName) throws Exception {
+
 		org.beanio.StreamFactory streamFactory = org.beanio.StreamFactory.newInstance();
-		streamFactory.loadResource(ifSpec.valueOf(interfaceName).getHeaderPath()); //하드코딩 수정예정
-		org.beanio.Marshaller marshaller = streamFactory.createMarshaller("request"); //하드코딩 수정예정
-		String header = marshaller.marshal("commonHeader", inDto.commonHeader).toString(); //하드코딩 수정예정
-		byte[] headerByteArray = header.getBytes(encoding);
+		org.beanio.builder.StreamBuilder builder = new StreamBuilder(interfaceName) //enum 정의
+		        .format(format)
+		        .strict()
+		        .parser(new org.beanio.builder.FixedLengthParserBuilder())
+		        .addRecord(mciIfSpec.valueOf(interfaceName).getCls());
+	    streamFactory.define(builder);
 
-		byteArrayOutputStream.write(headerByteArray);
+		org.beanio.Marshaller marshaller = streamFactory.createMarshaller(interfaceName);
+		String result = marshaller.marshal(interfaceName, object).toString();
 
-		//본문부분 구현예정
-
-		return byteArrayOutputStream.toByteArray();
+		byte[] byteArray = result.getBytes();
+		return byteArray;
 	}
 
-	public ResponseMCIOutDto unmarshal(byte[] response) throws Exception {
+	public ResponseMCIOutDto unmarshal(byte[] response, String interfaceName) throws Exception {
+		String responseStr = new String(response, encoding);
+
+		StreamFactory streamFactory = StreamFactory.newInstance();
+		StreamBuilder builder = new StreamBuilder("") // enum으로 바꿔야 함
+								        .format(format)
+								        .strict()
+								        .parser(new FixedLengthParserBuilder())
+								        .addRecord(mciIfSpec.valueOf(interfaceName).getCls());
+	    streamFactory.define(builder);
+		Unmarshaller unmarshaller = streamFactory.createUnmarshaller(interfaceName); // enum으로 바꿔야 함
+		Object result = unmarshaller.unmarshal(responseStr);
+
 		int responseLength = response.length;
 		int dataLength = responseLength - headerLength;
 		byte[] responseHeader = new byte[headerLength];
@@ -65,15 +84,18 @@ public class MCIExecutor {
 		responseHeader = Arrays.copyOf(response, headerLength);
 		responseData = Arrays.copyOfRange(response, headerLength, responseLength);
 
-		String header = new String(responseHeader, encoding);
-		org.beanio.StreamFactory streamFactory = org.beanio.StreamFactory.newInstance();
-		streamFactory.loadResource("beanIO/commonHeader.xml"); //하드코딩 수정예정
-		Unmarshaller unmarshaller = streamFactory.createUnmarshaller("request"); //하드코딩 수정예정
-		CommonHeader cc = (CommonHeader) unmarshaller.unmarshal(header); //하드코딩 수정예정
+		ResponseMCIOutDto responseMCIOutDto = new ResponseMCIOutDto();
+		responseMCIOutDto.setResponseData(result);
+
+//		String header = new String(responseHeader, encoding);
+//		org.beanio.StreamFactory streamFactory = org.beanio.StreamFactory.newInstance();
+//		streamFactory.loadResource("beanIO/commonHeader.xml"); //하드코딩 수정예정
+//		Unmarshaller unmarshaller = streamFactory.createUnmarshaller("request"); //하드코딩 수정예정
+//		CommonHeader cc = (CommonHeader) unmarshaller.unmarshal(header); //하드코딩 수정예정
 
 		//본문 부분
 
-		return null;
+		return responseMCIOutDto;
 	}
 
 	public void create(int connectTimeOut, int readTimeOut) throws UnknownHostException, IOException {
@@ -140,38 +162,34 @@ public class MCIExecutor {
 
 	public ResponseMCIOutDto execute(RequestMCIInDto inDto, String interfaceName, int connectTimeOut, int readTimeOut) throws Exception {
 		createHeader(inDto, interfaceName);
-		byte[] request = marshal(inDto, interfaceName);
+
+		byte[] requestHeader = marshal(inDto.getCommonHeader(), interfaceName);
+		byte[] requestData = marshal(inDto.getRequestData(), interfaceName);
+
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		baos.write(requestHeader);
+		baos.write(requestData);
+
+		byte[] request = baos.toByteArray();
+
+
 		create(connectTimeOut, readTimeOut);
 		outputStream.write(request);
 		outputStream.flush();
+
+
 		byte[] response;
 		response = read();
-		ResponseMCIOutDto outDto = unmarshal(response);
+		ResponseMCIOutDto outDto = unmarshal(response, interfaceName);
 
 		return outDto;
 	}
 	public ResponseMCIOutDto execute(RequestMCIInDto inDto, String interfaceName, int readTimeOut) throws Exception {
-		createHeader(inDto, interfaceName);
-		byte[] request = marshal(inDto, interfaceName);
-		create(this.connectTimeOut, readTimeOut);
-		outputStream.write(request);
-		outputStream.flush();
-		byte[] response;
-		response = read();
-		ResponseMCIOutDto outDto = unmarshal(response);
 
-		return outDto;
+		return execute(inDto, interfaceName, this.connectTimeOut, readTimeOut);
 	}
 	public ResponseMCIOutDto execute(RequestMCIInDto inDto, String interfaceName) throws Exception {
-		createHeader(inDto, interfaceName);
-		byte[] request = marshal(inDto, interfaceName);
-		create(this.connectTimeOut, this.readTimeOut);
-		outputStream.write(request);
-		outputStream.flush();
-		byte[] response;
-		response = read();
-		ResponseMCIOutDto outDto = unmarshal(response);
 
-		return outDto;
+		return execute(inDto, interfaceName, this.connectTimeOut, this.readTimeOut);
 	}
 }
