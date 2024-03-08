@@ -33,7 +33,9 @@
 		<okio.version>1.17.2</okio.version>
 		<validation-api.version>2.0.1.Final</validation-api.version>
 		<log4jdbc-log4j2.version>1.16</log4jdbc-log4j2.version>
-		
+		<commons-lang3.version>3.12.0</commons-lang3.version>
+		<beanio.version>2.1.0</beanio.version>
+
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
@@ -74,6 +76,18 @@
 					<groupId>org.springframework.boot</groupId>
 					<artifactId>spring-boot-starter-tomcat</artifactId>
 				</exclusion>
+		        <exclusion>
+		            <artifactId>tomcat-embed-el</artifactId>
+		            <groupId>org.apache.tomcat.embed</groupId>
+		        </exclusion>
+		        <exclusion>
+		            <artifactId>tomcat-embed-core</artifactId>
+		            <groupId>org.apache.tomcat.embed</groupId>
+		        </exclusion>
+		        <exclusion>
+		            <artifactId>tomcat-embed-websocket</artifactId>
+		            <groupId>org.apache.tomcat.embed</groupId>
+		        </exclusion>
 			</exclusions>
 		</dependency>
 
@@ -251,14 +265,19 @@
 			<artifactId>converter-jaxb</artifactId>
 			<version>${retrofit2.version}</version>
 		</dependency>
-		
+
 		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
 		<dependency>
 		    <groupId>org.apache.commons</groupId>
 		    <artifactId>commons-lang3</artifactId>
-		    <version>3.12.0</version>
+		    <version>${commons-lang3.version}</version>
 		</dependency>
-		
+		<!-- https://mvnrepository.com/artifact/org.beanio/beanio -->
+		<dependency>
+		    <groupId>org.beanio</groupId>
+		    <artifactId>beanio</artifactId>
+		    <version>${beanio.version}</version>
+		</dependency>
 		
 	</dependencies>
 
